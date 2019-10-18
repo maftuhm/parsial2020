@@ -29,31 +29,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tr>
                                         </thead>
                                         <tbody>
-<?php foreach ($users as $user):?>
+                                        <?php foreach ($users as $user):?>
                                             <tr>
                                                 <td><?php echo htmlspecialchars($user->first_name, ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td><?php echo htmlspecialchars($user->last_name, ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td><?php echo htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td>
-<?php
-
-foreach ($user->groups as $group)
-{
-
-    // Disabled temporary !!!
-    // echo anchor('admin/groups/edit/'.$group->id, '<span class="label" style="background:'.$group->bgcolor.';">'.htmlspecialchars($group->name, ENT_QUOTES, 'UTF-8').'</span>');
-    echo anchor('admin/groups/edit/'.$group->id, '<span class="label label-default">'.htmlspecialchars($group->name, ENT_QUOTES, 'UTF-8').'</span>');
-}
-
-?>
+                                        <?php
+                                                foreach ($user->groups as $group){echo anchor('admin/groups/edit/'.$group->id, '<span class="label" style="background:'.$group->bgcolor.';">'.htmlspecialchars($group->name, ENT_QUOTES, 'UTF-8').'</span>');}
+                                            ?>
                                                 </td>
                                                 <td><?php echo ($user->active) ? anchor('admin/users/deactivate/'.$user->id, '<span class="label label-success">'.lang('users_active').'</span>') : anchor('admin/users/activate/'. $user->id, '<span class="label label-default">'.lang('users_inactive').'</span>'); ?></td>
                                                 <td>
-                                                    <?php echo anchor('admin/users/edit/'.$user->id, lang('actions_edit')); ?>
-                                                    <?php echo anchor('admin/users/profile/'.$user->id, lang('actions_see')); ?>
+                                                    <?php echo anchor('admin/users/profile/'.$user->id, '<span class="label label-primary">'.lang('actions_see').'</span> ');?>
+                                                    <?php echo anchor('admin/users/edit/'.$user->id, '<span class="label label-warning">'.lang('actions_edit').'</span> ');?>
+                                                    <?php echo anchor('admin/users/delete/'.$user->id, '<span class="label label-danger">'.lang('actions_delete').'</span>');?>
                                                 </td>
                                             </tr>
-<?php endforeach;?>
+                                            <?php endforeach;?>
                                         </tbody>
                                     </table>
                                 </div>

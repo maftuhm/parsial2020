@@ -141,10 +141,56 @@ class Users extends Admin_Controller {
 	}
 
 
-	public function delete()
+	public function delete($id = NULL)
 	{
         /* Load Template */
-		$this->template->admin_render('admin/users/delete', $this->data);
+		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
+		{
+            return show_error('You must be an administrator to view this page.');
+		}
+
+        /* Breadcrumbs */
+        $this->breadcrumbs->unshift(2, lang('menu_users_delete'), 'admin/users/delete');
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+
+		/* Validate form input */
+		$this->form_validation->set_rules('confirm', 'lang:delete_validation_confirm_label', 'required');
+		$this->form_validation->set_rules('id', 'lang:delete_validation_user_id_label', 'required|alpha_numeric');
+
+		$id = (int) $id;
+		$this->data['session_id'] 	= $this->session->userdata('user_id');
+		if ($this->form_validation->run() === FALSE)
+		{
+			$user = $this->ion_auth->user($id)->row();
+
+            $this->data['csrf']       = $this->_get_csrf_nonce();
+            $this->data['id']         = (int) $user->id;
+            $this->data['firstname']  = ! empty($user->first_name) ? htmlspecialchars($user->first_name, ENT_QUOTES, 'UTF-8') : NULL;
+            $this->data['lastname']   = ! empty($user->last_name) ? ' '.htmlspecialchars($user->last_name, ENT_QUOTES, 'UTF-8') : NULL;
+
+            /* Load Template */
+            $this->template->admin_render('admin/users/delete', $this->data);
+		}
+		else
+		{
+            if ($this->input->post('confirm') == 'yes')
+			{
+                if ($this->_valid_csrf_nonce() === FALSE OR $id != $this->input->post('id'))
+				{
+                    show_error($this->lang->line('error_csrf'));
+				}
+
+                if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
+				{
+					$this->ion_auth->delete_user($id);
+					if ($id == $this->session->userdata('user_id')) {
+						redirect('auth/logout', 'refresh');
+					}
+				}
+			}
+
+			redirect('admin/users', 'refresh');
+		}
 	}
 
 
