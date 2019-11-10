@@ -23,6 +23,7 @@ class MY_Controller extends CI_Controller
         $this->data['frameworks_dir'] = $this->config->item('frameworks_dir');
         $this->data['plugins_dir']    = $this->config->item('plugins_dir');
         $this->data['avatar_dir']     = $this->config->item('avatar_dir');
+        $this->data['templates_dir']  = $this->config->item('templates_dir');
 
         /* Any mobile device (phones or tablets) */
         if ($this->mobile_detect->isMobile())
@@ -117,6 +118,12 @@ class Public_Controller extends MY_Controller
         if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
         {
             $this->data['admin_link'] = TRUE;
+            $this->load->helper('menu');
+            /* Data */
+            $this->data['title']       = $this->config->item('title');
+            $this->data['title_lg']    = $this->config->item('title_lg');
+            $this->data['title_mini']  = $this->config->item('title_mini');
+ 
         }
         else
         {

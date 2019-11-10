@@ -10,7 +10,6 @@ class Template {
 		$this->CI =& get_instance();
     }
 
-
     public function admin_render($content, $data = NULL)
     {
         if ( ! $content)
@@ -30,6 +29,23 @@ class Template {
         }
 	}
 
+    public function public_render($content, $data = NULL)
+    {
+        if ( ! $content)
+        {
+            return NULL;
+        }
+        else
+        {
+            $this->template['header']          = $this->CI->load->view('public/_templates/header', $data, TRUE);
+            $this->template['main_header']     = $this->CI->load->view('public/_templates/main_header', $data, TRUE);
+            $this->template['content']         = /*$this->CI->load->view($content, $data, TRUE);*/
+                                                $this->CI->load->view('public/_templates/main_content', $data, TRUE);
+            $this->template['footer']          = $this->CI->load->view('public/_templates/footer', $data, TRUE);
+
+            return $this->CI->load->view('admin/_templates/template', $this->template);
+        }
+    }
 
     public function auth_render($content, $data = NULL)
     {
