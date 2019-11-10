@@ -45,9 +45,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				window.scrollTo(0, 1);
 			}
 		</script>
-        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/startup_corporate/css/bootstrap.css'); ?>">
-        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/startup_corporate/css/style.css'); ?>">
-        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/startup_corporate/css/font-awesome.min.css'); ?>">
+        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/css/bootstrap.css'); ?>">
+        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/css/style.css'); ?>">
+        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/css/font-awesome.min.css'); ?>">
 
 	</head>
 

@@ -13,18 +13,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a href="about.html" class="btn button-style mt-md-5 mt-4">Read More</a>
 						</div>
 						<div class="banner-img">
-							<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/banner.png'); ?>" alt="" class="img-fluid">
+							<img src="<?php echo base_url($templates_dir . '/images/banner.png'); ?>" alt="" class="img-fluid">
 						</div>
 					</div>
 				</div>
 				<!-- animations effects -->
 				<div class="icon-effects-w3l">
-					<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/shape1.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-one">
-					<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/shape2.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-two">
-					<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/shape3.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-three">
-					<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/shape4.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-four">
-					<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/shape5.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-five">
-					<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/shape6.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-six">
+					<img src="<?php echo base_url($templates_dir . '/images/shape1.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-one">
+					<img src="<?php echo base_url($templates_dir . '/images/shape2.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-two">
+					<img src="<?php echo base_url($templates_dir . '/images/shape3.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-three">
+					<img src="<?php echo base_url($templates_dir . '/images/shape4.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-four">
+					<img src="<?php echo base_url($templates_dir . '/images/shape5.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-five">
+					<img src="<?php echo base_url($templates_dir . '/images/shape6.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-six">
 				</div>
 				<!-- //animations effects -->
 			</div>
@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="row about-bottom-w3l text-center mt-4">
 					<div class="col-lg-4 about-grid">
 						<div class="about-grid-main">
-							<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/img1.png'); ?>" alt="" class="img-fluid">
+							<img src="<?php echo base_url($templates_dir . '/images/img1.png'); ?>" alt="" class="img-fluid">
 							<h4 class="my-4">Dolor Sit</h4>
 							<p> Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
 							<a href="about.html" class="button-w3ls btn mt-sm-5 mt-4">Read More</a>
@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 					<div class="col-lg-4 about-grid my-lg-0 my-5">
 						<div class="about-grid-main">
-							<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/img2.png'); ?>" alt="" class="img-fluid">
+							<img src="<?php echo base_url($templates_dir . '/images/img2.png'); ?>" alt="" class="img-fluid">
 							<h4 class="my-4">Conse Tetur</h4>
 							<p>Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
 							<a href="about.html" class="button-w3ls btn mt-sm-5 mt-4">Read More</a>
@@ -54,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 					<div class="col-lg-4 about-grid">
 						<div class="about-grid-main">
-							<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/img3.png'); ?>" alt="" class="img-fluid">
+							<img src="<?php echo base_url($templates_dir . '/images/img3.png'); ?>" alt="" class="img-fluid">
 							<h4 class="my-4">Adip Cing</h4>
 							<p>Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
 							<a href="about.html" class="button-w3ls btn mt-sm-5 mt-4">Read More</a>
@@ -84,7 +84,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<a href="about.html" class="btn button-style button-style-2 mt-sm-5 mt-4">Read More</a>
 					</div>
 					<div class="col-lg-6 left-wthree-img text-right">
-						<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/b1.png'); ?>" alt="" class="img-fluid mt-5" />
+						<img src="<?php echo base_url($templates_dir . '/images/b1.png'); ?>" alt="" class="img-fluid mt-5" />
 					</div>
 				</div>
 			</div>
@@ -141,7 +141,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="container py-xl-5 py-lg-3">
 				<div class="row">
 					<div class="col-lg-5 left-img-w3ls">
-						<img src="<?php echo base_url($templates_dir . '/startup_corporate/images/b2.png'); ?>" alt="" class="img-fluid" />
+						<img src="<?php echo base_url($templates_dir . '/images/b2.png'); ?>" alt="" class="img-fluid" />
 					</div>
 					<div class="col-lg-7 right-img-w3ls pl-lg-4 mt-lg-2 mt-4">
 						<div class="bott-w3ls mr-xl-5">

@@ -115,15 +115,17 @@ class Public_Controller extends MY_Controller
 	{
 		parent::__construct();
 
+        $template_name = 'startup_corporate';
+        $this->load->helper('menu');
+        /* Data */
+        $this->data['title']       = $this->config->item('title');
+        $this->data['title_lg']    = $this->config->item('title_lg');
+        $this->data['title_mini']  = $this->config->item('title_mini');
+        $this->data['templates_dir'] = $this->data['templates_dir'] . '/' . $template_name;
+
         if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
         {
             $this->data['admin_link'] = TRUE;
-            $this->load->helper('menu');
-            /* Data */
-            $this->data['title']       = $this->config->item('title');
-            $this->data['title_lg']    = $this->config->item('title_lg');
-            $this->data['title_mini']  = $this->config->item('title_mini');
- 
         }
         else
         {
