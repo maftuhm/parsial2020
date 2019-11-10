@@ -14,7 +14,7 @@ class MY_Controller extends CI_Controller
         $this->load->config('common/dp_config');
         $this->load->config('common/dp_language');
         $this->load->library(array('form_validation', 'ion_auth', 'template', 'common/mobile_detect'));
-        $this->load->helper(array('array', 'language', 'url'));
+        $this->load->helper(array('array', 'language', 'url', 'menu'));
         $this->load->model('common/prefs_model');
 
         /* Data */
@@ -81,7 +81,6 @@ class Admin_Controller extends MY_Controller
             $this->load->library('admin/page_title');
             $this->load->library('admin/breadcrumbs');
             $this->load->model('admin/core_model');
-            $this->load->helper('menu');
             $this->lang->load(array('admin/main_header', 'admin/main_sidebar', 'admin/footer', 'admin/actions'));
 
             /* Load library function  */
@@ -116,7 +115,6 @@ class Public_Controller extends MY_Controller
 		parent::__construct();
 
         $template_name = 'startup_corporate';
-        $this->load->helper('menu');
         /* Data */
         $this->data['title']       = $this->config->item('title');
         $this->data['title_lg']    = $this->config->item('title_lg');

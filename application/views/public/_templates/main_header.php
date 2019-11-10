@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label for="drop" class="toggle">Menu</label>
 								<input type="checkbox" id="drop" />
 								<ul class="menu">
-									<li><a href="index.html" class="active">Home</a></li>
+									<li><a href="<?php echo base_url();?>" class="<?php echo active_link_controller('home');?>">Home</a></li>
 									<li><a href="about.html">About Us</a></li>
 									<li><a href="pricing.html">Pricing</a></li>
 									<li>
