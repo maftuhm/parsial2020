@@ -11,9 +11,9 @@ if (isset($main_header))
     echo $main_header;
 }
 
-if (isset($main_content))
+if (isset($content))
 {
-    echo $main_content;
+    echo $content;
 }
 
 if (isset($footer))
