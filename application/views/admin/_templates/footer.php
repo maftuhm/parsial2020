@@ -14,6 +14,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
         <script src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
         <script src="<?php echo base_url($plugins_dir . '/slimscroll/slimscroll.min.js'); ?>"></script>
+        <!-- DataTables -->
+        <script src="<?php echo base_url($plugins_dir . '/datatables.net/jquery.dataTables.min.js');?>"></script>
+        <script src="<?php echo base_url($plugins_dir . '/datatables.net-bs/dataTables.bootstrap.min.js');?>"></script>
+
 <?php if ($mobile == TRUE): ?>
         <script src="<?php echo base_url($plugins_dir . '/fastclick/fastclick.min.js'); ?>"></script>
 <?php endif; ?>
@@ -29,5 +33,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php endif; ?>
         <script src="<?php echo base_url($frameworks_dir . '/adminlte/js/adminlte.min.js'); ?>"></script>
         <script src="<?php echo base_url($frameworks_dir . '/domprojects/js/dp.min.js'); ?>"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#dataTable').DataTable({
+                "scrollX"       : true,
+                'paging'        : false,
+                'lengthChange'  : true,
+                'searching'     : false,
+                'ordering'      : true,
+                'info'          : true,
+                'autoWidth'     : false
+                })
+            });
+        </script>
     </body>
 </html>
