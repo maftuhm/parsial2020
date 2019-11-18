@@ -21,26 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			                        <?php if($count_contents):?>
 			                        <?php foreach ($menu_contents as $content):?>
-		                            <li><a href="<?php echo site_url('/'.$content->slug); ?>"><?php echo $content->title; ?></a></li>
+		                            <li><a href="<?php echo site_url('/'.$content->slug);?>" title="<?php echo $content->title;?>"><?php echo $content->name;?></a></li>
 			                        <?php endforeach;endif;?>
-
-									<li><a href="about.html">About Us</a></li>
-									<li>
-										<!-- First Tier Drop Down -->
-										<label for="drop-2" class="toggle toogle-2">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span>
-										</label>
-										<a href="#">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span></a>
-										<input type="checkbox" id="drop-2" />
-										<ul>
-											<li><a href="#services" class="drop-text">Services</a></li>
-											<li><a href="faq.html" class="drop-text">Faq's</a></li>
-											<li><a href="404.html" class="drop-text">404</a></li>
-											<li><a href="#stats" class="drop-text">Statistics</a></li>
-											<li><a href="about.html" class="drop-text">Why Choose Us?</a></li>
-											<li><a href="about.html" class="drop-text">Our Team</a></li>
-											<li><a href="#partners" class="drop-text">Partners</a></li>
-										</ul>
-									</li>
 									<li><a href="contact.html">Contact Us</a></li>
 								</ul>
 							</nav>
