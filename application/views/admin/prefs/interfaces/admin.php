@@ -89,6 +89,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="col-sm-2 control-label"><?php echo lang('prefs_contents_menu'); ?></label>
+                                                <div class="col-sm-10">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="contents_menu" id="contents_menu1" value="1" <?php echo set_value('contents_menu', $value['contents_menu']) == 1 ? 'checked' : NULL; ?>> <?php echo strtoupper(lang('actions_yes')); ?>
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="contents_menu" id="contents_menu0" value="0" <?php echo set_value('contents_menu', $value['contents_menu']) == 0 ? 'checked' : NULL; ?>> <?php echo strtoupper(lang('actions_no')); ?>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-sm-2 control-label"><?php echo lang('prefs_ctrl_sidebar'); ?></label>
                                                 <div class="col-sm-10">
                                                     <label class="radio-inline">

@@ -20,6 +20,7 @@ class Prefs_model extends CI_Model {
             $data['notifications_menu'] = $value['notifications_menu'];
             $data['tasks_menu']         = $value['tasks_menu'];
             $data['user_menu']          = $value['user_menu'];
+            $data['contents_menu']      = $value['contents_menu'];
             $data['ctrl_sidebar']       = $value['ctrl_sidebar'];
             $data['transition_page']    = $value['transition_page'];
         }

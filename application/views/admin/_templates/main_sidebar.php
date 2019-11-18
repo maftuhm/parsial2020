@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <i class="fa fa-dashboard"></i> <span><?php echo lang('menu_dashboard'); ?></span>
                             </a>
                         </li>
-                        <?php if($count_contents):?>
+                        <?php if ($admin_prefs['contents_menu'] == TRUE): if($count_contents):?>
                         <li class="header text-uppercase"><?php echo lang('menu_contents'); ?></li>
                         <?php foreach ($menu_contents as $content):?>
                             <li class="<?=active_link_controller($content->slug)?>">
@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <i class="fa fa-book"></i> <span><?php echo $content->title; ?></span>
                                 </a>
                             </li>
-                        <?php endforeach;endif;?>
+                        <?php endforeach;endif;endif;?>
                         <li class="header text-uppercase"><?php echo lang('menu_administration'); ?></li>
                         <li class="<?=active_link_controller('contents')?>">
                             <a href="<?php echo site_url('admin/contents'); ?>">

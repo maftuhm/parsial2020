@@ -59,6 +59,7 @@ class Prefs extends Admin_Controller {
             $this->form_validation->set_rules('notifications_menu', 'lang:prefs_notifications_menu', 'required|is_numeric');
             $this->form_validation->set_rules('tasks_menu', 'lang:prefs_tasks_menu', 'required|is_numeric');
             $this->form_validation->set_rules('user_menu', 'lang:prefs_user_menu', 'required|is_numeric');
+            $this->form_validation->set_rules('contents_menu', 'lang:prefs_contents_menu', 'required|is_numeric');
             $this->form_validation->set_rules('ctrl_sidebar', 'lang:prefs_ctrl_sidebar', 'required|is_numeric');
             $this->form_validation->set_rules('transition_page', 'lang:prefs_transition_page', 'required|is_numeric');
 
@@ -75,6 +76,7 @@ class Prefs extends Admin_Controller {
                     'notifications_menu' => (bool) $this->input->post('notifications_menu'),
                     'tasks_menu'         => (bool) $this->input->post('tasks_menu'),
                     'user_menu'          => (bool) $this->input->post('user_menu'),
+                    'contents_menu'      => (bool) $this->input->post('contents_menu'),
                     'ctrl_sidebar'       => (bool) $this->input->post('ctrl_sidebar'),
                     'transition_page'    => (bool) $this->input->post('transition_page')
                 );
@@ -140,6 +142,7 @@ class Prefs extends Admin_Controller {
                 'notifications_menu' => '0',
                 'tasks_menu'         => '0',
                 'user_menu'          => '1',
+                'contents_menu'      => '0',
                 'ctrl_sidebar'       => '0',
                 'transition_page'    => '0'
             );
