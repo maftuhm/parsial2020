@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
 						<!-- logo -->
 						<div id="logo">
-							<h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Startup</a></h1>
+							<h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Parsial 2020</a></h1>
 						</div>
 						<!-- //logo -->
 						<!-- nav -->
@@ -18,8 +18,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<input type="checkbox" id="drop" />
 								<ul class="menu">
 									<li><a href="<?php echo base_url();?>" class="<?php echo active_link_controller('home');?>">Home</a></li>
+
+			                        <?php if($count_contents):?>
+			                        <?php foreach ($menu_contents as $content):?>
+		                            <li><a href="<?php echo site_url('/'.$content->slug); ?>"><?php echo $content->title; ?></a></li>
+			                        <?php endforeach;endif;?>
+
 									<li><a href="about.html">About Us</a></li>
-									<li><a href="pricing.html">Pricing</a></li>
 									<li>
 										<!-- First Tier Drop Down -->
 										<label for="drop-2" class="toggle toogle-2">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span>

@@ -23,4 +23,18 @@ class Contents_model extends CI_Model {
     	}
 		return $query->result();
 	}
+    public function register_contents($name, $slug)
+    {
+        $table = 'contents';
+        $data = array(
+            'created_on'    => time(),
+            'name'          => $this->input->post('content_name'),
+            'title'         => $this->input->post('content_title'),
+            'slug'          => $this->input->post('content_slug'),
+            'description'   => $this->input->post('content_description')
+        );
+
+        $this->db->insert($table, $data);
+        $id = $this->db->insert_id($table . '_id_seq');
+    }
 }

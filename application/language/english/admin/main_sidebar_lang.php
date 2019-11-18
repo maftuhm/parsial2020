@@ -19,6 +19,12 @@ $lang['menu_search'] = 'Search';
 /* * */$lang['menu_main_navigation']            = 'Main Navigation';
 /* ****** */$lang['menu_dashboard']             = 'Dashboard';
 
+/* * */$lang['menu_contents']            		= 'Contents';
+/* ****** *//*$lang['menu_contents']                 = 'Contents';*/
+/* *********** */$lang['menu_contents_profile']    = 'Profile';
+/* *********** */$lang['menu_contents_deactivate'] = 'Deactivate';
+/* *********** */$lang['menu_contents_create']     = 'Create';
+/* *********** */$lang['menu_contents_edit']       = 'Edit';
 
 /* * */$lang['menu_administration']             = 'Administration';
 /* ****** */$lang['menu_users']                 = 'Users';

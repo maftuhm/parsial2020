@@ -13,7 +13,6 @@ class Home extends Public_Controller {
 
 	public function index()
 	{
-
         $this->template->public_render('public/home', $this->data);
 	}
 }
