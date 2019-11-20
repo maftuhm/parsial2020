@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="box-title"><?php echo lang('contents_create'); ?></h3>
                                 </div>
                                 <div class="box-body">
-                                    <?php /*echo $message;*/ ?>
+                                    <?php echo $message;?>
 
                                     <?php echo form_open(current_url(), array('class' => 'form-horizontal', 'id' => 'form-create_user')); ?>
                                         <div class="form-group">

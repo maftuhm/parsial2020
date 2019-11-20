@@ -49,24 +49,25 @@ class Contents extends Admin_Controller {
 		/* Validate form input */
 		$this->form_validation->set_rules('content_name', 'lang:contents_name', 'required');
 		$this->form_validation->set_rules('content_title', 'lang:contents_title', 'required');
-		$this->form_validation->set_rules('content_description', 'lang:contents_description');
 		$this->form_validation->set_rules('content_slug', 'lang:contents_slug', 'required|is_unique[contents.slug]');
-		$this->form_validation->set_rules('password', 'lang:users_password', 'required');
+		#$this->form_validation->set_rules('password', 'lang:users_password', 'required');
 
 		if ($this->form_validation->run() == TRUE)
 		{
-			$name    = strtolower($this->input->post('name'));
-			$slug    = strtolower($this->input->post('slug'));
+			$name    	= strtolower($this->input->post('content_name'));
+			$title   	= $this->input->post('content_title');
+			$description= $this->input->post('content_description');
+			$slug    	= strtolower($this->input->post('content_slug'));
+
 		}
 
-		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $slug))
+		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $title, $description, $slug))
 		{
-            $this->session->set_flashdata('message', $this->ion_auth->messages());
 			redirect('admin/contents', 'refresh');
 		}
 		else
 		{
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            $this->data['message'] = validation_errors();
 
 			$this->data['content_name'] = array(
 				'name'  => 'content_name',
@@ -87,7 +88,6 @@ class Contents extends Admin_Controller {
 				'id'    => 'content_description',
 				'type'  => 'text',
 				'class' => 'form-control',
-				'value' => $this->form_validation->set_value('content_description'),
 			);
 			$this->data['content_slug'] = array(
 				'name'  => 'content_slug',
@@ -101,7 +101,6 @@ class Contents extends Admin_Controller {
 				'id'    => 'password',
 				'type'  => 'password',
                 'class' => 'form-control',
-				'value' => $this->form_validation->set_value('password'),
 			);
             /* Load Template */
             $this->template->admin_render('admin/contents/create', $this->data);

@@ -24,19 +24,17 @@ class Contents_model extends CI_Model {
     	}
 		return $query->result();
 	}
-    public function register_content($name, $slug)
+    public function register_content($name, $title, $description, $slug)
     {
         $table = 'contents';
         $data = array(
             'created_on'    => time(),
-            'name'          => $this->input->post('content_name'),
-            'title'         => $this->input->post('content_title'),
-            'slug'          => $this->input->post('content_slug'),
-            'description'   => $this->input->post('content_description')
+            'name'          => $name,
+            'title'         => $title,
+            'description'   => $description,
+            'slug'          => $slug
         );
-
-        $this->db->insert($table, $data);
-        $id = $this->db->insert_id($table . '_id_seq');
+        return $this->db->insert($table, $data);
     }
 
     public function delete_content($id)
@@ -48,8 +46,6 @@ class Contents_model extends CI_Model {
         if ($this->db->trans_status() === FALSE)
         {
             $this->db->trans_rollback();
-            $this->trigger_events(array('post_delete_content', 'post_delete_content_unsuccessful'));
-            $this->set_error('delete_unsuccessful');
             return FALSE;
         }
         $this->db->trans_commit();
