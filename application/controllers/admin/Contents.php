@@ -59,7 +59,7 @@ class Contents extends Admin_Controller {
 			$slug    = strtolower($this->input->post('slug'));
 		}
 
-		if ($this->form_validation->run() == TRUE && $this->contents_model->register_contents($name, $slug))
+		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $slug))
 		{
             $this->session->set_flashdata('message', $this->ion_auth->messages());
 			redirect('admin/contents', 'refresh');
@@ -126,16 +126,14 @@ class Contents extends Admin_Controller {
 		$this->form_validation->set_rules('id', 'lang:delete_validation_user_id_label', 'required|alpha_numeric');
 
 		$id = (int) $id;
-		$this->data['session_id'] 	= $this->session->userdata('user_id');
 		if ($this->form_validation->run() === FALSE)
 		{
-			$user = $this->ion_auth->user($id)->row();
-
+            $contents	  = $this->contents_model->get_data('contents', $id);
+            foreach ($contents as $content) {
+            	$this->data['contents_id']    = (int) $content->id;
+            	$this->data['contents_title'] = $content->title;
+            }
             $this->data['csrf']       = $this->_get_csrf_nonce();
-            $this->data['id']         = (int) $user->id;
-            $this->data['firstname']  = ! empty($user->first_name) ? htmlspecialchars($user->first_name, ENT_QUOTES, 'UTF-8') : NULL;
-            $this->data['lastname']   = ! empty($user->last_name) ? ' '.htmlspecialchars($user->last_name, ENT_QUOTES, 'UTF-8') : NULL;
-
             /* Load Template */
             $this->template->admin_render('admin/contents/delete', $this->data);
 		}
@@ -147,16 +145,11 @@ class Contents extends Admin_Controller {
 				{
                     show_error($this->lang->line('error_csrf'));
 				}
-
-                if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
+				else
 				{
-					$this->ion_auth->delete_user($id);
-					if ($id == $this->session->userdata('user_id')) {
-						redirect('auth/logout', 'refresh');
-					}
+		            $this->contents_model->delete_content($id);
 				}
 			}
-
 			redirect('admin/contents', 'refresh');
 		}
 	}

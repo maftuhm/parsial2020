@@ -6,6 +6,7 @@ class Contents_model extends CI_Model {
     public function __construct()
     {
         parent::__construct();
+        $this->table = 'contents';
     }
 
     public function get_data($table, $value = NULL, $get_by = 'id')
@@ -23,7 +24,7 @@ class Contents_model extends CI_Model {
     	}
 		return $query->result();
 	}
-    public function register_contents($name, $slug)
+    public function register_content($name, $slug)
     {
         $table = 'contents';
         $data = array(
@@ -36,5 +37,21 @@ class Contents_model extends CI_Model {
 
         $this->db->insert($table, $data);
         $id = $this->db->insert_id($table . '_id_seq');
+    }
+
+    public function delete_content($id)
+    {
+        $this->db->trans_begin();
+
+        $this->db->delete($this->table, array('id' => $id));
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            $this->trigger_events(array('post_delete_content', 'post_delete_content_unsuccessful'));
+            $this->set_error('delete_unsuccessful');
+            return FALSE;
+        }
+        $this->db->trans_commit();
     }
 }
