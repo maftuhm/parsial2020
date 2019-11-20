@@ -17,38 +17,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="box-title"><?php echo lang('contents_create'); ?></h3>
                                 </div>
                                 <div class="box-body">
-                                    <?php echo $message;?>
+                                    <?php echo $message;/*print_r($questions)*/?>
                                     <?php echo form_open(current_url(), array('class' => 'form-horizontal', 'id' => 'form-create_user')); ?>
+                                        <?php foreach ($questions as $quest => $q):?>
                                         <div class="form-group">
-                                            <?php echo lang('contents_name', 'content_name', array('class' => 'col-sm-2 control-label')); ?>
+                                            <?php echo lang('contents_quest_name', $q['name'], array('class' => 'col-sm-2 control-label')); ?>
                                             <div class="col-sm-10">
-                                                <?php echo form_input($content_name);?>
+                                                <?php echo form_input($q);?>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <?php echo lang('contents_title', 'content_title', array('class' => 'col-sm-2 control-label')); ?>
+                                            <?php echo lang('contents_quest_name', $q['name'], array('class' => 'col-sm-2 control-label')); ?>
                                             <div class="col-sm-10">
-                                                <?php echo form_input($content_title);?>
+                                                <?php echo form_dropdown($q);?>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <?php echo lang('contents_description', 'content_description', array('class' => 'col-sm-2 control-label')); ?>
-                                            <div class="col-sm-10">
-                                                <?php echo form_input($content_description);?>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <?php echo lang('contents_slug', 'content_slug', array('class' => 'col-sm-2 control-label')); ?>
-                                            <div class="col-sm-10">
-                                                <?php echo form_input($content_slug);?>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <?php echo lang('contents_n_quest', 'content_n_quest', array('class' => 'col-sm-2 control-label')); ?>
-                                            <div class="col-sm-10">
-                                                <?php echo form_dropdown($content_n_quest);?>
-                                            </div>
-                                        </div>
+                                        <?php endforeach;?>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <div class="btn-group">

@@ -42,6 +42,11 @@ class Contents extends Admin_Controller {
 
 	public function create()
 	{
+		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
+		{
+			redirect('auth', 'refresh');
+		}
+
         /* Breadcrumbs */
         $this->breadcrumbs->unshift(2, lang('menu_contents_create'), 'admin/contents/create');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
@@ -50,7 +55,7 @@ class Contents extends Admin_Controller {
 		$this->form_validation->set_rules('content_name', 'lang:contents_name', 'required');
 		$this->form_validation->set_rules('content_title', 'lang:contents_title', 'required');
 		$this->form_validation->set_rules('content_slug', 'lang:contents_slug', 'required|is_unique[contents.slug]');
-		#$this->form_validation->set_rules('password', 'lang:users_password', 'required');
+		$this->form_validation->set_rules('content_n_quest', 'lang:contents_n_quest', 'required');
 
 		if ($this->form_validation->run() == TRUE)
 		{
@@ -58,10 +63,10 @@ class Contents extends Admin_Controller {
 			$title   	= $this->input->post('content_title');
 			$description= $this->input->post('content_description');
 			$slug    	= strtolower($this->input->post('content_slug'));
-
+			$num_of_quest = (int) $this->input->post('content_n_quest');
 		}
 
-		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $title, $description, $slug))
+		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $title, $description, $slug, $num_of_quest))
 		{
 			redirect('admin/contents', 'refresh');
 		}
@@ -96,17 +101,74 @@ class Contents extends Admin_Controller {
 				'class' => 'form-control',
 				'value' => $this->form_validation->set_value('content_slug'),
 			);
-			$this->data['password'] = array(
-				'name'  => 'password',
-				'id'    => 'password',
-				'type'  => 'password',
-                'class' => 'form-control',
+			for ($i=0; $i < 16; $i++) { 
+				$options[$i] = $i;
+			}
+			$this->data['content_n_quest'] = array(
+				'name'  => 'content_n_quest',
+				'id'    => 'content_n_quest',
+				'class' => 'form-control',
+				'options'=> $options,
+				'selected'=> $this->form_validation->set_value('content_n_quest')
 			);
             /* Load Template */
             $this->template->admin_render('admin/contents/create', $this->data);
         }
 	}
 
+	public function create_question($id)
+	{
+		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
+		{
+			redirect('auth', 'refresh');
+		}
+        /* Breadcrumbs */
+        $this->breadcrumbs->unshift(2, lang('menu_contents_create_quest'), 'admin/contents/create');
+        $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->data['contents'] = $this->contents_model->get_data('contents', $id);
+        foreach ($this->data['contents'] as $content) {
+        	$this->data['num_of_quest'] = $content->num_of_question;
+        }
+
+        for ($i=0; $i < $this->data['num_of_quest']; $i++) { 
+			$this->form_validation->set_rules('question_name_'.($i+1), 'lang:contents_quest_name', 'required');
+        }
+
+		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $title, $description, $slug, $num_of_quest))
+		{
+			redirect('admin/contents', 'refresh');
+		}
+		else
+		{
+			$option_type = array(
+								'text' => 'Text',
+								'phone'=> 'Phone',
+								'email'=> 'Email'
+							);
+            $this->data['message'] = validation_errors();
+            $this->data['questions'] = array();
+            for ($i=0; $i < $this->data['num_of_quest']; $i++) {
+				$question_name = array(
+					'name'  => 'question_name_'.($i+1),
+					'id'    => 'question_name_'.($i+1),
+					'type'  => 'text',
+	                'class' => 'form-control',
+					'value' => $this->form_validation->set_value('question_name_'.($i+1))
+				);
+				$question_type = array(
+					'name'  => 'question_type_'.($i+1),
+					'id'    => 'question_type_'.($i+1),
+	                'class' => 'form-control',
+	                'options'=> $option_type,
+					'selected' => $this->form_validation->set_value('question_name_'.($i+1))
+				);
+				array_push($this->data['questions'], $question_name);
+            }
+
+            /* Load Template */
+            $this->template->admin_render('admin/contents/create_question', $this->data);
+        }
+    }
 
 	public function delete($id = NULL)
 	{

@@ -24,7 +24,7 @@ class Contents_model extends CI_Model {
     	}
 		return $query->result();
 	}
-    public function register_content($name, $title, $description, $slug)
+    public function register_content($name, $title, $description, $slug, $num_of_question)
     {
         $table = 'contents';
         $data = array(
@@ -32,7 +32,8 @@ class Contents_model extends CI_Model {
             'name'          => $name,
             'title'         => $title,
             'description'   => $description,
-            'slug'          => $slug
+            'slug'          => $slug,
+            'num_of_question'=> $num_of_question
         );
         return $this->db->insert($table, $data);
     }
