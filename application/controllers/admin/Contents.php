@@ -68,7 +68,7 @@ class Contents extends Admin_Controller {
 
 		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $title, $description, $slug, $num_of_quest))
 		{
-			redirect('admin/contents', 'refresh');
+			redirect('admin/contents/create/q/'.$slug, 'refresh');
 		}
 		else
 		{
@@ -116,7 +116,7 @@ class Contents extends Admin_Controller {
         }
 	}
 
-	public function create_question($id)
+	public function create_question($slug)
 	{
 		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
 		{
@@ -125,49 +125,82 @@ class Contents extends Admin_Controller {
         /* Breadcrumbs */
         $this->breadcrumbs->unshift(2, lang('menu_contents_create_quest'), 'admin/contents/create');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
-        $this->data['contents'] = $this->contents_model->get_data('contents', $id);
-        foreach ($this->data['contents'] as $content) {
-        	$this->data['num_of_quest'] = $content->num_of_question;
+        $this->data['contents'] = $this->contents_model->get_data('contents', $slug, 'slug');
+        if ($this->data['contents'] == FALSE) {
+        	show_404();
         }
+        else
+        {
+	        foreach ($this->data['contents'] as $content) {
+	        	$this->data['num_of_quest'] = $content->num_of_question;
+	        	$this->data['content_id']	= $content->id;
+	        }
 
-        for ($i=0; $i < $this->data['num_of_quest']; $i++) { 
-			$this->form_validation->set_rules('question_name_'.($i+1), 'lang:contents_quest_name', 'required');
-        }
+	        for ($i=0; $i < $this->data['num_of_quest']; $i++) { 
+				$this->form_validation->set_rules('question_'.$i, 'lang:contents_quest', 'required');
+				$this->form_validation->set_rules('question_type_'.$i, 'lang:contents_quest_type', 'required');
+	        }
 
-		if ($this->form_validation->run() == TRUE && $this->contents_model->register_content($name, $title, $description, $slug, $num_of_quest))
-		{
-			redirect('admin/contents', 'refresh');
-		}
-		else
-		{
-			$option_type = array(
-								'text' => 'Text',
-								'phone'=> 'Phone',
-								'email'=> 'Email'
-							);
-            $this->data['message'] = validation_errors();
-            $this->data['questions'] = array();
-            for ($i=0; $i < $this->data['num_of_quest']; $i++) {
-				$question_name = array(
-					'name'  => 'question_name_'.($i+1),
-					'id'    => 'question_name_'.($i+1),
-					'type'  => 'text',
-	                'class' => 'form-control',
-					'value' => $this->form_validation->set_value('question_name_'.($i+1))
-				);
-				$question_type = array(
-					'name'  => 'question_type_'.($i+1),
-					'id'    => 'question_type_'.($i+1),
-	                'class' => 'form-control',
-	                'options'=> $option_type,
-					'selected' => $this->form_validation->set_value('question_name_'.($i+1))
-				);
-				array_push($this->data['questions'], $question_name);
-            }
+			if ($this->form_validation->run() == TRUE)
+			{
+				$question_data = [];
+				for ($i=0; $i < $this->data['num_of_quest']; $i++) {
+					$quest = array(
+								'content_id' => $this->data['content_id'],
+								'question'   => $this->input->post('question_'.$i),
+								'type'		 => $this->input->post('question_type_'.$i),
+								'placeholder'=> $this->input->post('question_placeholder_'.$i)
+								);
+					array_push($question_data, $quest);
+				}
+			}
+			if ($this->form_validation->run() == TRUE && $this->contents_model->create_question($question_data))
+			{
+				redirect('admin/contents', 'refresh');
+			}
+			else
+			{
+				$option_type = array(
+									'text' => 'Text',
+									'phone'=> 'Phone',
+									'email'=> 'Email'
+								);
+	            $this->data['message'] = validation_errors();
+	            $this->data['questions'] = array();
+	            for ($i=0; $i < $this->data['num_of_quest']; $i++) {
+					$question = array(
+						'name'  => 'question_'.$i,
+						'placeholder'=> lang('contents_quest'),
+						'type'  => 'text',
+		                'class' => 'form-control',
+						'value' => $this->form_validation->set_value('question_'.$i)
+					);
+					$question_type = array(
+						'name'  => 'question_type_'.$i,
+		                'class' => 'form-control',
+		                'options'=> $option_type,
+						'selected' => $this->form_validation->set_value('question_type_'.$i)
+					);
+					$question_placeholder = array(
+						'name'  => 'question_placeholder_'.$i,
+						'placeholder'=> lang('contents_quest'),
+						'type'  => 'text',
+		                'class' => 'form-control',
+						'value' => $this->form_validation->set_value('question_placeholder_'.$i)
+					);
+					$required = array(
+						'name'  => 'required_'.$i,
+						'type'  => 'checkbox',
+			            'checked'	=> set_checkbox('required_quest')
+					);
+					$question_group = array($question, $question_type, $question_placeholder, $required);
+					array_push($this->data['questions'], $question_group);
+	            }
 
-            /* Load Template */
-            $this->template->admin_render('admin/contents/create_question', $this->data);
-        }
+	            /* Load Template */
+	            $this->template->admin_render('admin/contents/create_question', $this->data);
+	        }
+	    }
     }
 
 	public function delete($id = NULL)

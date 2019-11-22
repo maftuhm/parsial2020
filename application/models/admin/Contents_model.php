@@ -22,8 +22,10 @@ class Contents_model extends CI_Model {
     		}
     		$query = $this->db->get_where($table, $get_by);
     	}
-		return $query->result();
+        $result = $query->result();
+		return isset($result) ? $result : FALSE;
 	}
+
     public function register_content($name, $title, $description, $slug, $num_of_question)
     {
         $table = 'contents';
@@ -35,7 +37,15 @@ class Contents_model extends CI_Model {
             'slug'          => $slug,
             'num_of_question'=> $num_of_question
         );
-        return $this->db->insert($table, $data);
+        $this->db->insert($table, $data);
+        $id = $this->db->insert_id($table . '_id_seq');
+        return (isset($id)) ? $id : FALSE;
+    }
+
+    public function create_question($data)
+    {
+        $table = 'contents_form';
+        return $this->db->insert_batch($table, $data); 
     }
 
     public function delete_content($id)
