@@ -52,6 +52,8 @@ class Contents_model extends CI_Model {
     {
         $this->db->trans_begin();
 
+        $this->delete_forms($id);
+
         $this->db->delete($this->table, array('id' => $id));
 
         if ($this->db->trans_status() === FALSE)
@@ -60,5 +62,16 @@ class Contents_model extends CI_Model {
             return FALSE;
         }
         $this->db->trans_commit();
+    }
+    public function delete_forms($content_id)
+    {
+        $table = 'contents_form';
+
+        if (empty($content_id)) {
+            return FALSE;
+        }
+
+        return $this->db->delete($table, array('content_id' => $content_id));
+
     }
 }

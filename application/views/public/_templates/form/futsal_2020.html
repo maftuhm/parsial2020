@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html Lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE-edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<title>Futsal PARSIAL 2020</title>
+	</head>
+	<body>
+		<div class="container">
+
+		<div id="header">
+			<h2>Futsal PARSIAL 2020</h2>
+		</div>
+
+		<div class="form-container">
+		<form action="" method="post" autocomplete="on" id="form1">
+			<fieldset>
+				<legend>Informasi Umum Tim</legend>
+				<div class="form-grup">
+					<div class="label">
+						<label>Nama Tim</label>
+					</div>
+					<div class="input">
+						<input type="text" name="tim_name" placeholder="misal: Integral UIN Jakarta" maxlength="30" autofocus required>
+					</div>
+				</div>
+				<div class="form-grup">
+					<div class="label">
+						<label>Nama Pemain</label>
+					</div>
+					<div class="input">
+						<input type="text" name="player_name" placeholder="Isi salah satu nama pemain" maxlength="30" autofocus required />
+					</div>
+				</div>
+				<div class="form-grup">
+					<div class="label">
+						<label>Semester</label>
+					</div>
+					<div class="input">
+						<input type="text" name="grade" placeholder="misal: 6" maxlength="1" autofocus required />
+					</div>
+				</div>
+				<div class="form-grup">
+					<div class="label">
+						<label>Universitas</label>
+					</div>
+					<div class="input">
+						<input type="text" name="university" placeholder="misal: UIN Syarif Hidayatullah Jakarta" maxlength="30" autofocus required />
+					</div>
+				</div>
+				<div class="form-grup">
+				<div class="form-grup">
+					<div class="label" id="only-number">
+						<label>Nomor Telepon (WA)</label>
+					</div>
+					<div class="input">
+						<input type="tel" name="phone" placeholder="misal: 08571234XXXX" maxlength="13" autofocus required />
+					</div>
+				</div>
+					<div class="label">
+						<label>Email</label>
+					</div>
+					<div class="input">
+						<input type="email" name="email" placeholder="misal: email_anda@gmail.com" autocomplete="off" required />
+					</div>
+				</div>
+				<div class="form-grup">
+					<div class="label">
+						<label>Official</label>
+					</div>
+					<div class="input">
+						<input type="text" name="official" placeholder="misal: Adisty Putr" maxlength="30" autofocus required />
+					</div>
+				</div>
+				<div class="form-grup">
+					<div class="label">
+						<label>Coach</label>
+					</div>
+					<div class="input">
+						<input type="text" name="coach" placeholder="misal: Adisty Putr" maxlength="30" autofocus required />
+					</div>
+				</div>
+			</fieldset>
+
+			<div class="form-grup">
+				<hr>
+				<input type="checkbox" name="syarat_ketentuan" required />Saya sudah membaca dan menyetujui <a href="http://himatika.fst.uinjkt.ac.id/parsial2019/mathematic-competition/sk/" target="_blank">Syarat dan Ketentuan</a> 
+			</div>
+
+			<div class="form-grup">
+				<button type="submit" name="submit">Submit</button>
+			</div>
+			
+		</form>
+		</div>
+		</div>
+
+		<footer>
+			<p>&copy; Parsial 2020 | All Rights Reserved</p>
+		</footer>
+	</body>
+</html>
