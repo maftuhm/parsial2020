@@ -13,18 +13,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <a href="about.html" class="btn button-style mt-md-5 mt-4">Read More</a>
                         </div>
                         <div class="banner-img">
-                            <img src="<?php echo base_url($templates_dir . '/images/banner.png'); ?>" alt="" class="img-fluid">
+                            <img src="<?php echo base_url($templates_dir . '/images/banner-astronaut.png'); ?>" alt="" class="img-fluid">
                         </div>
                     </div>
                 </div>
                 <!-- animations effects -->
                 <div class="icon-effects-w3l">
-                    <img src="<?php echo base_url($templates_dir . '/images/shape1.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-one">
-                    <img src="<?php echo base_url($templates_dir . '/images/shape2.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-two">
-                    <img src="<?php echo base_url($templates_dir . '/images/shape3.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-three">
+                    <img src="<?php echo base_url($templates_dir . '/images/satelite.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-one">
+                    <img src="<?php echo base_url($templates_dir . '/images/moon.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-two">
+                    <img src="<?php echo base_url($templates_dir . '/images/star.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-three">
                     <img src="<?php echo base_url($templates_dir . '/images/shape4.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-four">
-                    <img src="<?php echo base_url($templates_dir . '/images/shape5.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-five">
-                    <img src="<?php echo base_url($templates_dir . '/images/shape6.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-six">
+                    <img src="<?php echo base_url($templates_dir . '/images/shape3.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-five">
+                    <img src="<?php echo base_url($templates_dir . '/images/planet.png'); ?>" alt="" class="img-fluid shape-wthree shape-w3-six">
                 </div>
                 <!-- //animations effects -->
             </div>

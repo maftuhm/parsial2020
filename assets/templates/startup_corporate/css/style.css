@@ -519,6 +519,8 @@ li>a:only-child:after {
 
 /* banner */
 .banner_w3lspvt {
+    background: url(../images/space-background.png) no-repeat right bottom;
+    background-size: auto 100%;
     padding: 4vw 0;
     z-index: 0;
 }
@@ -553,6 +555,13 @@ h3.w3ls_pvt-title span {
     margin-bottom: 10px;
 }
 
+.banner_w3lspvt .container .img-fluid{
+    position: absolute;
+    right: 120px;
+    bottom: 0;
+    height: 500px;
+}
+
 /* button style */
 .button-style {
     padding: 14px 26px;
@@ -576,11 +585,11 @@ h3.w3ls_pvt-title span {
 
 /* animation effect */
 .shape-wthree {
-    -webkit-animation: fa-spin 5s infinite linear;
-    -moz-animation: fa-spin 5s infinite linear;
-    -ms-animation: fa-spin 5s infinite linear;
-    -o-animation: fa-spin 5s infinite linear;
-    animation: fa-spin 5s infinite linear;
+    -webkit-animation: fa-spin 10s infinite linear;
+    -moz-animation: fa-spin 10s infinite linear;
+    -ms-animation: fa-spin 10s infinite linear;
+    -o-animation: fa-spin 10s infinite linear;
+    animation: fa-spin 10s infinite linear;
 }
 
 img.shape-w3-one {
