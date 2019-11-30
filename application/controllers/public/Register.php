@@ -6,61 +6,43 @@ class Register extends Public_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->title = 'MCC';
-        $this->data['required'] = lang('form_required');
-		$this->form_validation->set_message('is_unique', '{field} ' . set_value('email') . ' sudah terdaftar.');
-		$this->data['name'] = array(
-			'name'  => 'name',
-			'type'  => 'text',
-			'class'	=> 'input100',
-            'placeholder' => lang('placeholder_name')
-		);
-		$this->data['address'] = array(
-			'name'  => 'address',
-			'cols'	=> '40',
-			'rows' 	=> '3',
-			'class'	=> 'input100',
-            'placeholder' => lang('placeholder_address'),
-            'value'	=> $this->form_validation->set_value('address')
-		);
-		$this->data['email'] = array(
-			'name'  => 'email',
-			'type'  => 'email',
-			'class'	=> 'input100',
-            'placeholder' => lang('placeholder_email'),
-            'value'	=> $this->form_validation->set_value('email')
-		);
-		$this->data['phone'] = array(
-			'name'  => 'phone',
-			'type'  => 'tel',
-            'pattern' => '^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$',
-			'class'	=> 'input100',
-            'placeholder' => lang('placeholder_phone'),
-            'value'	=> $this->form_validation->set_value('phone')
-		);
-		$this->data['accept'] = array(
-			'name'  => 'accept',
-			'class'    => 'checkbox',
-			'type'  => 'checkbox',
-            'checked'	=> set_checkbox('accept')
-		);
-		$this->data['school'] = array(
-			'name'  => 'school',
-			'type'  => 'text',
-			'class'	=> 'input100',
-            'placeholder' => lang('placeholder_school'),
-            'value'	=> $this->form_validation->set_value('school')
-		);
-		$this->data['birthplace'] = array(
-			'name'  => 'birthplace',
-			'type'  => 'text',
-            'placeholder' => lang('placeholder_city'),
-			'class'	=> 'input100',
-            'value'	=> $this->form_validation->set_value('birthplace')
-		);
+
     }
-    public function mcc($value='')
-    {
+
+	public function mcc()
+	{
+
+		$table 	= 'content_mcc_sementara';
+		/* Validate form input */
+		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
+		$this->form_validation->set_rules('university', 'lang:university', 'required');
+		$this->form_validation->set_rules('leader_name', 'lang:leader_name', 'required');
+		$this->form_validation->set_rules('leader_major', 'lang:leader_major', 'required');
+		$this->form_validation->set_rules('leader_email', 'lang:leader_email', 'required|valid_email|is_unique['.$table.'.leader_email]');
+		$this->form_validation->set_rules('leader_phone', 'lang:leader_phone', 'required');
+		$this->form_validation->set_rules('member_name', 'lang:member_name', 'required');
+		$this->form_validation->set_rules('member_major', 'lang:member_major', 'required');
+		$this->form_validation->set_rules('member_email', 'lang:member_email', 'required|valid_email|is_unique['.$table.'.member_email]');
+		$this->form_validation->set_rules('member_phone', 'lang:member_phone', 'required');
+
+		if ($this->form_validation->run() == TRUE)
+		{
+			$data = array(
+					'tim_name'		=> $this->input->post('tim_name'),
+					'university'	=> $this->input->post('university'),
+					'leader_name'	=> $this->input->post('leader_name'),
+					'leader_major'	=> $this->input->post('leader_major'),
+					'leader_email'	=> $this->input->post('leader_email'),
+					'leader_phone'	=> $this->input->post('leader_phone'),
+					'member_name'	=> $this->input->post('member_name'),
+					'member_major'	=> $this->input->post('member_major'),
+					'member_email'	=> $this->input->post('member_email'),
+					'member_phone'	=> $this->input->post('member_phone')
+				);
+
+			$register = $this->public_model->register($table, $data);
+		}
+
         $this->template->public_form_render('public/mcc', $this->data);
 	}
 }

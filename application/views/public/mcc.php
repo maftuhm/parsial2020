@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container">
-				<form action="" method="post" autocomplete="on" id="form1">
+				<form action="<?php echo current_url();?>" method="post" autocomplete="on" id="form1">
 					<fieldset>
 						<legend>Informasi umum</legend>
 						<div class="form-grup">

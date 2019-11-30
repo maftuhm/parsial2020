@@ -15,7 +15,7 @@ class MY_Controller extends CI_Controller
         $this->load->config('common/dp_language');
         $this->load->library(array('form_validation', 'ion_auth', 'template', 'common/mobile_detect'));
         $this->load->helper(array('array', 'language', 'url', 'menu'));
-        $this->load->model(array('common/prefs_model', 'common/contents_common_model'));
+        $this->load->model(array('common/prefs_model', 'common/contents_common_model', 'public/public_model'));
 
         /* Data */
         $this->data['lang']           = element($this->config->item('language'), $this->config->item('language_abbr'));

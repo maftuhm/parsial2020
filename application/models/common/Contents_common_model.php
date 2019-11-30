@@ -14,7 +14,6 @@ class Contents_common_model extends CI_Model {
     }
     public function count_contents()
     {
-        $this->db->limit(1);
         return  $this->db->count_all_results('contents') > 0;
     }
 }

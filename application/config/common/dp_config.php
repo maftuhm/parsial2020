@@ -23,6 +23,9 @@ $domain = (in_array($_SERVER['HTTP_HOST'], $config['host_dev'], TRUE)) ? $_SERVE
 
 $config['base_url'] = ( ! empty($_SERVER['HTTPS'])) ? 'https://' . $domain : 'http://' . $domain;
 
+$config['base_url_absolute']	= 'http:'.$domain;
+$config['base_url_absolute_ssl']	= 'https://'.$domain; 
+
 /*
 |--------------------------------------------------------------------------
 | Index File
