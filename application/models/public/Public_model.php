@@ -77,7 +77,6 @@ class Public_model extends CI_Model {
  		return $id;
 	}
 
-
 	public function set_payment($table)
 	{
 		$email = $this->input->post('email');
@@ -126,6 +125,14 @@ class Public_model extends CI_Model {
 			$this->db->where('payment_type', $payment_type);
 		}		
 		$this->db->where('email', $email);
+		$this->db->limit(1);
+		return  $this->db->count_all_results($table) > 0;
+	}
+
+	public function check_any($table, $array)
+    {
+
+		$this->db->where($array);
 		$this->db->limit(1);
 		return  $this->db->count_all_results($table) > 0;
 	}
