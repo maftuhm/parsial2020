@@ -123,7 +123,7 @@ a{
 	color: #4b82d4;
 }
 
-input[type=text], input[type=text], input[type=date], textarea, input[type=email], input[type=tel], input[type=text], input[type=tel]{
+input[type=text], input[type=date], textarea, input[type=email], input[type=tel]{
 	border: none;
 	padding: 8px;
 	border-radius: 3px;
@@ -140,8 +140,44 @@ input[type=checkbox]:checked{
 	background-color: rgb(0,0,0,0.5);
 	color: #fff;
 }
+/*==== Statrt Upload File ====*/
+.inputfile-box {
+	position: relative;
+}
 
-button[type=submit]{
+.inputfile {
+	display: none;
+}
+
+.file-box {
+	display: inline-block;
+	width: 100%;
+    border-bottom: 2px solid #ffb7cf;
+	padding: 5px 0px 5px 5px;
+	box-sizing: border-box;
+	height: calc(2rem - 2px);
+	font-size: 12px;
+}
+
+.file-button {
+	padding: 7.5px 5px;
+	position: absolute;
+	background: #cf5c95;
+	border-color: #ffb7cf;
+	border-width: 1px;
+	font-family: verdana, sans-serif;
+	font-size: 12px;
+	color: #fff;
+	right: 0px;
+	bottom: 5px;
+	cursor: pointer;
+}
+.file-button:hover {
+	background: #51497a;
+}
+/*==== End Upload File ====*/
+
+button[type=submit] {
 	background: #cf5c95;
 	border-radius: 5px;
 	border-color: #ffb7cf;

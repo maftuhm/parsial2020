@@ -17,18 +17,23 @@ class Public_model extends CI_Model {
     	return $this->db->insert($table, $data);
     }
     
-    public function get_data($table, $email = NULL)
+    public function get_data($table, $value = NULL, $get_by = 'email')
     {
-    	if ($email === NULL)
+
+    	if ($value === NULL)
     	{
 	      	$query = $this->db->get($table);
     	}
     	else
     	{
-    		$query = $this->db->get_where($table, array('email' => $email));
+    		if (!is_array($get_by)) {
+    			$get_by = array($get_by => $value);
+    		}
+    		$query = $this->db->get_where($table, $get_by);
     	}
 		return $query->result();
 	}
+
     
     public function register_tryout()
     {
@@ -81,20 +86,27 @@ class Public_model extends CI_Model {
 	{
 		$email = $this->input->post('email');
 
-		$query = $this->db->get_where($table, array('email' => $email))->row();
+		$query = $this->db->get_where($table, array('leader_email' => $email))->row();
  		$id = $query->id;
 		$data = array(
 						'time'				=> time(),
 						'participant_id'	=> $id,
 						'payment_type'		=> $table,
 						'account_owner'		=> $this->input->post('name'),
-						'email'				=> $email,
+						'leader_email'		=> $email,
 						'file_name' 		=> $this->upload->data('file_name'),
     					'file_type'			=> $this->upload->data('file_type'),
     					'file_size'			=> $this->upload->data('file_size'),
     					'file_ext'			=> $this->upload->data('file_ext')
 					);
 		return $this->db->insert($this->table['payment'], $data);
+	}
+	public function upload($data)
+	{
+		$this->db->insert('media', $data);
+		$id = $this->db->insert_id('media' . '_id_seq');
+
+		return $id;
 	}
 
 	public function register($table, $additional_data = array())

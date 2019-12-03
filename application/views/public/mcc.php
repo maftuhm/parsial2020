@@ -7,7 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container">
-				<form action="<?php echo current_url();?>" method="post" autocomplete="on" id="form1">
+				<p><?php /*print_r($id_file);echo $id_team;*/ ?></p>
+				<form action="<?php echo current_url();?>" enctype="multipart/form-data" method="post" autocomplete="on" id="form1">
 					<fieldset>
 						<legend>Informasi umum</legend>
 						<div class="form-grup">
@@ -59,8 +60,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Email</label>
 							</div>
 							<div class="input">
-								<input type="email" name="leader_email" placeholder="misal: email_anda@gmail.com" autocomplete="off" required />
+								<input type="email" name="leader_email" placeholder="misal: email_anda@gmail.com" required />
 							</div>
+						</div>
+						<div class="form-grup inputfile-box">
+							<div class="label">
+								<label>KTM</label>
+							</div>
+							<input type="file" id="file1" name="ktm[]" class="inputfile" onchange='uploadFile1(this)'>
+							<label for="file1">
+								<span id="file-name1" class="file-box"></span>
+								<span class="file-button">
+									<i class="fa fa-upload" aria-hidden="true"></i>
+									Select File
+								</span>
+							</label>
+							<script type="text/javascript">function uploadFile1(target){document.getElementById("file-name1").innerHTML = target.files[0].name;}</script>
 						</div>
 					</fieldset>
 
@@ -95,8 +110,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Email</label>
 							</div>
 							<div class="input">
-								<input type="email" name="member_email" placeholder="misal: email@gmail.com" autocomplete="off" required />
+								<input type="email" name="member_email" placeholder="misal: email@gmail.com" required />
 							</div>
+						</div>
+						<div class="form-grup inputfile-box">
+							<div class="label">
+								<label>KTM</label>
+							</div>
+							<input type="file" name="ktm[]" id="file2" class="inputfile" onchange='uploadFile2(this)'>
+							<label for="file2">
+								<span id="file-name2" class="file-box"></span>
+								<span class="file-button">
+									<i class="fa fa-upload" aria-hidden="true"></i>
+									Select File
+								</span>
+							</label>
+							<script type="text/javascript">function uploadFile2(target){document.getElementById("file-name2").innerHTML = target.files[0].name;}</script>
 						</div>
 					</fieldset>
 
