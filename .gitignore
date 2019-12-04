@@ -1,4 +1,3 @@
 .htsccess
 application/session/
 media/mcc/data/
-application/config/database.php
