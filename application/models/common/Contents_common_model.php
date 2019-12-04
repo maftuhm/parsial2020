@@ -13,7 +13,7 @@ class Contents_common_model extends CI_Model {
         return  $this->db->count_all_results('contents') > 0;
     }
 
-    public function get_contentS($value = NULL, $result = 'id', $key = 'slug')
+    public function get_contents($value = NULL, $result = 'id', $key = 'slug')
     {
         if ($value == NULL) {
             return $this->db->get('contents')->result();
@@ -25,7 +25,7 @@ class Contents_common_model extends CI_Model {
                                 ->limit(1)
                                 ->get('contents')
                                 ->row();
-            return $query->$result;
+            return $query;
         }
     }
 }

@@ -101,12 +101,29 @@ class Public_model extends CI_Model {
 					);
 		return $this->db->insert($this->table['payment'], $data);
 	}
-	public function upload($data)
+	public function upload($data, $content_id = NULL, $participant_id = NULL)
 	{
 		$this->db->insert('media', $data);
 		$id = $this->db->insert_id('media' . '_id_seq');
 
-		return $id;
+		if ($content_id != NULL && $participant_id != NULL)
+		{
+			if (isset($id)) {
+				$data_groups = array(
+					'content_id' 		=> $content_id, 
+					'participant_id' 	=> $participant_id, 
+					'media_id'			=> $id);
+				$this->db->insert('participants_media', $data_groups);
+			}
+		}
+
+		return (isset($id)) ? $id : FALSE;
+	}
+
+    public function get_participant($table, $value = NULL, $get_by = 'id')
+    {
+        $result = $this->db->get_where($table, array($get_by => $value))->result();
+		return isset($result) ? $result : FALSE;
 	}
 
 	public function register($table, $additional_data = array())

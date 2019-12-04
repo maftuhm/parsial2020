@@ -7,8 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container">
-				<p><?php /*print_r($id_file);echo $id_team;*/ ?></p>
-				<form action="<?php echo current_url();?>" enctype="multipart/form-data" method="post" autocomplete="on" id="form1">
+				<p><?php /*echo $id;*/ echo $message;?></p>
+				<form action="<?php echo current_url();?>" method="post" autocomplete="on" id="form1">
 					<fieldset>
 						<legend>Informasi umum</legend>
 						<div class="form-group">
