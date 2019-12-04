@@ -193,6 +193,11 @@ button[type=submit]:hover{
 	background: #5e558e;
 	text-decoration: none;
 	cursor: pointer;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5 s all;
+	-ms-transition: 0.5s all;
 }
 
 footer{
@@ -203,6 +208,46 @@ footer{
 	color: #eae9f3;
 	text-align: center;
 }
+
+/*===== Upload berkas =====*/
+.upload-btn-wrapper{
+	width: 500px;
+	margin: 0 auto;
+}
+
+#header h3{
+	color: #fff;
+	font-family: Lucida Sans Unicode;
+	margin-bottom: 25px;
+	margin-top: -10px;
+	font-size: 30px;
+	text-align: center;
+}
+
+input[type=file]:hover{
+	background: #5e558e;
+	text-decoration: none;
+	cursor: pointer;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5 s all;
+	-ms-transition: 0.5s all;
+}
+
+.form-control{
+	border: 2px solid #ffb7cf;
+	color: #fff;
+	background-color: #5e558e;
+	font-family: 'Verdana', sans-serif;
+	padding: 8px 20px;
+	border-radius: 5px;
+	font-size: 14px;
+	margin-top: 10px;
+	margin-left: 55px;
+}
+/*===== Upload berkas =====*/
+
 
 @media (max-width: 480px){
 	.container{
@@ -238,7 +283,22 @@ footer{
 	button{
 		cursor: pointer;
 	}
-	
+	.upload-btn-wrapper{
+		width:95%;
+		margin: 0 auto;
+	}
+	.form-control{
+		font-size: 12px;
+		margin-left: 25px;
+		margin-top: 8px;
+	}
+	#header h3{
+		float: none;
+		width: 100%;
+		margin-bottom: 15px;
+		font-size: 25px;
+		text-align: center;
+	}	
 }
 
 @media (min-width: 480px) and (max-width: 768px){
