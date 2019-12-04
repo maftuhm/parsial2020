@@ -52,5 +52,5 @@ $config['templates_dir']    = $config['assets_dir'] . '/templates';
 |--------------------------------------------------------------------------
 |
 */
-$config['upload_dir']     = 'upload';
+$config['upload_dir']     = 'media';
 $config['avatar_dir']     = $config['upload_dir'] . '/avatar';

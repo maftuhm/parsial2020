@@ -2,8 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
-
-
 			<div id="header">
 				<h3>Form Upload Berkas MCC 2020</h3>
 			</div>
@@ -12,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<form action="<?php echo current_url();?>" method="post" enctype="multipart/form-data">
 					<fieldset>
 						<legend>Upload Scan KTM</legend>
-						<div class="form-grup">
+						<div class="form-group">
 							<div class="label">
 								<label>Scan KTM Ketua Tim</label>
 							</div>
@@ -20,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<input type="file" class="form-control" name="ktm[]" /required>
 							</div>
 						</div>
-						<div class="form-grup">
+						<div class="form-group">
 							<div class="label">
 								<label>Scan KTM Anggota</label>
 						</div>
@@ -31,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 					</fieldset>
 
-					<div class="form-grup">
+					<div class="form-group">
 						<button type="submit" name="submit">Submit</button>
 					</div>
 				</form>

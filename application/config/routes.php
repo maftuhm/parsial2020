@@ -61,3 +61,4 @@ $route['admin/contents/create/q/(:any)'] = 'admin/contents/create_question/$1';
 /* ===== PUBLIC ROUTES ===== */
 $route['(:any)'] = 'public/register/$1';
 $route['payment/(:any)'] = 'public/register/payment/$1';
+$route['upload/(:any)'] = 'public/register/upload/$1';

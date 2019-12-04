@@ -20,11 +20,11 @@ class Register extends Public_Controller {
 		$this->form_validation->set_rules('university', 'lang:university', 'required');
 		$this->form_validation->set_rules('leader_name', 'lang:leader_name', 'required');
 		$this->form_validation->set_rules('leader_major', 'lang:leader_major', 'required');
-		$this->form_validation->set_rules('leader_email', 'lang:leader_email', 'required|valid_email'/*|is_unique['.$table.'.leader_email]*/);
+		$this->form_validation->set_rules('leader_email', 'lang:leader_email', 'required|valid_email|is_unique['.$table.'.leader_email]');
 		$this->form_validation->set_rules('leader_phone', 'lang:leader_phone', 'required');
 		$this->form_validation->set_rules('member_name', 'lang:member_name', 'required');
 		$this->form_validation->set_rules('member_major', 'lang:member_major', 'required');
-		$this->form_validation->set_rules('member_email', 'lang:member_email', 'required|valid_email'/*|is_unique['.$table.'.member_email]*/);
+		$this->form_validation->set_rules('member_email', 'lang:member_email', 'required|valid_email|is_unique['.$table.'.member_email]');
 		$this->form_validation->set_rules('member_phone', 'lang:member_phone', 'required');
 
         if(!empty($_FILES)){
@@ -45,41 +45,49 @@ class Register extends Public_Controller {
 					);
 
 				$this->data['id'] = $this->public_model->register($table, $data);
-
-				$this->data['id_file'] = $this->multiple_upload('./upload/mcc/data/');
-
-				// if ($this->public_model->check_any($this->table['par'], array('id_team'=>$id_team, 'id_content'=> 3))) {
-				// 	$this->data['error'] = 'Anda sudah upload data pemain';
-				// }
-				// else
-				// {
-					$id_file = $this->multiple_upload('./upload/mcc/data/');
-					// if ($id_file != FALSE) {
-					// 	$count = count($id_file)/2;
-					// 	foreach ($this->input->post('name') as $key => $value) {
-					// 		$data = array(
-					// 					'name' 	  => $value,
-					// 					'id_team' => $id_team,
-					// 					'id_content'=> 3,
-					// 					'id_photo'=> $id_file[$key],
-					// 					'id_card' => $id_file[$key+$count]
-					// 				);
-
-					// 		if (!$this->common_model->register_one($data)) {
-								
-					// 			$this->data['error'] = '<p>Terjadi kesalahan dalam input data pemain</p>';
-					// 			break;
-					// 		}else{
-					// 			$this->data['modal_success'] = modal_success('', $this->data['header'], base_url('futsal/payment')/*$this->content_url['payment_futsal']*/, base_url('futsal/payment'));
-					// 		}
-					// 	}
-					// }
-				// }
 			}
-
         }
 
         $this->template->public_form_render('public/mcc', $this->data);
+	}
+
+	public function upload($content = '')
+	{
+		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
+
+        if (!$content_exist){
+			show_404();
+        }
+        else
+		{
+
+	        $this->data['header'] = $this->contents_common_model->get_contents($content, 'title');
+			$this->data['page_title'] = 'Upload';
+	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
+
+	        $config['upload_path']      = './'.$this->data['upload_dir'].'/'.$content.'/';
+	        $config['allowed_types']    = 'pdf|gif|jpg|png|jpeg';
+	        $config['max_size']         = 4096;
+	        $config['max_width']        = 4096;
+	        $config['max_height']       = 4096;
+	        $config['file_ext_tolower'] = TRUE;
+
+	        $this->load->library('upload', $config);
+			
+			$upload = FALSE;
+
+			if ($this->form_validation->run() == TRUE)
+			{
+				$email_value = $this->form_validation->set_value('email');
+	            $upload = $this->upload->do_upload('bukti_pembayaran');
+			}
+			else
+			{
+				$this->data['message'] = validation_errors('<p>', '</p>');
+			}
+
+        	$this->template->public_form_render('public/mcc_upload', $this->data);
+		}
 	}
 
     public function payment($content = '')
@@ -96,7 +104,7 @@ class Register extends Public_Controller {
 			$this->data['page_title'] = 'Konfirmasi Pembayaran';
 	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
 	        /* Conf */
-	        $config['upload_path']      = './upload/'.$content.'/';
+	        $config['upload_path']      = './'.$this->data['upload_dir'].'/'.$content.'/';
 	        $config['allowed_types']    = 'pdf|gif|jpg|png|jpeg';
 	        $config['max_size']         = 4096;
 	        $config['max_width']        = 4096;

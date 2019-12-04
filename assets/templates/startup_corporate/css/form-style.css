@@ -71,19 +71,19 @@ legend{
 	font-size: 20px;
 }
 
-.form-grup{
+.form-group{
 	margin-bottom: 15px;
 	margin-right: 17px;
 	color: #fff;
 }
 
-.form-grup:after, .form-grup:before{
+.form-group:after, .form-group:before{
 	display: flex;
 	justify-content: space-between;
 	content: "";
 }
 
-.form-grup:after{
+.form-group:after{
 	clear: both;
 }
 
@@ -111,7 +111,7 @@ legend{
 	outline: none;
 }
 
-.form-grup hr{
+.form-group hr{
 	margin-left: 11px;
 	color: #5e558e;
 	border: solid;
@@ -250,7 +250,7 @@ input[type=file]:hover{
 
 
 @media (max-width: 480px){
-	.container{
+	.container, .upload-btn-wrapper{
 		width: 95%;
 		margin: 0 auto;
 	}
@@ -271,10 +271,13 @@ input[type=file]:hover{
 	}
 	legend{
 		float: none;
-		width: 95%;
+		/*width: 95%;*/
 		font-size: 16px;
 	}
-	.form-grup{
+	.form-container{
+		padding: 8px;
+	}
+	.form-group{
 		font-size: 14px;
 	}
 	fieldset{
@@ -283,13 +286,11 @@ input[type=file]:hover{
 	button{
 		cursor: pointer;
 	}
-	.upload-btn-wrapper{
-		width:95%;
-		margin: 0 auto;
-	}
+
 	.form-control{
+		padding: 8px 10px;
 		font-size: 12px;
-		margin-left: 25px;
+		margin-left: 0;
 		margin-top: 8px;
 	}
 	#header h3{
@@ -303,6 +304,20 @@ input[type=file]:hover{
 
 @media (min-width: 480px) and (max-width: 768px){
 	.container{
-		width: 100%;
+		width: 98%;
+	}
+}
+
+@media (max-width: 320px){
+	.form-control{
+		padding: 8px 0 8px 4px;
+		font-size: 12px;
+		margin-left: 0;
+	}
+	.form-group {
+		margin-right: 0;
+	}
+	input[type=file]{
+		max-width: 220px;
 	}
 }
