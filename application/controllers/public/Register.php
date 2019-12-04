@@ -59,9 +59,9 @@ class Register extends Public_Controller {
 	{
 		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
 		$this->table 	= 'content_mcc_sementara';
-		$this->data['content_id'] = '';
-		$this->data['id'] = '';
-		$this->data['id_file'] = 'tes';
+		// $this->data['content_id'] = '';
+		// $this->data['id'] = '';
+		// $this->data['id_file'] = 'tes';
 
         if (!$content_exist){
 			show_404();
@@ -70,12 +70,9 @@ class Register extends Public_Controller {
 		{
 
 	        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
-	        // $this->data['data_content'] =  $data_content;
+        	$this->data['header'] = $data_content['title'];
+        	$content_id = $data_content['id'];
 
-	        // foreach ($data_content as $key) {
-	        	$this->data['header'] = $data_content['title'];
-	        	$content_id = $data_content['id'];
-	        // }
 			$this->data['page_title'] = 'Upload';
 	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
 
@@ -121,11 +118,10 @@ class Register extends Public_Controller {
 
 			if ($this->form_validation->run() == TRUE && !empty($_FILES))
 			{
-				$this->data['content_id'] = $content_id;
-				$this->data['id']		= $id;
-				if ($content_id != NULL && $id != NULL) {
-		            
-		            if ($this->multiple_upload($content.'/data/', 'ktm', $content_id, $id) != FALSE) {
+				if ($content_id != NULL && $id != NULL)
+				{
+		            if ($this->multiple_upload($content.'/data/', 'ktm', $content_id, $id) != FALSE)
+		            {
 		            	
 		            }
 				}

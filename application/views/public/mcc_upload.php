@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container upload-btn-wrapper">
-				<?php echo $content_id.$id.'<br>'; echo $message.$error;#print_r($data_content);?>
+				<?php /*echo $content_id.$id.'<br>';*/ echo $message.$error;#print_r($data_content);?>
 				<form action="<?php echo current_url();?>" method="post" enctype="multipart/form-data">
 					<fieldset>
 						<legend>Upload Scan KTM</legend>
