@@ -6,6 +6,7 @@ class Register extends Public_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->data['message'] = '';
 
     }
 
@@ -13,6 +14,7 @@ class Register extends Public_Controller {
 	{
 
 		$table 	= 'content_mcc_sementara';
+
 		/* Validate form input */
 		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
 		$this->form_validation->set_rules('university', 'lang:university', 'required');
@@ -25,8 +27,8 @@ class Register extends Public_Controller {
 		$this->form_validation->set_rules('member_email', 'lang:member_email', 'required|valid_email|is_unique['.$table.'.member_email]');
 		$this->form_validation->set_rules('member_phone', 'lang:member_phone', 'required');
 
-		if ($this->form_validation->run() == TRUE)
-		{
+		if ($this->form_validation->run() == TRUE) {
+
 			$data = array(
 					'tim_name'		=> $this->input->post('tim_name'),
 					'university'	=> $this->input->post('university'),
@@ -40,9 +42,16 @@ class Register extends Public_Controller {
 					'member_phone'	=> $this->input->post('member_phone')
 				);
 
-			$register = $this->public_model->register($table, $data);
+			$id = $this->public_model->register($table, $data);
+			if ($id != FALSE) {
+				redirect('upload/mcc/'.$id, 'refresh');
+			}
 		}
-
+		else
+		{
+			$this->data['message'] = validation_errors();
+		}
+    
         $this->template->public_form_render('public/mcc', $this->data);
 	}
 }

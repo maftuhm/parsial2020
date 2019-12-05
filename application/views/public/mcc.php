@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container">
+				<?php echo $message;?>
 				<form action="<?php echo current_url();?>" method="post" autocomplete="on" id="form1">
 					<fieldset>
 						<legend>Informasi umum</legend>
@@ -59,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Email</label>
 							</div>
 							<div class="input">
-								<input type="email" name="leader_email" placeholder="misal: email_anda@gmail.com" autocomplete="off" required />
+								<input type="email" name="leader_email" placeholder="misal: email_anda@gmail.com" required />
 							</div>
 						</div>
 					</fieldset>
@@ -95,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Email</label>
 							</div>
 							<div class="input">
-								<input type="email" name="member_email" placeholder="misal: email@gmail.com" autocomplete="off" required />
+								<input type="email" name="member_email" placeholder="misal: email@gmail.com" required />
 							</div>
 						</div>
 					</fieldset>
