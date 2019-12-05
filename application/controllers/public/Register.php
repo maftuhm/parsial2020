@@ -52,7 +52,7 @@ class Register extends Public_Controller {
 			$this->data['message'] = validation_errors();
 		}
     
-        $this->template->public_form_render('public/mcc_upload', $this->data);
+        $this->template->public_form_render('public/mcc', $this->data);
 	}
 
 		public function upload($content = '', $id = '')

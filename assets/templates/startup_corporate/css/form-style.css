@@ -76,6 +76,9 @@ legend{
 	margin-right: 17px;
 	color: #fff;
 }
+.button-submit{
+	margin-bottom: 0;
+}
 
 .form-grup:after, .form-grup:before{
 	display: flex;
@@ -117,13 +120,39 @@ legend{
 	border: solid;
 }
 
+.form-upload {
+	border: 2px solid #ffb7cf;
+	color: #fff;
+	background-color: #5e558e;
+	font-family: 'Verdana', sans-serif;
+	padding: 8px 20px;
+	border-radius: 5px;
+	font-size: 14px;
+	margin-top: 10px;
+	margin-left: 55px;
+}
+.form-upload:hover{
+	text-decoration: none;
+	cursor: pointer;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5 s all;
+	-ms-transition: 0.5s all;
+}
+
+.upload-btn-wrapper{
+	width: 500px;
+	margin: 0 auto;
+}
+
 a{
 	font-weight: bold;
 	cursor: pointer;
 	color: #4b82d4;
 }
 
-input[type=text], input[type=text], input[type=date], textarea, input[type=email], input[type=tel], input[type=text], input[type=tel]{
+input[type=text], input[type=date], textarea, input[type=email], input[type=tel] {
 	border: none;
 	padding: 8px;
 	border-radius: 3px;
@@ -173,12 +202,6 @@ footer{
 	text-align: center;
 }
 
-/*===== Upload berkas =====*/
-.upload-btn-wrapper{
-	width: 500px;
-	margin: 0 auto;
-}
-
 #header h3{
 	color: #fff;
 	font-family: Lucida Sans Unicode;
@@ -188,44 +211,33 @@ footer{
 	text-align: center;
 }
 
-input[type=file]:hover{
-	background: #5e558e;
-	text-decoration: none;
-	cursor: pointer;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5 s all;
-	-ms-transition: 0.5s all;
+@media (max-width: 768px){
+	.container{
+		width: 97%;
+	}
+	.upload-btn-wrapper {
+		width: 90%;
+		max-width: 500px;
+	}
+	.form-upload {
+		margin-left: 0;
+	}
+	.button-submit{
+		margin-right: 0;
+	}
 }
-
-.form-control{
-	border: 2px solid #ffb7cf;
-	color: #fff;
-	background-color: #5e558e;
-	font-family: 'Verdana', sans-serif;
-	padding: 8px 20px;
-	border-radius: 5px;
-	font-size: 14px;
-	margin-top: 10px;
-	margin-left: 55px;
-}
-/*===== Upload berkas =====*/
-
 
 @media (max-width: 480px){
 	.container{
 		width: 95%;
-		margin: 0 auto;
 	}
-	.label{
-		float: none;
-		width: 95%;
+	.upload-btn-wrapper {
+		width: 85%;
 	}
-	.input{
-		float: none;
-		width: 95%;
+	.label, .input{
+		padding-left: 0;
 	}
+
 	#header h2{
 		float: none;
 		width: 100%;
@@ -235,26 +247,27 @@ input[type=file]:hover{
 	}
 	legend{
 		float: none;
-		width: 95%;
 		font-size: 16px;
 	}
 	.form-grup{
 		font-size: 14px;
+		margin-right: 0;
 	}
+
 	fieldset{
 		margin-bottom: 20px;
 	}
+
 	button{
 		cursor: pointer;
 	}
-	.upload-btn-wrapper{
-		width:95%;
-		margin: 0 auto;
-	}
-	.form-control{
+
+	.form-upload {
 		font-size: 12px;
-		margin-left: 25px;
+		padding: 8px;
+		margin-left: 0;
 		margin-top: 8px;
+		width: 90%;
 	}
 	#header h3{
 		float: none;
@@ -263,10 +276,4 @@ input[type=file]:hover{
 		font-size: 25px;
 		text-align: center;
 	}	
-}
-
-@media (min-width: 480px) and (max-width: 768px){
-	.container{
-		width: 100%;
-	}
 }

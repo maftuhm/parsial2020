@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Scan KTM Ketua Tim</label>
 							</div>
 							<div class="input">
-								<input type="file" class="form-control" name="ktm[]" /required>
+								<input type="file" class="form-upload" name="ktm[]" /required>
 							</div>
 						</div>
 						<div class="form-grup">
@@ -27,13 +27,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Scan KTM Anggota</label>
 						</div>
 							<div class="input">
-								<input type="file" class="form-control" name="ktm[]" /required>
+								<input type="file" class="form-upload" name="ktm[]" /required>
 							</div>
 						</div>
 
 					</fieldset>
 
-					<div class="form-grup">
+					<div class="form-grup button-submit">
 						<button type="submit" name="submit">Submit</button>
 					</div>
 				</form>

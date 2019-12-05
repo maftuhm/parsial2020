@@ -106,7 +106,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<input type="checkbox" name="syarat_ketentuan" required />Saya sudah membaca dan menyetujui <a href="http://himatika.fst.uinjkt.ac.id/parsial2019/mathematic-competition/sk/" target="_blank">Syarat dan Ketentuan</a> 
 					</div>
 
-					<div class="form-grup">
+					<div class="form-grup button-submit">
 						<button type="submit" name="submit">Submit</button>
 					</div>
 					
