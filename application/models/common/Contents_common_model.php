@@ -12,8 +12,19 @@ class Contents_common_model extends CI_Model {
     {
         return $this->db->get('contents')->result();
     }
-    public function count_contents()
+    public function get_contents($value = NULL, $result = 'id', $key = 'slug')
     {
-        return  $this->db->count_all_results('contents') > 0;
+        if ($value == NULL) {
+            return $this->db->get('contents')->result();
+        }
+        else
+        {
+            $query = $this->db->select($result)
+                                ->where($key, $value)
+                                ->limit(1)
+                                ->get('contents')
+                                ->row();
+            return $query;
+        }
     }
 }

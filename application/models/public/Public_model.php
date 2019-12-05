@@ -115,6 +115,14 @@ class Public_model extends CI_Model {
 		return  $this->db->count_all_results($table) > 0;
 	}
 
+	public function check_any($table, $array)
+    {
+
+		$this->db->where($array);
+		$this->db->limit(1);
+		return  $this->db->count_all_results($table) > 0;
+	}
+
 	public function set_error($error)
 	{
 		$this->errors[] = $error;
