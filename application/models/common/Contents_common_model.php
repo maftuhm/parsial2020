@@ -8,10 +8,6 @@ class Contents_common_model extends CI_Model {
         parent::__construct();
     }
 
-    public function get_contents()
-    {
-        return $this->db->get('contents')->result();
-    }
     public function get_contents($value = NULL, $result = 'id', $key = 'slug')
     {
         if ($value == NULL) {
@@ -26,5 +22,10 @@ class Contents_common_model extends CI_Model {
                                 ->row();
             return $query;
         }
+    }
+
+    public function count_contents()
+    {
+        return  $this->db->count_all_results('contents') > 0;
     }
 }
