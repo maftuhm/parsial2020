@@ -29,46 +29,6 @@ class Public_model extends CI_Model {
     	}
 		return $query->result();
 	}
-    
-    public function register_tryout()
-    {
-    	$table = $this->table['tryout'];
-		$ip_address = $this->input->ip_address();
-
-		$data = array(
-    		'ip_address' 	=> $ip_address,
-    		'created_on'	=> time(),
-			'name'			=> $this->input->post('name'),
-			'birthplace'	=> $this->input->post('birthplace'),
-			'birthday'		=> $this->input->post('birthday'),
-			'phone'			=> $this->input->post('phone'),
-			'address'		=> $this->input->post('address'),
-			'school'		=> $this->input->post('school'),
-			'email'			=> strtolower($this->input->post('email')),
-			'interest'		=> $this->input->post('interest')
-		);
-
-		$this->db->insert($table, $data);
-		$id = $this->db->insert_id($table . '_id_seq');
-
-		$id_choice = $this->get_id_group($this->input->post('choice'));
-		$id_major = $this->get_id_group($this->input->post('major'));
-
-		$this->add_to_group($id, $id_choice, $id_major);
-    }
-
-	public function get_groups($description = NULL)
-	{
-		$table = $this->table['par_groups'];
-		if ($description != NULL) {
-			$query = $this->db->query("SELECT name FROM $table WHERE description = '$description'");
-		}
-		else
-		{
-			$query = $this->db->get($table);
-		}
-		return $query->result();
-	}
 
 	public function get_id_group($name)
 	{
@@ -96,6 +56,31 @@ class Public_model extends CI_Model {
     					'file_ext'			=> $this->upload->data('file_ext')
 					);
 		return $this->db->insert($this->table['payment'], $data);
+	}
+
+	public function upload($data, $content_id = NULL, $participant_id = NULL)
+	{
+		$this->db->insert('media', $data);
+		$id = $this->db->insert_id('media' . '_id_seq');
+
+		if ($content_id != NULL && $participant_id != NULL)
+		{
+			if (isset($id)) {
+				$data_groups = array(
+					'content_id' 		=> $content_id, 
+					'participant_id' 	=> $participant_id, 
+					'media_id'			=> $id);
+				$this->db->insert('participants_media', $data_groups);
+			}
+		}
+
+		return (isset($id)) ? $id : FALSE;
+	}
+
+    public function get_participant($table, $value = NULL, $get_by = 'id')
+    {
+        $result = $this->db->get_where($table, array($get_by => $value))->result();
+		return isset($result) ? $result : FALSE;
 	}
 
 	public function register($table, $additional_data = array())
