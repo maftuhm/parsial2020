@@ -8,7 +8,7 @@ class Register extends Public_Controller {
         parent::__construct();
         $this->data['message'] = '';
         $this->data['error'] = '';
-
+        $this->data['show_alert'] = 'tes';
     }
 
 	public function mcc()
