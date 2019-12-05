@@ -55,7 +55,7 @@ class Register extends Public_Controller {
         $this->template->public_form_render('public/mcc', $this->data);
 	}
 
-		public function upload($content = '', $id = '')
+	public function upload($content = '', $id = '')
 	{
 		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
 		$this->table 	= 'content_mcc_sementara';

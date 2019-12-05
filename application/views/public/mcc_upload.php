@@ -13,6 +13,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<form action="<?php echo current_url();?>" method="post" enctype="multipart/form-data">
 					<fieldset>
+						<?php if($show_email_form): ?>
+						<div class="form-grup">
+							<div class="label">
+								<label>Email</label>
+							</div>
+							<div class="input">
+								<input type="email" name="leader_email" placeholder="misal: email_anda@gmail.com" required />
+							</div>
+						</div>
+						<?php endif;?>
 						<legend>Upload Scan KTM</legend>
 						<div class="form-grup">
 							<div class="label">

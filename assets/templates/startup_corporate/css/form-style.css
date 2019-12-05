@@ -235,9 +235,10 @@ footer{
 		width: 85%;
 	}
 	.label, .input{
-		padding-left: 0;
-	}
+		float: none;
+		width: 90%;
 
+	}
 	#header h2{
 		float: none;
 		width: 100%;
