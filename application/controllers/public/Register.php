@@ -44,7 +44,7 @@ class Register extends Public_Controller {
 
 			$id = $this->public_model->register($table, $data);
 			if ($id != FALSE) {
-				redirect('upload/'.$content.'/'.$id, 'refresh');
+				redirect('upload/mcc/'.$id, 'refresh');
 			}
 		}
 		else

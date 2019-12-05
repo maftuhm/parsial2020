@@ -100,7 +100,7 @@ legend{
 .label label{
 	display: inline-block;
 	vertical-align: -webkit-baseline-middle;
-};
+}
 
 .input{
 	float: left;

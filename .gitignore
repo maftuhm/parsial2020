@@ -1,6 +1,5 @@
-.htaccess
-!application/config/database.php
-!application/controllers/admin/Dashboard.php
+application/config/database.php
+application/controllers/admin/Dashboard.php
 application/session/
 media/mcc/data/
 
