@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container upload-btn-wrapper">
-				<?php echo $message;?>
+				<?php echo $message.$message;?>
 
 				<form action="<?php echo current_url();?>" method="post" enctype="multipart/form-data">
 					<fieldset>

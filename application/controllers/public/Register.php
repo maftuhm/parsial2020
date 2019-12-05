@@ -7,6 +7,7 @@ class Register extends Public_Controller {
     {
         parent::__construct();
         $this->data['message'] = '';
+        $this->data['error'] = '';
 
     }
 
