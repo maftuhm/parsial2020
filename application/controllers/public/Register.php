@@ -6,9 +6,8 @@ class Register extends Public_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->data['message'] = '';
         $this->data['error'] = '';
-        $this->data['show_alert'] = 'tes';
+        $this->data['alert_modal'] = '';
     }
 
 	public function mcc()
@@ -25,9 +24,10 @@ class Register extends Public_Controller {
 		$this->form_validation->set_rules('leader_phone', 'lang:leader_phone', 'required');
 		$this->form_validation->set_rules('member_name', 'lang:member_name', 'required');
 		$this->form_validation->set_rules('member_major', 'lang:member_major', 'required');
-		$this->form_validation->set_rules('member_email', 'lang:member_email', 'required|valid_email|is_unique['.$table.'.member_email]');
+		$this->form_validation->set_rules('member_email', 'lang:member_email', 'required|valid_email');
 		$this->form_validation->set_rules('member_phone', 'lang:member_phone', 'required');
 
+		$id = FALSE;
 		if ($this->form_validation->run() == TRUE) {
 
 			$data = array(
@@ -42,17 +42,13 @@ class Register extends Public_Controller {
 					'member_email'	=> $this->input->post('member_email'),
 					'member_phone'	=> $this->input->post('member_phone')
 				);
-
 			$id = $this->public_model->register($table, $data);
 			if ($id != FALSE) {
 				redirect('upload/mcc/'.$id, 'refresh');
 			}
 		}
-		else
-		{
-			$this->data['message'] = validation_errors();
-		}
-    
+
+		$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
         $this->template->public_form_render('public/mcc', $this->data);
 	}
 
@@ -83,6 +79,11 @@ class Register extends Public_Controller {
 	        if ($id != '') {
 	        	$id = (int) $id;
 	        	$this->data['show_email_form'] = FALSE;
+				$atts = array(
+					'title' 	=> 'Berhasil!',
+					'text'		=> 'Anda berhasil mendaftar. Silahkan lanjutkan ke langkah berikutnya.'
+				);
+				$this->data['alert_modal'] = sweet_alert($atts);
 	        }
 	        else
 	        {
@@ -121,17 +122,28 @@ class Register extends Public_Controller {
 			{
 				if ($content_id != NULL && $id != NULL)
 				{
-		            if ($this->multiple_upload($content.'/data/', 'ktm', $content_id, $id) != FALSE)
+		            if ($this->multiple_upload('mcc/data/', 'ktm', $content_id, $id) != FALSE)
 		            {
-		            	
+						// $atts = array(
+						// 	'title' 	=> 'Berhasil!',
+						// 	'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+						// 	'footer'	=> anchor('payment/mcc', 'Pembayaran')
+						// );
+						// $this->data['alert_modal'] = sweet_alert($atts);
+		            }
+		            else
+		            {
+						$atts = array(
+							'icon'		=> 'error',
+							'title' 	=> 'Terjadi kesalahan!',
+							'html'		=> $this->data['error']
+						);
+						$this->data['alert_modal'] = (validation_errors(sweet_alert_open(), sweet_alert_close()) ? validation_errors(sweet_alert_open(), sweet_alert_close()) : sweet_alert($atts));
 		            }
 				}
 			}
-			else
-			{
-				$this->data['message'] = validation_errors('<p>', '</p>');
-			}
 
+			$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
         	$this->template->public_form_render('public/mcc_upload', $this->data);
 		}
 	}
