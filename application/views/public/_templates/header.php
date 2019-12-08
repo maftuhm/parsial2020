@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php endif;?>
 		<link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAqElEQVRYR+2WYQ6AIAiF8W7cq7oXd6v5I2eYAw2nbfivYq+vtwcUgB1EPPNbRBR4Tby2qivErYRvaEnPAdyB5AAi7gCwvSUeAA4iis/TkcKl1csBHu3HQXg7KgBUegVA7UW9AJKeA6znQKULoDcDkt46bahdHtZ1Por/54B2xmuz0uwA3wFfd0Y3gDTjhzvgANMdkGb8yAyY/ro1d4H2y7R1DuAOTHfgAn2CtjCe07uwAAAAAElFTkSuQmCC">
 
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext">
 		<script>
 			addEventListener("load", function () {
 				setTimeout(hideURLbar, 0);
@@ -45,9 +45,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				window.scrollTo(0, 1);
 			}
 		</script>
-        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/css/bootstrap.css'); ?>">
-        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/css/style.css'); ?>">
-        <link rel="stylesheet" href="<?php echo base_url($templates_dir . '/css/font-awesome.min.css'); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/bootstrap.css'); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/style.css'); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/font-awesome.min.css'); ?>">
 
 	</head>
 
