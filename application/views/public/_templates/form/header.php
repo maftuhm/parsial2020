@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAqElEQVRYR+2WYQ6AIAiF8W7cq7oXd6v5I2eYAw2nbfivYq+vtwcUgB1EPPNbRBR4Tby2qivErYRvaEnPAdyB5AAi7gCwvSUeAA4iis/TkcKl1csBHu3HQXg7KgBUegVA7UW9AJKeA6znQKULoDcDkt46bahdHtZ1Por/54B2xmuz0uwA3wFfd0Y3gDTjhzvgANMdkGb8yAyY/ro1d4H2y7R1DuAOTHfgAn2CtjCe07uwAAAAAElFTkSuQmCC">
 		
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url($plugins_dir . '/sweetalert2/sweetalert2.min.css'); ?>">        
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/form-style.css'); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/form-style.css?v=1.2'); ?>">
 
 	</head>
 

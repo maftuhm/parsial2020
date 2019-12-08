@@ -43,7 +43,7 @@ $config['index_page'] = '';
 $config['assets_dir']     = 'assets';
 $config['frameworks_dir'] = $config['assets_dir'] . '/frameworks';
 $config['plugins_dir']    = $config['assets_dir'] . '/plugins';
-$config['templates_dir']    = $config['assets_dir'] . '/templates';
+$config['templates_dir']  = $config['assets_dir'] . '/templates';
 
 
 /*
