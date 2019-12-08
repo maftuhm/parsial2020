@@ -44,11 +44,27 @@ class Register extends Public_Controller {
 				);
 			$id = $this->public_model->register($table, $data);
 			if ($id != FALSE) {
-				redirect('upload/mcc/'.$id.'-modal_show', 'refresh');
+				redirect('mcc?status=success&id='.$id);
 			}
 		}
 
-		$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+		$status = $this->input->get('status');
+		$id = $this->input->get('id');
+
+		if ($status == 'success'&& isset($id)) {
+			$atts = array(
+				'icon'		=> 'success',
+				'title' 	=> 'Berhasil!',
+				'text'		=> 'Anda berhasil mendaftar. Silahkan lanjutkan ke langkah berikutnya.',
+				'showConfirmButton' => 'false',
+				'footer'	=> anchor('upload/mcc/'.$id, 'Upload KTM')
+			);
+			$this->data['alert_modal'] = sweet_alert($atts);
+		}
+		else
+		{
+			$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+		}
         $this->template->public_form_render('public/mcc', $this->data);
 	}
 
@@ -56,9 +72,6 @@ class Register extends Public_Controller {
 	{
 		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
 		$this->table 	= 'content_mcc_sementara';
-		// $this->data['content_id'] = '';
-		// $this->data['id'] = '';
-		// $this->data['id_file'] = 'tes';
 
         if (!$content_exist){
 			show_404();
@@ -77,18 +90,8 @@ class Register extends Public_Controller {
 			$id_file = FALSE;
 
 	        if ($id != '') {
-	        	$id = explode('-', $id);
 	        	$this->data['show_email_form'] = FALSE;
-	        	if (count($id) > 1) {
-	        		if ($id[1] == 'modal_show') {
-						$atts = array(
-							'title' 	=> 'Berhasil!',
-							'text'		=> 'Anda berhasil mendaftar. Silahkan lanjutkan ke langkah berikutnya.'
-						);
-						$this->data['alert_modal'] = sweet_alert($atts);
-	        		}
-	        	}
-	        	$id = $id[0];
+	        	$id = (int) $id;
 	        }
 	        else
 	        {
@@ -129,13 +132,7 @@ class Register extends Public_Controller {
 				{
 		            if ($this->multiple_upload('mcc/data/', 'ktm', $content_id, $id) != FALSE)
 		            {
-						// $atts = array(
-						// 	'title' 	=> 'Berhasil!',
-						// 	'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
-						// 	'footer'	=> anchor('payment/mcc', 'Pembayaran')
-						// );
-						// $this->data['alert_modal'] = sweet_alert($atts);
-						redirect('payment/mcc/'.$id.'-modal_show', 'refresh');
+						redirect('upload/mcc?status=success&id='.$id);
 		            }
 		            else
 		            {
@@ -148,9 +145,157 @@ class Register extends Public_Controller {
 		            }
 				}
 			}
+			$status = $this->input->get('status');
+			$id = $this->input->get('id');
 
-			// $this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			if ($status == 'success'&& isset($id)) {
+				$atts = array(
+					'icon'		=> 'success',
+					'title' 	=> 'Berhasil!',
+					'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+					'showConfirmButton' => 'false',
+					'footer'	=> anchor('payment/mcc/'.$id, 'Pembayaran')
+				);
+				$this->data['alert_modal'] = sweet_alert($atts);
+			}
+			else
+			{
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			}
         	$this->template->public_form_render('public/mcc_upload', $this->data);
+		}
+	}
+
+	public function payment($content = '', $id = '')
+	{
+		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
+		$this->table 	= 'content_mcc_sementara';
+
+        if (!$content_exist){
+			show_404();
+        }
+        else
+		{
+
+	        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
+        	$this->data['header'] = $data_content['title'];
+        	$content_id = $data_content['id'];
+
+			$this->data['page_title'] = 'Upload Bukti Pembayaran';
+	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
+
+
+			$this->form_validation->set_rules('bank_name', 'lang:bank_name', 'required');
+			$this->form_validation->set_rules('account_owner', 'lang:account_owner', 'required');
+
+        	$this->data['show_email_form'] = TRUE;
+			$id_file = FALSE;
+
+			$this->config_upload('mcc/');
+
+	        if ($id != '') {
+	        	$id = (int) $id;
+	        	$this->data['show_email_form'] = FALSE;
+	        }
+	        else
+	        {
+		        $this->form_validation->set_rules(
+			        'leader_email', 'lang:leader_email',
+			        array(
+			        	'required',
+						array(
+							'is_exist',
+							function($value)
+							{
+								if ($this->public_model->check_any($this->table, array('leader_email' => $value)))
+								{
+									return TRUE;
+								}
+								return FALSE;
+							}
+						)
+			        ),
+			        array(
+			        	'is_exist' => '{field} ' . set_value('leader_email') . ' belum terdaftar.'
+			        )
+				);
+
+		        if ($this->form_validation->run() == TRUE)
+		        {
+		        	$email = $this->input->post('leader_email');
+		        	$data = $this->public_model->get_participant($this->table, $email, 'leader_email');
+		        	foreach ($data as $key) {
+		        		$id = $key->id;
+		        	}
+		        }
+	        }
+
+			if (isset($id) && !empty($_FILES))
+			{
+				if ($content_id != NULL && $id != NULL)
+				{
+		            if ($this->upload->do_upload('userfile') == TRUE)
+		            {
+						$image_data =   $this->upload->data();
+						$payment_data = array(
+							'time'			=> time(),
+							'bank_name'		=> $this->input->post('bank_name'),
+							'account_owner' => $this->input->post('account_owner'),
+							'account_number'=> $this->input->post('account_number')
+							);
+						$payment_id = $this->public_model->input_payment($payment_data);
+
+						if ($payment_id != FALSE)
+						{
+							$this->resize_image($image_data['full_path']);
+							$file_data = array(
+								'file_name' 		=> $image_data['file_name'],
+								'file_type'			=> $image_data['file_type'],
+								'file_size'			=> $image_data['file_size'],
+								'file_ext'			=> $image_data['file_ext']
+							);
+
+							if($this->public_model->upload_payment($file_data, $payment_id, $id))
+							{
+								redirect('payment/mcc?status=success');
+							}
+							else
+							{
+								$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+							}
+						}
+						else
+						{
+							$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+						}
+		            }
+		            else
+		            {
+						$atts = array(
+							'icon'		=> 'error',
+							'title' 	=> 'Terjadi kesalahan!',
+							'text'		=> $this->upload->display_errors()
+						);
+						$this->data['alert_modal'] = (validation_errors(sweet_alert_open(), sweet_alert_close()) ? validation_errors(sweet_alert_open(), sweet_alert_close()) : sweet_alert($atts));
+		            }
+				}
+			}
+
+			$status = $this->input->get('status');
+
+			if ($status == 'success') {
+				$atts = array(
+					'icon'		=> 'success',
+					'title' 	=> 'Berhasil!',
+					'text'		=> 'Upload bukti pembayaran berhasil.'
+				);
+				$this->data['alert_modal'] = sweet_alert($atts);
+			}
+			else
+			{
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			}
+        	$this->template->public_form_render('public/payment', $this->data);
 		}
 	}
 
@@ -195,14 +340,21 @@ class Register extends Public_Controller {
 			unset($_FILES[$unset]);
 		}
 	}
-	function multiple_upload($folder, $name = array(), $content_id = NULL, $participant_id = NULL)
+
+	function config_upload($folder)
 	{
-		$error = TRUE;
+
 		$config['upload_path']      = './'.$this->data['upload_dir'].'/'.$folder;
         $config['allowed_types']    = 'pdf|gif|jpg|png|jpeg';
         $config['max_size']         = 2048;
         $config['file_ext_tolower'] = TRUE;
         $this->load->library('upload', $config);
+	}
+
+	function multiple_upload($folder, $name = array(), $content_id = NULL, $participant_id = NULL)
+	{
+		$error = TRUE;
+		$this->config_upload($folder);
 
         $this->re_array($name);
 		foreach($_FILES as $field_name => $file)
@@ -211,14 +363,14 @@ class Register extends Public_Controller {
 			{
 				$image_data =   $this->upload->data();
 				$this->resize_image($image_data['full_path']);
-				$data_file = array(
+				$file_data = array(
 					'file_name' 		=> $image_data['file_name'],
 					'file_type'			=> $image_data['file_type'],
 					'file_size'			=> $image_data['file_size'],
 					'file_ext'			=> $image_data['file_ext']
 				);
 
-				$id_file = $this->public_model->upload($data_file, $content_id, $participant_id);
+				$this->public_model->upload($file_data, $content_id, $participant_id);
 				$error = FALSE;
 			}
 			else
@@ -229,7 +381,7 @@ class Register extends Public_Controller {
 			}
 		}
 		if (!$error) {
-			return $id_file;
+			return TRUE;
 		}
 		return FALSE;
 	}

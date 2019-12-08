@@ -37,42 +37,45 @@ class Public_model extends CI_Model {
  		return $id;
 	}
 
-
-	public function set_payment($table)
+	public function input_payment($data)
 	{
-		$email = $this->input->post('email');
-
-		$query = $this->db->get_where($table, array('email' => $email))->row();
- 		$id = $query->id;
-		$data = array(
-						'time'				=> time(),
-						'participant_id'	=> $id,
-						'payment_type'		=> $table,
-						'account_owner'		=> $this->input->post('name'),
-						'email'				=> $email,
-						'file_name' 		=> $this->upload->data('file_name'),
-    					'file_type'			=> $this->upload->data('file_type'),
-    					'file_size'			=> $this->upload->data('file_size'),
-    					'file_ext'			=> $this->upload->data('file_ext')
-					);
-		return $this->db->insert($this->table['payment'], $data);
+		$this->db->insert('payments', $data);
+		$id = $this->db->insert_id('payments' . '_id_seq');
+		return (isset($id)) ? $id : FALSE;
 	}
 
-	public function upload($data, $content_id = NULL, $participant_id = NULL)
+	public function upload_payment($file_data, $payment_id = NULL, $participant_id = NULL)
 	{
-		$this->db->insert('media', $data);
-		$id = $this->db->insert_id('media' . '_id_seq');
-
-		if ($content_id != NULL && $participant_id != NULL)
+		$file_id = $this->upload_media($file_data);
+		if ($file_id != FALSE)
 		{
-			if (isset($id)) {
-				$data_groups = array(
-					'content_id' 		=> $content_id, 
-					'participant_id' 	=> $participant_id, 
-					'media_id'			=> $id);
-				$this->db->insert('participants_media', $data_groups);
-			}
+			$data_groups = array(
+				'payment_id' 		=> $payment_id, 
+				'participant_id' 	=> $participant_id, 
+				'media_id'			=> $file_id);
+			return $this->db->insert('participants_payments_media', $data_groups);
 		}
+		return FALSE;
+	}
+
+	public function upload($file_data, $content_id = '', $participant_id = '')
+	{
+		$file_id = $this->upload_media($file_data);
+		if ($file_id != FALSE)
+		{
+			$data_groups = array(
+				'content_id' 		=> $content_id, 
+				'participant_id' 	=> $participant_id, 
+				'media_id'			=> $file_id);
+			return $this->db->insert('participants_media', $data_groups);
+		}
+		return FALSE;
+	}
+
+	public function upload_media($file_data)
+	{
+		$this->db->insert('media', $file_data);
+		$id = $this->db->insert_id('media' . '_id_seq');
 
 		return (isset($id)) ? $id : FALSE;
 	}

@@ -23,7 +23,7 @@ if ( ! function_exists('sweet_alert_open'))
 			'title' => 'Terjadi kesalahan!',
 			'showCloseButton'=> 'true'
 		);
-		return '<script type="text/javascript">Swal.fire({'.parse_form_attributes_($data, $defaults).' html : "';
+		return '<script type="text/javascript">Swal.fire({'.parse_form_attributes_($data, $defaults)." html : '";
     }
 }
 
@@ -32,7 +32,7 @@ if ( ! function_exists('sweet_alert_close'))
     function sweet_alert_close()
     {
 		
-		return '"})</script>';
+		return "'})</script>";
     }
 }
 
@@ -56,7 +56,7 @@ if ( ! function_exists('attributes_to_string_'))
 
 			foreach ($attributes as $key => $val)
 			{
-				$atts .= ' '.$key.':"'.$val.'",';
+				$atts .= " ".$key.":'".$val."',";
 			}
 
 			return $atts;
@@ -64,7 +64,7 @@ if ( ! function_exists('attributes_to_string_'))
 
 		if (is_string($attributes))
 		{
-			return ' '.$attributes;
+			return " ".$attributes;
 		}
 
 		return FALSE;
@@ -104,8 +104,15 @@ if ( ! function_exists('parse_form_attributes_'))
 			{
 				continue;
 			}
+			if ($val == 'false' || $val == 'true')
+			{
+				$att .= $key.":".$val.", ";
+			}
+			else
+			{
+				$att .= $key.":'".$val."', ";
+			}
 
-			$att .= $key.':"'.$val.'", ';
 		}
 
 		return $att;
