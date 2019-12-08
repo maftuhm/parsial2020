@@ -44,7 +44,7 @@ class Register extends Public_Controller {
 				);
 			$id = $this->public_model->register($table, $data);
 			if ($id != FALSE) {
-				redirect('upload/mcc/'.$id, 'refresh');
+				redirect('upload/mcc/'.$id.'-modal_show', 'refresh');
 			}
 		}
 
@@ -77,13 +77,18 @@ class Register extends Public_Controller {
 			$id_file = FALSE;
 
 	        if ($id != '') {
-	        	$id = (int) $id;
+	        	$id = explode('-', $id);
 	        	$this->data['show_email_form'] = FALSE;
-				$atts = array(
-					'title' 	=> 'Berhasil!',
-					'text'		=> 'Anda berhasil mendaftar. Silahkan lanjutkan ke langkah berikutnya.'
-				);
-				$this->data['alert_modal'] = sweet_alert($atts);
+	        	if (count($id) > 1) {
+	        		if ($id[1] == 'modal_show') {
+						$atts = array(
+							'title' 	=> 'Berhasil!',
+							'text'		=> 'Anda berhasil mendaftar. Silahkan lanjutkan ke langkah berikutnya.'
+						);
+						$this->data['alert_modal'] = sweet_alert($atts);
+	        		}
+	        	}
+	        	$id = $id[0];
 	        }
 	        else
 	        {
@@ -118,7 +123,7 @@ class Register extends Public_Controller {
 		        }
 	        }
 
-			if ($this->form_validation->run() == TRUE && !empty($_FILES))
+			if (isset($id) && !empty($_FILES))
 			{
 				if ($content_id != NULL && $id != NULL)
 				{
@@ -130,6 +135,7 @@ class Register extends Public_Controller {
 						// 	'footer'	=> anchor('payment/mcc', 'Pembayaran')
 						// );
 						// $this->data['alert_modal'] = sweet_alert($atts);
+						redirect('payment/mcc/'.$id.'-modal_show', 'refresh');
 		            }
 		            else
 		            {
@@ -143,7 +149,7 @@ class Register extends Public_Controller {
 				}
 			}
 
-			$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			// $this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
         	$this->template->public_form_render('public/mcc_upload', $this->data);
 		}
 	}
