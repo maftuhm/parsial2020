@@ -9,7 +9,7 @@ class Contents_model extends CI_Model {
         $this->table = 'contents';
     }
 
-    public function get_data($table, $value = NULL, $get_by = 'id')
+    public function get_data($table, $value = NULL, $get_by = 'id', $object = TRUE)
     {
     	if ($value === NULL)
     	{
@@ -22,7 +22,13 @@ class Contents_model extends CI_Model {
     		}
     		$query = $this->db->get_where($table, $get_by);
     	}
-        $result = $query->result();
+        if ($object) {
+            $result = $query->result();
+        }
+        else
+        {
+            $result = $query->row();
+        }
 		return isset($result) ? $result : FALSE;
 	}
 

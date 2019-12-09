@@ -57,6 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['admin'] = 'admin/dashboard';
 $route['admin/prefs/interfaces/(:any)'] = 'admin/prefs/interfaces/$1';
 $route['admin/contents/create/q/(:any)'] = 'admin/contents/create_question/$1';
+$route['admin/contents/p/(:any)'] = 'admin/contents/page/$1';
 
 /* ===== PUBLIC ROUTES ===== */
 $route['(:any)'] 				= 'public/register/$1';

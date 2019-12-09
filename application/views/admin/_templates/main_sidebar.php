@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <li class="header text-uppercase"><?php echo lang('menu_contents'); ?></li>
                         <?php foreach ($menu_contents as $content):?>
                             <li class="<?=active_link_controller($content->slug)?>">
-                                <a href="<?php echo site_url('admin/contents/'.$content->slug); ?>">
+                                <a href="<?php echo site_url('admin/contents/p/'.$content->slug); ?>">
                                     <i class="fa fa-book"></i> <span><?php echo $content->title; ?></span>
                                 </a>
                             </li>

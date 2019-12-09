@@ -39,6 +39,34 @@ class Contents extends Admin_Controller {
         }
 	}
 
+	public function page($content_name)
+	{
+        if ( ! $this->ion_auth->logged_in())
+        {
+            redirect('auth/login', 'refresh');
+        }
+        else
+        {
+        	$this->data['content_data'] = $this->contents_model->get_data('contents', $content_name, 'slug');
+
+			if($this->data['content_data'] == FALSE)
+			{
+				show_404();
+			}
+			else
+			{
+	            /* Breadcrumbs */
+	            $this->data['breadcrumb'] = $this->breadcrumbs->show();
+	            /* Get all contents */
+
+	            $content = $this->unset_key((array)$this->contents_model->get_data('content_'.$content_name.'_sementara', NULL, NULL, FALSE));
+	            $this->data['contents_keys'] = array_keys($content);
+	            $this->data['contents'] = $this->contents_model->get_data('content_'.$content_name.'_sementara');
+	            /* Load Template */
+	            $this->template->admin_render('admin/contents/page', $this->data);
+			}
+        }
+	}
 
 	public function create()
 	{
@@ -521,4 +549,47 @@ class Contents extends Admin_Controller {
 			return FALSE;
 		}
 	}
+
+	function unset_key($data)
+	{
+		$unset_data = array('id', 'ip_address');
+		foreach ($unset_data as $key => $value) {
+			unset($data[$value]);
+		}
+		return $data;
+	}
 }
+
+// Array(
+// 	[0] => stdClass Object(
+// 		[id] => 1
+// 		[created_on] => 1575839259
+// 		[ip_address] => ::1
+// 		[tim_name] => himatika
+// 		[university] => uin jakarta
+// 		[leader_name] => maftuh mashuri
+// 		[leader_major] => matematika
+// 		[leader_email] => maftuh@gmail.com
+// 		[leader_phone] => 085777455031
+// 		[member_name] => lintang
+// 		[member_major] => mtk
+// 		[member_email] => maftuh@gmail.com
+// 		[member_phone] => 90438987
+// 	)
+// )
+
+// Array(
+// 	[id] => 1
+// 	[created_on] => 1575839259
+// 	[ip_address] => ::1
+// 	[tim_name] => himatika
+// 	[university] => uin jakarta
+// 	[leader_name] => maftuh mashuri
+// 	[leader_major] => matematika
+// 	[leader_email] => maftuh@gmail.com
+// 	[leader_phone] => 085777455031
+// 	[member_name] => lintang
+// 	[member_major] => mtk
+// 	[member_email] => maftuh@gmail.com
+// 	[member_phone] => 90438987
+// )
