@@ -48,6 +48,7 @@ class Contents extends Admin_Controller {
         else
         {
         	$this->data['content_data'] = $this->contents_model->get_data('contents', $content_name, 'slug');
+        	$this->data['content_name'] = $content_name;
 
 			if($this->data['content_data'] == FALSE)
 			{

@@ -15,3 +15,16 @@ $lang['contents_n_quest']		      = 'Number of question';
 $lang['contents_deactivate_question'] = 'Are you sure you want to deactivate the content %s';
 $lang['contents_edit']           	  = 'Edit content';
 $lang['contents_status']              = 'Status';
+
+/*====== MCC ======*/
+$lang['contents_tim_name']				= 'Tim Name';
+$lang['contents_university']			= 'University';
+$lang['contents_leader_name']			= 'Leader Name';
+$lang['contents_leader_major']			= 'Leader Major';
+$lang['contents_leader_email']			= 'Leader Email';
+$lang['contents_leader_phone']			= 'Leader Phone';
+$lang['contents_member_name']			= 'Member Name';
+$lang['contents_member_major']			= 'Member Major';
+$lang['contents_member_email']			= 'Member Email';
+$lang['contents_member_phone']			= 'Member Phone';
+

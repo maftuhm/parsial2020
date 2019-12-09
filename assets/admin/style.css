@@ -1,0 +1,14 @@
+.url_action{
+	margin-right: 5px;
+	color: #000000;
+}
+.btn-action{
+	margin: 0 5px !important;
+}
+.actions{
+	display: none;
+	font-size: 12px;
+}
+.show-actions{
+	display: block;
+}

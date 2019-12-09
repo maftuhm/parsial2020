@@ -22,9 +22,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <?php foreach ($contents_keys as $key => $value):?>
-                                                    <th><?php echo $value;?></th>
-                                                    <?php endforeach;?>
+                                                    <?php 
+                                                    foreach ($contents_keys as $key => $value): 
+                                                        echo '<th style="min-width:'.(strlen(lang('contents_'.$value))*14).'px;">'.lang('contents_'.$value).'</th>'; 
+                                                    endforeach;?>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -42,41 +43,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             {
                                                                 echo '<td class="name">';
                                                                 $atts = array('class' => 'url_action','title' => lang('see').' '.$content->$value);
-                                                                echo anchor('admin/tryout/profile/'.$content->id, $content->$value, $atts);
-                                                                echo '<div class="actions show-actions">';
-                                                                echo anchor('admin/tryout/profile/'.$content->id, '<i class="fa fa-user" aria-hidden="true"></i> <span>'.lang('see').'</span>', $atts);
-                                                                echo anchor('admin/tryout/delete/'.$content->id, '<i class="fa fa-trash" aria-hidden="true"></i> <span>'.lang('delete').'</span>', 'class="url_action"');
-                                                                echo '</div></td>';
+                                                                echo anchor('admin/contents/p/'.$content_name.'/profile/'.$content->id, $content->$value, $atts);
+                                                                // echo '<div class="actions show-actions">';
+                                                                // echo anchor('admin/contents/p/'.$content_name.'/profile/'.$content->id, '<i class="fa fa-user" aria-hidden="true"></i> <span>'.lang('see').'</span>', $atts);
+                                                                // echo anchor('admin/contents/p/'.$content_name.'/delete/'.$content->id, '<i class="fa fa-trash" aria-hidden="true"></i> <span>'.lang('delete').'</span>', 'class="url_action"');
+                                                                // echo '</div>';
+                                                                echo '</td>';
                                                             }
                                                             else
                                                             {
-                                                                echo '<td>'.$content->$value.'</td>';
+                                                                echo '<td style="min-width:'.(strlen($content->$value)*14).'px;">'.$content->$value.'</td>';
                                                             }
                                                         ?>
                                                     
                                                     <?php endforeach;?>
-                                                    <!-- <td class="name"> -->
-                                                        <?php 
-
-                                                        ?>
-                                                        <!-- <div class="actions show-actions"> -->
-                                                            <?php 
-                                                            //     echo anchor('admin/tryout/profile/'.$u->id, '<i class="fa fa-user" aria-hidden="true"></i> <span>'.lang('see').'</span>', $atts);
-                                                            //     echo anchor('admin/tryout/edit/'.$u->id, '<i class="fa fa-edit" aria-hidden="true"></i> <span>'.lang('edit').'</span>', 'class="url_action"');
-                                                            //     echo anchor('admin/tryout/delete/'.$u->id, '<i class="fa fa-trash" aria-hidden="true"></i> <span>'.lang('delete').'</span>', 'class="url_action"');
-                                                            ?>
-                                                        <!-- </div> -->
-                                                    <!-- </td> -->
-                                                    <!-- <td><?php //echo date('d-m-Y', $u->created_on); ?></td>
-                                                    <td><?php //echo $u->email; ?></td>
-                                                    <td><?php //echo $u->phone; ?></td>
-                                                    <td><?php //echo $u->birthplace. ', ' . $u->birthday; ?></td>
-                                                    <td><?php //echo $u->address; ?></td>
-                                                    <td><?php //echo $u->school; ?></td>
-                                                    <td><?php //echo $u->departement;?></td>
-                                                    <td><?php //echo strtoupper($u->choice);?></td>
-                                                    <td><?php //echo $u->interest; ?></td>
-                                                    <td><?php //echo $get_payment;?></td> -->
                                                 </tr>
                                                 <?php $i++; endforeach; ?>
                                             </tbody>
@@ -84,7 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <tr>
                                                     <th>No</th>
                                                     <?php foreach ($contents_keys as $key => $value):?>
-                                                    <th><?php echo $value;?></th>
+                                                    <th><?php echo lang('contents_'.$value);?></th>
                                                     <?php endforeach;?>
                                                 </tr>
                                             </tfoot>

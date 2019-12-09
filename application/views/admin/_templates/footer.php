@@ -20,6 +20,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <?php if ($mobile == TRUE): ?>
         <script src="<?php echo base_url($plugins_dir . '/fastclick/fastclick.min.js'); ?>"></script>
+<?php else: ?>
+    <script type="text/javascript">
+            var action = '.actions';
+            $(action).removeClass('show-actions');
+            $('tr').hover(
+              function() {
+                $(this).find(action).addClass('show-actions');
+              },
+              function() {
+                $(this).find(action).removeClass('show-actions');
+              }
+            );
+    </script>
 <?php endif; ?>
 <?php if ($admin_prefs['transition_page'] == TRUE): ?>
         <script src="<?php echo base_url($plugins_dir . '/animsition/animsition.min.js'); ?>"></script>
