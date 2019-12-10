@@ -52,7 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <i class="fa fa-book"></i> <span><?php echo $content->title; ?></span>
                                 </a>
                             </li>
-                        <?php endforeach;endif;endif;?>
+                        <?php 
+                            endforeach;endif;endif;
+                            if ($is_admin):
+                        ?>
                         <li class="header text-uppercase"><?php echo lang('menu_administration'); ?></li>
                         <li class="<?=active_link_controller('contents')?>">
                             <a href="<?php echo site_url('admin/contents'); ?>">
@@ -89,7 +92,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <i class="fa fa-database"></i> <span><?php echo lang('menu_database_utility'); ?></span>
                             </a>
                         </li>
-
+                    <?php endif;?>
 
                         <li class="header text-uppercase"><?php echo $title; ?></li>
                         <li class="<?=active_link_controller('license')?>">

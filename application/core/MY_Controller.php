@@ -71,7 +71,7 @@ class Admin_Controller extends MY_Controller
 	{
 		parent::__construct();
 
-        if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
+        if ( ! $this->ion_auth->logged_in())
         {
             redirect('auth/login', 'refresh');
         }
@@ -93,7 +93,7 @@ class Admin_Controller extends MY_Controller
             $this->data['title_mini']  = $this->config->item('title_mini');
             $this->data['admin_prefs'] = $this->prefs_model->admin_prefs();
             $this->data['user_login']  = $this->prefs_model->user_info_login($this->ion_auth->user()->row()->id);
-
+            $this->data['is_admin']    = $this->ion_auth->is_admin();
             $this->data['menu_contents'] = $this->contents_common_model->get_contents();
             $this->data['count_contents']= $this->contents_common_model->count_contents();
 
