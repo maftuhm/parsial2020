@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th>No</th>
                                                     <?php 
                                                     foreach ($contents_keys as $key => $value): 
-                                                        echo '<th style="min-width:'.(strlen(lang('contents_'.$value))*14).'px;">'.lang('contents_'.$value).'</th>'; 
+                                                        echo '<th>'.lang('contents_'.$value).'</th>'; 
                                                     endforeach;?>
                                                 </tr>
                                             </thead>
@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             }
                                                             else
                                                             {
-                                                                echo '<td style="min-width:'.(strlen($content->$value)*14).'px;">'.$content->$value.'</td>';
+                                                                echo '<td>'.$content->$value.'</td>';
                                                             }
                                                         ?>
                                                     

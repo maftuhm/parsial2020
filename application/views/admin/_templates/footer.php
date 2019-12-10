@@ -50,12 +50,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $(function () {
                 $('#dataTable').DataTable({
                 "scrollX"       : true,
-                'paging'        : false,
+                'paging'        : true,
                 'lengthChange'  : true,
                 'searching'     : false,
                 'ordering'      : true,
                 'info'          : true,
-                'autoWidth'     : false
+                'autoWidth'     : true
                 })
             });
         </script>
