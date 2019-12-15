@@ -220,6 +220,105 @@ class Register extends Public_Controller {
 		}
 	}
 
+	public function upload_futsal($id = NULL)
+	{
+		$content = 'futsal';
+		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
+		$this->table 	= 'content_futsal_sementara';
+
+        if (!$content_exist){
+			show_404();
+        }
+        else
+		{
+
+	        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
+        	$this->data['header'] = $data_content['title'];
+        	$content_id = $data_content['id'];
+
+			$this->data['page_title'] = 'Upload';
+	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
+
+        	$this->data['show_email_form'] = TRUE;
+			$id_file = FALSE;
+
+	        if ($id != '') {
+	        	$this->data['show_email_form'] = FALSE;
+	        	$id = (int) $id;
+	        }
+	        else
+	        {
+		        $this->form_validation->set_rules(
+			        'email', 'lang:email',
+			        array(
+			        	'required',
+						array(
+							'is_exist',
+							function($value)
+							{
+								if ($this->public_model->check_any($this->table, array('email' => $value)))
+								{
+									return TRUE;
+								}
+								return FALSE;
+							}
+						)
+			        ),
+			        array(
+			        	'is_exist' => '{field} ' . set_value('email') . ' belum terdaftar.'
+			        )
+				);
+
+		        if ($this->form_validation->run() == TRUE)
+		        {
+		        	$email = $this->input->post('email');
+		        	$data = $this->public_model->get_participant($this->table, $email, 'email');
+		        	foreach ($data as $key) {
+		        		$id = $key->id;
+		        	}
+		        }
+	        }
+
+			if (isset($id) && !empty($_FILES))
+			{
+				if ($content_id != NULL && $id != NULL)
+				{
+		            if ($this->multiple_upload('futsal/data/', array('photo', 'ktm'), $content_id, $id) != FALSE)
+		            {
+						redirect('upload/futsal?status=success&id='.$id);
+		            }
+		            else
+		            {
+						$atts = array(
+							'icon'		=> 'error',
+							'title' 	=> 'Terjadi kesalahan!',
+							'html'		=> $this->data['error']
+						);
+						$this->data['alert_modal'] = (validation_errors(sweet_alert_open(), sweet_alert_close()) ? validation_errors(sweet_alert_open(), sweet_alert_close()) : sweet_alert($atts));
+		            }
+				}
+			}
+			$status = $this->input->get('status');
+			$id = $this->input->get('id');
+
+			if ($status == 'success'&& isset($id)) {
+				$atts = array(
+					'icon'		=> 'success',
+					'title' 	=> 'Berhasil!',
+					'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+					'showConfirmButton' => 'false',
+					'footer'	=> anchor('payment/futsal/'.$id, 'Pembayaran')
+				);
+				$this->data['alert_modal'] = sweet_alert($atts);
+			}
+			else
+			{
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			}
+        	$this->template->public_form_render('public/futsal_upload', $this->data);
+		}
+	}
+
 	public function payment($content = '', $id = '')
 	{
 		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));

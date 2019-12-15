@@ -129,7 +129,7 @@ legend{
 	border-radius: 5px;
 	font-size: 14px;
 	margin-top: 10px;
-	margin-left: 55px;
+	/*margin-left: 55px;*/
 }
 .form-upload:hover{
 	text-decoration: none;
@@ -152,7 +152,7 @@ a{
 	color: #4b82d4;
 }
 
-input[type=text], input[type=date], textarea, input[type=email], input[type=tel] {
+input[type=text], input[type=date], textarea, input[type=email], input[type=tel], input[type=file] {
 	border: none;
 	padding: 8px;
 	border-radius: 3px;

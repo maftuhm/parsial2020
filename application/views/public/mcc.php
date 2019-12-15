@@ -72,7 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Nama Lengkap</label>
 							</div>
 							<div class="input">
-								<input type="text" name="member_name" placeholder="nama Lengkap" maxlength="30" autofocus required>
+								<input type="text" name="member_name" placeholder="nama Lengkap" maxlength="30" autofocus required />
 							</div>
 						</div>
 						<div class="form-grup">

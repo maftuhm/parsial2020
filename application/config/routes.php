@@ -61,6 +61,8 @@ $route['admin/contents/p/(:any)'] = 'admin/contents/page/$1';
 
 /* ===== PUBLIC ROUTES ===== */
 $route['(:any)'] 				= 'public/register/$1';
+$route['upload/futsal'] 		= 'public/register/upload_futsal';
+$route['upload/futsal/(:any)'] 	= 'public/register/upload_futsal/$1';
 $route['upload/(:any)'] 		= 'public/register/upload/$1';
 $route['upload/(:any)/(:any)'] 	= 'public/register/upload/$1/$2';
 $route['payment/(:any)'] 		= 'public/register/payment/$1';
