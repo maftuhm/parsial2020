@@ -68,6 +68,60 @@ class Register extends Public_Controller {
         $this->template->public_form_render('public/mcc', $this->data);
 	}
 
+	public function futsal()
+	{
+
+		$table 	= 'content_futsal_sementara';
+
+		/* Validate form input */
+		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
+		$this->form_validation->set_rules('player_name', 'lang:player_name', 'required');
+		$this->form_validation->set_rules('grade', 'lang:grade', 'required');
+		$this->form_validation->set_rules('university', 'lang:university', 'required');
+		$this->form_validation->set_rules('phone', 'lang:phone', 'required');
+		$this->form_validation->set_rules('email', 'lang:email', 'required|valid_email|is_unique['.$table.'.email]');
+		$this->form_validation->set_rules('official', 'lang:official', 'required');
+		$this->form_validation->set_rules('coach', 'lang:coach', 'required');
+
+		$id = FALSE;
+		if ($this->form_validation->run() == TRUE) {
+
+			$data = array(
+					'tim_name'		=> $this->input->post('tim_name'),
+					'player_name'	=> $this->input->post('player_name'),
+					'grade'			=> $this->input->post('grade'),
+					'university'	=> $this->input->post('university'),
+					'phone'			=> $this->input->post('phone'),
+					'email'			=> $this->input->post('email'),
+					'official'		=> $this->input->post('official'),
+					'coach'			=> $this->input->post('coach')
+				);
+			$id = $this->public_model->register($table, $data);
+			if ($id != FALSE) {
+				redirect('futsal?status=success&id='.$id);
+			}
+		}
+
+		$status = $this->input->get('status');
+		$id = $this->input->get('id');
+
+		if ($status == 'success'&& isset($id)) {
+			$atts = array(
+				'icon'		=> 'success',
+				'title' 	=> 'Berhasil!',
+				'text'		=> 'Anda berhasil mendaftar. Silahkan lanjutkan ke langkah berikutnya.',
+				'showConfirmButton' => 'false',
+				'footer'	=> anchor('upload/futsal/'.$id, 'Upload Berkas')
+			);
+			$this->data['alert_modal'] = sweet_alert($atts);
+		}
+		else
+		{
+			$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+		}
+        $this->template->public_form_render('public/futsal', $this->data);
+	}
+
 	public function upload($content = '', $id = '')
 	{
 		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
