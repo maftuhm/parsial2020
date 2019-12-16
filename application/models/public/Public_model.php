@@ -74,6 +74,45 @@ class Public_model extends CI_Model {
 		return FALSE;
 	}
 
+	public function input_members($data, $content_name)
+	{
+		$prefix = $this->tables['content_prefix'];
+		$suffix = $this->tables['content_members_suffix'];
+		$table  = $prefix . $content_name . $suffix;
+
+		$this->db->insert($table, $data);
+		$id = $this->db->insert_id($table . '_id_seq');
+
+		return (isset($id)) ? $id : FALSE;
+	}
+
+	public function upload_members($file_data, $content_name = '', $data = array())
+	{
+		$file_id = $this->upload_media($file_data);
+
+		if (!empty($content_name)) {
+
+			$media 	= $this->tables['media'];
+			$prefix = $this->tables['content_prefix'];
+			$suffix = $this->tables['content_members_suffix'];
+			$table  = $prefix . $content_name . $suffix . '_' . $media;
+
+			if ($file_id != FALSE)
+			{
+				$data_groups = array(
+					'content_id' 		=> $content_id, 
+					'participant_id' 	=> $participant_id, 
+					'media_id'			=> $file_id);
+				return $this->db->insert('participants_media', $data_groups);
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		return FALSE;
+	}
+
 	public function upload_media($file_data)
 	{
 		$this->db->insert($this->tables['media'], $file_data);

@@ -50,8 +50,7 @@ class Contents_model extends CI_Model {
 
     public function create_question($data)
     {
-        $table = 'contents_form';
-        return $this->db->insert_batch($table, $data); 
+        return $this->db->insert_batch($this->tables['forms'], $data); 
     }
 
     public function delete_content($id)

@@ -226,7 +226,6 @@ class Register extends Public_Controller {
 		$content = 'futsal';
 		$tables = $this->config->item('tables');
 		$table  = $tables['content_prefix'] . $content;
-
 		$content_exist = $this->public_model->check_any($tables['contents'], array('slug' => $content));
 
         if (!$content_exist){
@@ -297,7 +296,7 @@ class Register extends Public_Controller {
 							'title' 	=> 'Terjadi kesalahan!',
 							'html'		=> $this->data['error']
 						);
-						$this->data['alert_modal'] = (validation_errors(sweet_alert_open(), sweet_alert_close()) ? validation_errors(sweet_alert_open(), sweet_alert_close()) : sweet_alert($atts));
+						$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
 		            }
 				}
 			}
@@ -495,6 +494,12 @@ class Register extends Public_Controller {
 		{
 			unset($_FILES[$unset]);
 		}
+
+		foreach ($_FILES as $name => $array) {
+			if ($array['size'] == 0) {
+				unset($_FILES[$name]);
+			}
+		}
 	}
 
 	function config_upload($folder)
@@ -521,6 +526,7 @@ class Register extends Public_Controller {
 				$image_data =   $this->upload->data();
 				$this->resize_image($image_data['full_path']);
 				$file_data = array(
+					'name'				=> '',
 					'file_name' 		=> $image_data['file_name'],
 					'file_type'			=> $image_data['file_type'],
 					'file_size'			=> $image_data['file_size'],
@@ -543,14 +549,3 @@ class Register extends Public_Controller {
 		return FALSE;
 	}
 }
-
-				$question_data = [];
-				for ($i=0; $i < $this->data['num_of_quest']; $i++) {
-					$quest = array(
-								'content_id' => $this->data['content_id'],
-								'question'   => $this->input->post('question_'.$i),
-								'type'		 => $this->input->post('question_type_'.$i),
-								'placeholder'=> $this->input->post('question_placeholder_'.$i)
-								);
-					array_push($question_data, $quest);
-				}

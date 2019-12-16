@@ -175,60 +175,60 @@ class Contents extends Admin_Controller {
 				$question_data = [];
 				for ($i=0; $i < $this->data['num_of_quest']; $i++) {
 					$quest = array(
-								'content_id' => $this->data['content_id'],
 								'question'   => $this->input->post('question_'.$i),
 								'type'		 => $this->input->post('question_type_'.$i),
-								'placeholder'=> $this->input->post('question_placeholder_'.$i)
+								'placeholder'=> $this->input->post('question_placeholder_'.$i),
+								'description'=> '',
+								'required'   => 0,
+								'form_order' => $i+1
 								);
 					array_push($question_data, $quest);
 				}
 			}
+
 			if ($this->form_validation->run() == TRUE && $this->contents_model->create_question($question_data))
 			{
-				redirect('admin/contents', 'refresh');
+				$this->data['detail'] = $id;
 			}
-			else
-			{
-				$option_type = array(
-									'text' => 'Text',
-									'phone'=> 'Phone',
-									'email'=> 'Email'
-								);
-	            $this->data['message'] = validation_errors();
-	            $this->data['questions'] = array();
-	            for ($i=0; $i < $this->data['num_of_quest']; $i++) {
-					$question = array(
-						'name'  => 'question_'.$i,
-						'placeholder'=> lang('contents_quest'),
-						'type'  => 'text',
-		                'class' => 'form-control',
-						'value' => $this->form_validation->set_value('question_'.$i)
-					);
-					$question_type = array(
-						'name'  => 'question_type_'.$i,
-		                'class' => 'form-control',
-		                'options'=> $option_type,
-						'selected' => $this->form_validation->set_value('question_type_'.$i)
-					);
-					$question_placeholder = array(
-						'name'  => 'question_placeholder_'.$i,
-						'placeholder'=> lang('contents_quest'),
-						'type'  => 'text',
-		                'class' => 'form-control',
-						'value' => $this->form_validation->set_value('question_placeholder_'.$i)
-					);
-					$required = array(
-						'name'  => 'required_'.$i,
-						'type'  => 'checkbox',
-			            'checked'	=> set_checkbox('required_quest')
-					);
-					$question_group = array($question, $question_type, $question_placeholder, $required);
-					array_push($this->data['questions'], $question_group);
-	            }
+			$option_type = array(
+								'text' => 'Text',
+								'phone'=> 'Phone',
+								'email'=> 'Email'
+							);
+            $this->data['message'] = validation_errors();
+            $this->data['questions'] = array();
+            for ($i=0; $i < $this->data['num_of_quest']; $i++) {
+				$question = array(
+					'name'  => 'question_'.$i,
+					'placeholder'=> lang('contents_quest'),
+					'type'  => 'text',
+	                'class' => 'form-control',
+					'value' => $this->form_validation->set_value('question_'.$i)
+				);
+				$question_type = array(
+					'name'  => 'question_type_'.$i,
+	                'class' => 'form-control',
+	                'options'=> $option_type,
+					'selected' => $this->form_validation->set_value('question_type_'.$i)
+				);
+				$question_placeholder = array(
+					'name'  => 'question_placeholder_'.$i,
+					'placeholder'=> lang('contents_quest'),
+					'type'  => 'text',
+	                'class' => 'form-control',
+					'value' => $this->form_validation->set_value('question_placeholder_'.$i)
+				);
+				$required = array(
+					'name'  => 'required_'.$i,
+					'type'  => 'checkbox',
+		            'checked'	=> set_checkbox('required_quest')
+				);
+				$question_group = array($question, $question_type, $question_placeholder, $required);
+				array_push($this->data['questions'], $question_group);
+            }
+            /* Load Template */
+            $this->template->admin_render('admin/contents/create_question', $this->data);
 
-	            /* Load Template */
-	            $this->template->admin_render('admin/contents/create_question', $this->data);
-	        }
 	    }
     }
 
