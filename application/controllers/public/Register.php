@@ -70,8 +70,9 @@ class Register extends Public_Controller {
 
 	public function futsal()
 	{
-
-		$table 	= 'content_futsal_sementara';
+		$content = 'futsal';
+		$tables = $this->config->item('tables');
+		$table  = $tables['content_prefix'] . $content;
 
 		/* Validate form input */
 		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
@@ -223,8 +224,10 @@ class Register extends Public_Controller {
 	public function upload_futsal($id = NULL)
 	{
 		$content = 'futsal';
-		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
-		$this->table 	= 'content_futsal_sementara';
+		$tables = $this->config->item('tables');
+		$table  = $tables['content_prefix'] . $content;
+
+		$content_exist = $this->public_model->check_any($tables['contents'], array('slug' => $content));
 
         if (!$content_exist){
 			show_404();
@@ -256,7 +259,7 @@ class Register extends Public_Controller {
 							'is_exist',
 							function($value)
 							{
-								if ($this->public_model->check_any($this->table, array('email' => $value)))
+								if ($this->public_model->check_any($table, array('email' => $value)))
 								{
 									return TRUE;
 								}
@@ -272,7 +275,7 @@ class Register extends Public_Controller {
 		        if ($this->form_validation->run() == TRUE)
 		        {
 		        	$email = $this->input->post('email');
-		        	$data = $this->public_model->get_participant($this->table, $email, 'email');
+		        	$data = $this->public_model->get_participant($table, $email, 'email');
 		        	foreach ($data as $key) {
 		        		$id = $key->id;
 		        	}
@@ -408,7 +411,7 @@ class Register extends Public_Controller {
 								'file_ext'			=> $image_data['file_ext']
 							);
 
-							if($this->public_model->upload_payment($file_data, $payment_id, $id))
+							if($this->public_model->upload_payment($file_data, $content_id, $payment_id, $id))
 							{
 								redirect('payment/mcc?status=success');
 							}
@@ -510,6 +513,7 @@ class Register extends Public_Controller {
 		$this->config_upload($folder);
 
         $this->re_array($name);
+
 		foreach($_FILES as $field_name => $file)
 		{
 			if ($this->upload->do_upload($field_name))
@@ -540,3 +544,13 @@ class Register extends Public_Controller {
 	}
 }
 
+				$question_data = [];
+				for ($i=0; $i < $this->data['num_of_quest']; $i++) {
+					$quest = array(
+								'content_id' => $this->data['content_id'],
+								'question'   => $this->input->post('question_'.$i),
+								'type'		 => $this->input->post('question_type_'.$i),
+								'placeholder'=> $this->input->post('question_placeholder_'.$i)
+								);
+					array_push($question_data, $quest);
+				}

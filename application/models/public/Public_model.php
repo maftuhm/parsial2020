@@ -9,6 +9,7 @@ class Public_model extends CI_Model {
 		$this->load->database();
 		$this->load->helper('cookie');
 		$this->load->helper('date');
+        $this->tables = $this->config->item('tables');
     }
 
     public function input_participant($table, $data)
@@ -39,21 +40,22 @@ class Public_model extends CI_Model {
 
 	public function input_payment($data)
 	{
-		$this->db->insert('payments', $data);
-		$id = $this->db->insert_id('payments' . '_id_seq');
+		$this->db->insert($this->tables['payments'], $data);
+		$id = $this->db->insert_id($this->tables['payments'] . '_id_seq');
 		return (isset($id)) ? $id : FALSE;
 	}
 
-	public function upload_payment($file_data, $payment_id = NULL, $participant_id = NULL)
+	public function upload_payment($file_data, $content_id = NULL, $payment_id = NULL, $participant_id = NULL)
 	{
 		$file_id = $this->upload_media($file_data);
 		if ($file_id != FALSE)
 		{
 			$data_groups = array(
+				'content_id' 		=> $content_id, 
 				'payment_id' 		=> $payment_id, 
 				'participant_id' 	=> $participant_id, 
 				'media_id'			=> $file_id);
-			return $this->db->insert('participants_payments_media', $data_groups);
+			return $this->db->insert($this->tables['participants_payments_media'], $data_groups);
 		}
 		return FALSE;
 	}
@@ -74,8 +76,8 @@ class Public_model extends CI_Model {
 
 	public function upload_media($file_data)
 	{
-		$this->db->insert('media', $file_data);
-		$id = $this->db->insert_id('media' . '_id_seq');
+		$this->db->insert($this->tables['media'], $file_data);
+		$id = $this->db->insert_id($this->tables['media'] . '_id_seq');
 
 		return (isset($id)) ? $id : FALSE;
 	}

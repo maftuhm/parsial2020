@@ -54,3 +54,25 @@ $config['templates_dir']  = $config['assets_dir'] . '/templates';
 */
 $config['upload_dir']     = 'media';
 $config['avatar_dir']     = $config['upload_dir'] . '/avatar';
+
+
+/*
+| -------------------------------------------------------------------------
+| Tables.
+| -------------------------------------------------------------------------
+| Database table names.
+*/
+$config['tables']['contents']       				= 'contents';
+$config['tables']['forms']          				= 'forms';
+$config['tables']['contents_forms'] 				= 'contents_forms';
+$config['tables']['media']    						= 'media';
+$config['tables']['payments']  						= 'payments';
+$config['tables']['participants_payments_media']    = 'participants_payments_media';
+
+/*
+| -------------------------------------------------------------------------
+| Database table prefix & suffix names.
+| -------------------------------------------------------------------------
+*/
+$config['tables']['content_prefix'] 		= 'content_';
+$config['tables']['content_members_suffix'] = '_members';

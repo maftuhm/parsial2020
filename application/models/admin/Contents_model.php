@@ -6,7 +6,8 @@ class Contents_model extends CI_Model {
     public function __construct()
     {
         parent::__construct();
-        $this->table = 'contents';
+        // initialize db tables data
+        $this->tables = $this->config->item('tables');
     }
 
     public function get_data($table, $value = NULL, $get_by = 'id', $object = TRUE)
@@ -34,7 +35,6 @@ class Contents_model extends CI_Model {
 
     public function register_content($name, $title, $description, $slug, $num_of_question)
     {
-        $table = 'contents';
         $data = array(
             'created_on'    => time(),
             'name'          => $name,
@@ -43,8 +43,8 @@ class Contents_model extends CI_Model {
             'slug'          => $slug,
             'num_of_question'=> $num_of_question
         );
-        $this->db->insert($table, $data);
-        $id = $this->db->insert_id($table . '_id_seq');
+        $this->db->insert($this->tables['contents'], $data);
+        $id = $this->db->insert_id($this->tables['contents'] . '_id_seq');
         return (isset($id)) ? $id : FALSE;
     }
 
@@ -60,7 +60,7 @@ class Contents_model extends CI_Model {
 
         $this->delete_forms($id);
 
-        $this->db->delete($this->table, array('id' => $id));
+        $this->db->delete($this->tables['contents'], array('id' => $id));
 
         if ($this->db->trans_status() === FALSE)
         {
@@ -69,6 +69,7 @@ class Contents_model extends CI_Model {
         }
         $this->db->trans_commit();
     }
+
     public function delete_forms($content_id)
     {
         $table = 'contents_form';
