@@ -9,7 +9,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container">
-				<?php /*print_r($player_data); */print_r($id_file);?>
 				<form action="<?php echo current_url();?>" method="post" enctype="multipart/form-data">
 					<?php if($show_email_form): ?>
 					<fieldset>
@@ -32,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Nama Pemain</label>
 							</div>
 							<div class="input">
-								<input type="text" name="player_name[]" placeholder="misal: Fathur" />
+								<input type="text" name="name[]" placeholder="misal: Fathur" />
 							</div>
 						</div>
 						<div class="form-grup">

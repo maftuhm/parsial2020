@@ -123,7 +123,135 @@ class Register extends Public_Controller {
         $this->template->public_form_render('public/futsal', $this->data);
 	}
 
-	public function upload($content = '', $id = '')
+	public function upload($content = NULL, $id = NULL)
+	{
+		$tables 			= $this->config->item('tables');
+		$table  			= $tables['content_prefix'] . $content;
+		$table_member  		= $table . $tables['members_suffix'];
+		$table_member_media	= $table_member . $tables['media_suffix'];
+
+		$content_exist = $this->public_model->check_any($tables['contents'], array('slug' => $content));
+
+        if (!$content_exist){
+			show_404();
+        }
+        else
+		{
+	        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
+        	$this->data['header'] = $data_content['title'];
+        	$content_id = $data_content['id'];
+
+			$this->data['page_title'] = 'Upload';
+	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
+
+        	$this->data['show_email_form'] = TRUE;
+			$id_file = FALSE;
+
+	        if ($id != '') {
+	        	$this->data['show_email_form'] = FALSE;
+	        	$id = (int) $id;
+	        }
+	        else
+	        {
+		        $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table.']');
+
+		        if ($this->form_validation->run() == TRUE)
+		        {
+		        	$email = $this->input->post('email');
+		        	$data = $this->public_model->get_participant($table, $email, 'email');
+		        	foreach ($data as $key) {
+		        		$id = $key->id;
+		        	}
+		        }
+	        }
+
+			if ($this->form_validation->run() == TRUE && isset($id) && !empty($_FILES))
+			{
+				if ($content_id != NULL && $id != NULL)
+				{
+		            if ($this->public_model->check_any($table_member, array('tim_id' => $id)))
+		            {
+		            	$members_data = $this->public_model->get_participant($table_member, $id, 'tim_id');
+		            	foreach ($members_data as $column) {
+		            		$member_id[] = $column->id;
+		            	}
+
+		            	if ($this->public_model->check_any($table_member_media, array('member_id' => $member_id[0])))
+		            	{
+		            		$atts = array(
+								'icon'		=> 'error',
+								'title' 	=> 'Terjadi kesalahan!',
+								'text'		=> 'Anda sudah upload data tim!'
+							);
+							$this->data['alert_modal'] = sweet_alert($atts);
+		            	}
+		            	else
+		            	{
+							$file_type = 'ktm';
+							$file_id = $this->multiple_upload($content.'/data/', $file_type);
+		            	}
+		            }
+		            else
+		            {
+		            	/* SAMPE DI SINI SKIP DULU MAU TIDUR UDAH SUBUH */
+		            	
+		            	$members_id[] = $this->public_model->input_members($content, $members_data, array(), );
+			            if ($file_id != FALSE)
+			            {
+				            for ($i=0; $i < count($members_name); $i++)
+				            {
+				            	$members_data = array(
+				            		'tim_id' 		=> $id,
+				            		'name'			=> $player_name[$i],
+				            		'description'	=> ''
+				            		);
+
+				            	foreach ($file_type as $key => $value)
+				            	{
+				            		$members_file_id[$value] = $file_id[$value][$i]; 
+				            	}
+				            	$members_id[] = $this->public_model->input_members($content, $members_data, $members_file_id);
+				            }
+
+				            if ($members_id != FALSE)
+				            {
+								redirect(current_url('?status=success&id='.$id));
+				            }
+			            }
+			            else
+			            {
+							$atts = array(
+								'icon'		=> 'error',
+								'title' 	=> 'Terjadi kesalahan!',
+								'html'		=> $this->data['error']
+							);
+							$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			            }
+			        }
+				}
+			}
+			$status = $this->input->get('status');
+			$id = $this->input->get('id');
+
+			if ($status == 'success'&& isset($id)) {
+				$atts = array(
+					'icon'		=> 'success',
+					'title' 	=> 'Berhasil!',
+					'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+					'showConfirmButton' => 'false',
+					'footer'	=> anchor('payment/futsal/'.$id, 'Pembayaran')
+				);
+				$this->data['alert_modal'] = sweet_alert($atts);
+			}
+			else
+			{
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			}
+        	$this->template->public_form_render('public/futsal_upload', $this->data);
+		}
+	}
+
+	public function upload_mcc($content = NULL, $id = NULL)
 	{
 		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
 		$this->table 	= 'content_mcc_sementara';
@@ -223,7 +351,6 @@ class Register extends Public_Controller {
 
 	public function upload_futsal($id = NULL)
 	{
-		$this->data['id_file'] = '';
 		$content = 'futsal';
 		$tables = $this->config->item('tables');
 		$table  = $tables['content_prefix'] . $content;
@@ -251,26 +378,7 @@ class Register extends Public_Controller {
 	        }
 	        else
 	        {
-		        $this->form_validation->set_rules(
-			        'email', 'lang:email',
-			        array(
-			        	'required',
-						array(
-							'is_exist',
-							function($value)
-							{
-								if ($this->public_model->check_any($table, array('email' => $value)))
-								{
-									return TRUE;
-								}
-								return FALSE;
-							}
-						)
-			        ),
-			        array(
-			        	'is_exist' => '{field} ' . set_value('email') . ' belum terdaftar.'
-			        )
-				);
+		        $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table.']');
 
 		        if ($this->form_validation->run() == TRUE)
 		        {
@@ -575,6 +683,15 @@ class Register extends Public_Controller {
 		{
 			return $id_file;
 		}
+		return FALSE;
+	}
+	function email_exists($value, $table)
+	{
+		if ($this->public_model->check_any($table, array('email' => $value)))
+		{
+			return TRUE;
+		}
+		$this->form_validation->set_message('email_exists', 'Email '. $value . ' belum terdaftar.');
 		return FALSE;
 	}
 }

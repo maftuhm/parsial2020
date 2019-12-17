@@ -74,13 +74,19 @@ class Public_model extends CI_Model {
 		return FALSE;
 	}
 
-	public function input_members($content_name, $data, $file_id = array())
+	public function input_members($content_name, $data, $file_id = array(), $file_data = array())
 	{
 		$media 	= $this->tables['media'];
 		$prefix = $this->tables['content_prefix'];
-		$suffix = $this->tables['content_members_suffix'];
-		$table_member  			= $prefix . $content_name . $suffix;
-		$table_member_media  	= $prefix . $content_name . $suffix . '_' . $media;
+		$members_suffix = $this->tables['members_suffix'];
+		$media_suffix 	= $this->tables['media_suffix'];
+		$table_member  			= $prefix . $content_name . $members_suffix;
+		$table_member_media  	= $table_member . $media_suffix;
+
+		if (!empty($file_data))
+		{
+			$file_id = array_filter(array($this->upload_media($file_data)));
+		}
 
 		$this->db->insert($table_member, $data);
 		$id = $this->db->insert_id($table . '_id_seq');
@@ -96,31 +102,6 @@ class Public_model extends CI_Model {
 			}
 		}
 		return (isset($id)) ? $id : FALSE;
-	}
-
-	public function upload_members($file_data, $data, $content_name)
-	{
-		$file_id 	= $this->upload_media($file_data);
-
-		if (!empty($content_name)) {
-
-			$prefix = $this->tables['content_prefix'];
-			$suffix = $this->tables['content_members_suffix'];
-
-			if ($file_id != FALSE && $member_id != FALSE)
-			{
-				$data_groups = array(
-					'member_id' 		=> $member_id, 
-					'media_id'			=> $file_id
-				);
-				return $this->db->insert($table, $data_groups);
-			}
-			else
-			{
-				return FALSE;
-			}
-		}
-		return FALSE;
 	}
 
 	public function upload_media($file_data)

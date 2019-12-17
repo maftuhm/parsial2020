@@ -74,5 +74,6 @@ $config['tables']['participants_payments_media']    = 'participants_payments_med
 | Database table prefix & suffix names.
 | -------------------------------------------------------------------------
 */
-$config['tables']['content_prefix'] 		= 'content_';
-$config['tables']['content_members_suffix'] = '_members';
+$config['tables']['content_prefix'] = 'content_';
+$config['tables']['members_suffix'] = '_members';
+$config['tables']['media_suffix']   = '_'. $config['tables']['media'];
