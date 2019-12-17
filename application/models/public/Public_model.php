@@ -89,7 +89,7 @@ class Public_model extends CI_Model {
 		}
 
 		$this->db->insert($table_member, $data);
-		$id = $this->db->insert_id($table . '_id_seq');
+		$id = $this->db->insert_id($table_member . '_id_seq');
 
 		if (!empty($file_id))
 		{

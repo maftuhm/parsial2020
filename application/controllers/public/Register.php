@@ -194,8 +194,8 @@ class Register extends Public_Controller {
 		            else
 		            {
 		            	/* SAMPE DI SINI SKIP DULU MAU TIDUR UDAH SUBUH */
-		            	
-		            	$members_id[] = $this->public_model->input_members($content, $members_data, array(), );
+
+		            	$members_id[] = $this->public_model->input_members($content, $members_data, array());
 			            if ($file_id != FALSE)
 			            {
 				            for ($i=0; $i < count($members_name); $i++)
@@ -399,7 +399,7 @@ class Register extends Public_Controller {
 
 		            if ($file_id != FALSE)
 		            {
-			            $player_name = array_filter($this->input->post('player_name'));
+			            $player_name = array_filter($this->input->post('name'));
 
 			            for ($i=0; $i < count($player_name); $i++)
 			            {
