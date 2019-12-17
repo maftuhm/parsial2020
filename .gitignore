@@ -1,4 +1,6 @@
 application/session/
 application/config/database.php
+media/mcc/
 media/mcc/data/
+media/futsal/
 media/futsal/data/
