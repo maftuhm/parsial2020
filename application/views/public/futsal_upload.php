@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="form-container">
+				<?php /*print_r($player_data); */print_r($id_file);?>
 				<form action="<?php echo current_url();?>" method="post" enctype="multipart/form-data">
 					<?php if($show_email_form): ?>
 					<fieldset>

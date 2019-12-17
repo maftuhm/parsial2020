@@ -223,6 +223,7 @@ class Register extends Public_Controller {
 
 	public function upload_futsal($id = NULL)
 	{
+		$this->data['id_file'] = '';
 		$content = 'futsal';
 		$tables = $this->config->item('tables');
 		$table  = $tables['content_prefix'] . $content;
@@ -285,9 +286,32 @@ class Register extends Public_Controller {
 			{
 				if ($content_id != NULL && $id != NULL)
 				{
-		            if ($this->multiple_upload('futsal/data/', array('photo', 'ktm'), $content_id, $id) != FALSE)
+					$file_type = array('photo', 'ktm');
+					$file_id = $this->multiple_upload('futsal/data/', $file_type);
+
+		            if ($file_id != FALSE)
 		            {
-						redirect('upload/futsal?status=success&id='.$id);
+			            $player_name = array_filter($this->input->post('player_name'));
+
+			            for ($i=0; $i < count($player_name); $i++)
+			            {
+			            	$player_data = array(
+			            		'tim_id' 		=> $id,
+			            		'name'			=> $player_name[$i],
+			            		'description'	=> ''
+			            		);
+
+			            	foreach ($file_type as $key => $value)
+			            	{
+			            		$player_file_id[$value] = $file_id[$value][$i]; 
+			            	}
+			            	$player_id[] = $this->public_model->input_members('futsal', $player_data, $player_file_id);
+			            }
+
+			            if ($player_id != FALSE)
+			            {
+							redirect('upload/futsal?status=success&id='.$id);
+			            }
 		            }
 		            else
 		            {
@@ -346,7 +370,7 @@ class Register extends Public_Controller {
         	$this->data['show_email_form'] = TRUE;
 			$id_file = FALSE;
 
-			$this->config_upload('mcc/');
+			$this->config_upload($content.'/');
 
 	        if ($id != '') {
 	        	$id = (int) $id;
@@ -404,6 +428,7 @@ class Register extends Public_Controller {
 						{
 							$this->resize_image($image_data['full_path']);
 							$file_data = array(
+								'name'				=> 'payment',
 								'file_name' 		=> $image_data['file_name'],
 								'file_type'			=> $image_data['file_type'],
 								'file_size'			=> $image_data['file_size'],
@@ -478,12 +503,12 @@ class Register extends Public_Controller {
 				$i = 1;
 				foreach($val as $v)
 				{
-					$field_name = $name . '_' . $i;
-					$_FILES[$field_name][$key] = $v;
+					$_FILES[$name . '_' . $i][$key] = $v;
 					$i++;
 				}
 			}
 		}
+
 		if(is_array($unset))
 		{
 			foreach ($unset as $key => $value) {
@@ -495,8 +520,9 @@ class Register extends Public_Controller {
 			unset($_FILES[$unset]);
 		}
 
-		foreach ($_FILES as $name => $array) {
-			if ($array['size'] == 0) {
+		foreach ($_FILES as $name => $value)
+		{
+			if ($value['size'] == 0) {
 				unset($_FILES[$name]);
 			}
 		}
@@ -512,7 +538,7 @@ class Register extends Public_Controller {
         $this->load->library('upload', $config);
 	}
 
-	function multiple_upload($folder, $name = array(), $content_id = NULL, $participant_id = NULL)
+	function multiple_upload($folder, $name = array(), $content_name = NULL, $data = NULL)
 	{
 		$error = TRUE;
 		$this->config_upload($folder);
@@ -525,15 +551,16 @@ class Register extends Public_Controller {
 			{
 				$image_data =   $this->upload->data();
 				$this->resize_image($image_data['full_path']);
-				$file_data = array(
-					'name'				=> '',
+				$file_type = explode('_', $field_name)[0];
+
+				$data_file = array(
+					'name'				=> $file_type,
 					'file_name' 		=> $image_data['file_name'],
 					'file_type'			=> $image_data['file_type'],
 					'file_size'			=> $image_data['file_size'],
 					'file_ext'			=> $image_data['file_ext']
 				);
-
-				$this->public_model->upload($file_data, $content_id, $participant_id);
+				$id_file[$file_type][] = $this->public_model->upload_media($data_file);
 				$error = FALSE;
 			}
 			else
@@ -543,8 +570,10 @@ class Register extends Public_Controller {
 				break;
 			}
 		}
-		if (!$error) {
-			return TRUE;
+
+		if (!$error)
+		{
+			return $id_file;
 		}
 		return FALSE;
 	}

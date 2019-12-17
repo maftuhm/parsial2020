@@ -74,36 +74,46 @@ class Public_model extends CI_Model {
 		return FALSE;
 	}
 
-	public function input_members($data, $content_name)
+	public function input_members($content_name, $data, $file_id = array())
 	{
+		$media 	= $this->tables['media'];
 		$prefix = $this->tables['content_prefix'];
 		$suffix = $this->tables['content_members_suffix'];
-		$table  = $prefix . $content_name . $suffix;
+		$table_member  			= $prefix . $content_name . $suffix;
+		$table_member_media  	= $prefix . $content_name . $suffix . '_' . $media;
 
-		$this->db->insert($table, $data);
+		$this->db->insert($table_member, $data);
 		$id = $this->db->insert_id($table . '_id_seq');
 
+		if (!empty($file_id))
+		{
+			foreach ($file_id as $key => $value) {
+				$data_groups = array(
+					'member_id' 		=> $id, 
+					'media_id'			=> $value
+				);
+				$this->db->insert($table_member_media, $data_groups);
+			}
+		}
 		return (isset($id)) ? $id : FALSE;
 	}
 
-	public function upload_members($file_data, $content_name = '', $data = array())
+	public function upload_members($file_data, $data, $content_name)
 	{
-		$file_id = $this->upload_media($file_data);
+		$file_id 	= $this->upload_media($file_data);
 
 		if (!empty($content_name)) {
 
-			$media 	= $this->tables['media'];
 			$prefix = $this->tables['content_prefix'];
 			$suffix = $this->tables['content_members_suffix'];
-			$table  = $prefix . $content_name . $suffix . '_' . $media;
 
-			if ($file_id != FALSE)
+			if ($file_id != FALSE && $member_id != FALSE)
 			{
 				$data_groups = array(
-					'content_id' 		=> $content_id, 
-					'participant_id' 	=> $participant_id, 
-					'media_id'			=> $file_id);
-				return $this->db->insert('participants_media', $data_groups);
+					'member_id' 		=> $member_id, 
+					'media_id'			=> $file_id
+				);
+				return $this->db->insert($table, $data_groups);
 			}
 			else
 			{
