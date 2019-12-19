@@ -58,7 +58,7 @@ class Public_model extends CI_Model {
 				'payment_id' 		=> $payment_id, 
 				'participant_id' 	=> $participant_id, 
 				'media_id'			=> $file_id);
-			return $this->db->insert($this->tables['participants_payments_media'], $data_groups);
+			return $this->db->insert($this->tables['payments_media'], $data_groups);
 		}
 		return FALSE;
 	}

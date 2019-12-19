@@ -29,6 +29,7 @@ class Register extends Public_Controller {
 		$this->form_validation->set_rules('member_major', 'lang:member_major', 'required');
 		$this->form_validation->set_rules('member_email', 'lang:member_email', 'required|valid_email');
 		$this->form_validation->set_rules('member_phone', 'lang:member_phone', 'required');
+		$this->form_validation->set_message('is_unique', 'Email ' . set_value('leader_email') . ' sudah terdaftar.');
 
 		$id = FALSE;
 		if ($this->form_validation->run() == TRUE) {
@@ -91,6 +92,7 @@ class Register extends Public_Controller {
 		$this->form_validation->set_rules('email', 'lang:email', 'required|valid_email|is_unique['.$table.'.email]');
 		$this->form_validation->set_rules('official', 'lang:official', 'required');
 		$this->form_validation->set_rules('coach', 'lang:coach', 'required');
+		$this->form_validation->set_message('is_unique', 'Email ' . set_value('email') . ' sudah terdaftar.');
 
 		$id = FALSE;
 		if ($this->form_validation->run() == TRUE) {
@@ -373,9 +375,15 @@ class Register extends Public_Controller {
 		$file_type = 'ktm';
 		$this->data['all_file'] = '';
 
-        if ($id != '') {
-        	$this->data['show_email_form'] = FALSE;
-        	$id = (int) $id;
+        if ($id != '')
+        {
+	        	$id = (int) $id;
+	        	
+	        	if(!$this->public_model->check_any($table, array('id' => $id)))
+	        	{
+					show_404();
+	        	}
+	        	$this->data['show_email_form'] = FALSE;
         }
         else
         {
@@ -388,6 +396,10 @@ class Register extends Public_Controller {
 	        	foreach ($data as $key) {
 	        		$id = $key->id;
 	        	}
+	        }
+	        else
+	        {
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
 	        }
         }
 
@@ -407,7 +419,9 @@ class Register extends Public_Controller {
 	            		$atts = array(
 							'icon'		=> 'error',
 							'title' 	=> 'Terjadi kesalahan!',
-							'text'		=> 'Anda sudah upload data tim!'
+							'html'		=> 'Anda sudah upload data tim!<br>Silahkan upload bukti pembayaran melalui link dibawah',
+							'showConfirmButton' => 'false',
+							'footer'	=> anchor('payment/mcc/'.$id, 'Pembayaran')
 						);
 						$this->data['alert_modal'] = sweet_alert($atts);
 	            	}
@@ -482,9 +496,15 @@ class Register extends Public_Controller {
         	$this->data['show_email_form'] = TRUE;
 			$id_file = FALSE;
 
-	        if ($id != '') {
-	        	$this->data['show_email_form'] = FALSE;
+	        if ($id != '')
+	        {
 	        	$id = (int) $id;
+	        	
+	        	if(!$this->public_model->check_any($table, array('id' => $id)))
+	        	{
+					show_404();
+	        	}
+	        	$this->data['show_email_form'] = FALSE;
 	        }
 	        else
 	        {
@@ -565,15 +585,17 @@ class Register extends Public_Controller {
 
 	public function payment($content = '', $id = '')
 	{
-		$content_exist = $this->public_model->check_any('contents', array('slug' => $content));
-		$this->table 	= 'content_mcc_sementara';
+		$tables 				= $this->config->item('tables');
+		$table_content 			= $tables['content_prefix'] . $content;
+		$table_payments_media	= $tables['payments_media'];
+		$content_exist 			= $this->public_model->check_any($tables['contents'], array('slug' => $content));
 
-        if (!$content_exist){
+        if (!$content_exist)
+        {
 			show_404();
         }
         else
 		{
-
 	        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
         	$this->data['header'] = $data_content['title'];
         	$content_id = $data_content['id'];
@@ -590,109 +612,103 @@ class Register extends Public_Controller {
 
 			$this->config_upload($content.'/');
 
-	        if ($id != '') {
+	        if ($id != '')
+	        {
 	        	$id = (int) $id;
+	        	
+	        	if(!$this->public_model->check_any($table_content, array('id' => $id)))
+	        	{
+					show_404();
+	        	}
 	        	$this->data['show_email_form'] = FALSE;
 	        }
 	        else
 	        {
-		        $this->form_validation->set_rules(
-			        'leader_email', 'lang:leader_email',
-			        array(
-			        	'required',
-						array(
-							'is_exist',
-							function($value)
-							{
-								if ($this->public_model->check_any($this->table, array('leader_email' => $value)))
-								{
-									return TRUE;
-								}
-								return FALSE;
-							}
-						)
-			        ),
-			        array(
-			        	'is_exist' => '{field} ' . set_value('leader_email') . ' belum terdaftar.'
-			        )
-				);
+		        $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table_content.']');
 
 		        if ($this->form_validation->run() == TRUE)
 		        {
-		        	$email = $this->input->post('leader_email');
-		        	$data = $this->public_model->get_participant($this->table, $email, 'leader_email');
+		        	$email = $this->input->post('email');
+		        	$data = $this->public_model->get_participant($table_content, $email, 'email');
 		        	foreach ($data as $key) {
 		        		$id = $key->id;
 		        	}
 		        }
+		        else
+		        {
+					$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+		        }
 	        }
 
-			if (isset($id) && !empty($_FILES))
-			{
+	        if (isset($id) && !empty($_FILES))
+	        {
 				if ($content_id != NULL && $id != NULL)
 				{
-		            if ($this->upload->do_upload('userfile') == TRUE)
-		            {
-						$image_data =   $this->upload->data();
-						$payment_data = array(
-							'time'			=> time(),
-							'bank_name'		=> $this->input->post('bank_name'),
-							'account_owner' => $this->input->post('account_owner'),
-							'account_number'=> $this->input->post('account_number')
-							);
-						$payment_id = $this->public_model->input_payment($payment_data);
-
-						if ($payment_id != FALSE)
-						{
-							$this->resize_image($image_data['full_path']);
-							$file_data = array(
-								'name'				=> 'payment',
-								'file_name' 		=> $image_data['file_name'],
-								'file_type'			=> $image_data['file_type'],
-								'file_size'			=> $image_data['file_size'],
-								'file_ext'			=> $image_data['file_ext']
-							);
-
-							if($this->public_model->upload_payment($file_data, $content_id, $payment_id, $id))
-							{
-								$atts = array(
-									'icon'		=> 'success',
-									'title' 	=> 'Berhasil!',
-									'text'		=> 'Upload bukti pembayaran berhasil.'
+		        	if ($this->public_model->check_any($table_payments_media, array('content_id' => $content_id, 'participant_id' => $id)))
+		        	{
+		        		$atts = array(
+							'icon'		=> 'error',
+							'title' 	=> 'Upload gagal!',
+							'text'		=> 'Anda sudah upload bukti pembayaran!'
+						);
+						$this->data['alert_modal'] = sweet_alert($atts);
+		        	}
+		        	else
+		        	{
+			            if ($this->upload->do_upload('userfile') == TRUE)
+			            {
+							$image_data =   $this->upload->data();
+							$payment_data = array(
+								'time'			=> time(),
+								'bank_name'		=> $this->input->post('bank_name'),
+								'account_owner' => $this->input->post('account_owner'),
+								'account_number'=> $this->input->post('account_number')
 								);
-								$this->data['alert_modal'] = sweet_alert($atts);
+							$payment_id = $this->public_model->input_payment($payment_data);
+
+							if ($payment_id != FALSE)
+							{
+								$this->resize_image($image_data['full_path']);
+								$file_data = array(
+									'name'				=> 'payment',
+									'file_name' 		=> $image_data['file_name'],
+									'file_type'			=> $image_data['file_type'],
+									'file_size'			=> $image_data['file_size'],
+									'file_ext'			=> $image_data['file_ext']
+								);
+
+								if($this->public_model->upload_payment($file_data, $content_id, $payment_id, $id))
+								{
+									$atts = array(
+										'icon'		=> 'success',
+										'title' 	=> 'Berhasil!',
+										'text'		=> 'Upload bukti pembayaran berhasil.'
+									);
+									$this->data['alert_modal'] = sweet_alert($atts);
+								}
+								else
+								{
+									$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+								}
 							}
 							else
 							{
 								$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
 							}
-						}
-						else
-						{
-							$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
-						}
-		            }
-		            else
-		            {
-						$atts = array(
-							'icon'		=> 'error',
-							'title' 	=> 'Terjadi kesalahan!',
-							'text'		=> $this->upload->display_errors()
-						);
-						$this->data['alert_modal'] = (validation_errors(sweet_alert_open(), sweet_alert_close()) ? validation_errors(sweet_alert_open(), sweet_alert_close()) : sweet_alert($atts));
-		            }
+			            }
+			            else
+			            {
+							$atts = array(
+								'icon'		=> 'error',
+								'title' 	=> 'Terjadi kesalahan!',
+								'text'		=> $this->upload->display_errors()
+							);
+							$this->data['alert_modal'] = (validation_errors(sweet_alert_open(), sweet_alert_close()) ? validation_errors(sweet_alert_open(), sweet_alert_close()) : sweet_alert($atts));
+			            }
+					}
 				}
-			}
+	        }
 
-			$status = $this->input->get('status');
-
-			if ($status == 'success') {
-
-			}
-			else
-			{
-				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
-			}
         	$this->template->public_form_render('public/payment', $this->data);
 		}
 	}

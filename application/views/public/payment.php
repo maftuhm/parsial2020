@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Email</label>
 							</div>
 							<div class="input">
-								<input type="email" name="leader_email" placeholder="misal: email_anda@gmail.com" required />
+								<input type="email" name="email" placeholder="misal: email_anda@gmail.com" required />
 							</div>
 						</div>
 						<?php endif;?>
