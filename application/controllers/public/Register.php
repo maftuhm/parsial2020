@@ -562,7 +562,7 @@ class Register extends Public_Controller {
 							'title' 	=> 'Terjadi kesalahan!',
 							'html'		=> $this->data['error']
 						);
-						$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+						$this->data['alert_modal'] = sweet_alert($atts);
 		            }
 		    	}
 			}
@@ -679,12 +679,22 @@ class Register extends Public_Controller {
 								}
 								else
 								{
-									$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+									$atts = array(
+										'icon'		=> 'error',
+										'title' 	=> 'Terjadi kesalahan!',
+										'text'		=> 'Mohon maaf atas ketidaknyamanan anda. Harap hubungi contact person yang sudah disedikan'
+									);
+									$this->data['alert_modal'] = sweet_alert($atts);
 								}
 							}
 							else
 							{
-								$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+									$atts = array(
+										'icon'		=> 'error',
+										'title' 	=> 'Terjadi kesalahan!',
+										'text'		=> 'Mohon maaf atas ketidaknyamanan anda. Harap hubungi contact person yang sudah disedikan'
+									);
+									$this->data['alert_modal'] = sweet_alert($atts);
 							}
 			            }
 			            else

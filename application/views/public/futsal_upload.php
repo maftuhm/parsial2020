@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 					</fieldset>
 					<?php endif;?>
-					<?php for ($i=1; $i <=10 ; $i++):?>
+					<?php $n = 5; for ($i=1; $i <=10 ; $i++):?>
 					<fieldset>
 						<legend>Pemain <?php echo $i;?></legend>
 						<div class="form-grup">
@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Nama Pemain</label>
 							</div>
 							<div class="input">
-								<input type="text" name="name[]" placeholder="misal: Fathur" <?php if($i<=2){echo 'required';}?> />
+								<input type="text" name="name[]" placeholder="misal: Fathur" <?php if($i<=$n){echo 'required';}?> />
 							</div>
 						</div>
 						<div class="form-grup">
@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Foto pemain</label>
 							</div>
 							<div class="input">
-								<input type="file" class="form-upload" name="photo[]" <?php if($i<=2){echo 'required';}?> />
+								<input type="file" class="form-upload" name="photo[]" <?php if($i<=$n){echo 'required';}?> />
 							</div>
 						</div>
 						<div class="form-grup">
@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>KTM Pemain</label>
 						</div>
 							<div class="input">
-								<input type="file" class="form-upload" name="ktm[]" <?php if($i<=2){echo 'required';}?> />
+								<input type="file" class="form-upload" name="ktm[]" <?php if($i<=$n){echo 'required';}?> />
 							</div>
 						</div>
 					</fieldset>
