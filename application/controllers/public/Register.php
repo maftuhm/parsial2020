@@ -146,6 +146,8 @@ class Register extends Public_Controller {
 
         	$this->data['show_email_form'] = TRUE;
 			$id_file = FALSE;
+			$file_type = array('photo', 'ktm');
+
 
 	        if ($id != '') {
 	        	$this->data['show_email_form'] = FALSE;
@@ -165,7 +167,7 @@ class Register extends Public_Controller {
 		        }
 	        }
 
-			if ($this->form_validation->run() == TRUE && isset($id) && !empty($_FILES))
+			if ($this->form_validation->run() == TRUE && isset($id))
 			{
 				if ($content_id != NULL && $id != NULL)
 				{
@@ -187,20 +189,21 @@ class Register extends Public_Controller {
 		            	}
 		            	else
 		            	{
-							$file_type = 'ktm';
-							$file_id = $this->multiple_upload($content.'/data/', $file_type);
+		            		if (!empty($_FILES))
+		            		{
+								$file_id = $this->multiple_upload($content.'/data/', $file_type);
+		            		}
 		            	}
 		            }
 		            else
 		            {
-		            	/* SAMPE DI SINI SKIP DULU MAU TIDUR UDAH SUBUH */
-
-		            	$members_id[] = $this->public_model->input_members($content, $members_data, array());
-			            if ($file_id != FALSE)
+						$file_id = $this->multiple_upload($content.'/data/', $file_type);
+		            	if ($file_id != FALSE)
 			            {
-				            for ($i=0; $i < count($members_name); $i++)
+				            $player_name = array_filter($this->input->post('name'));
+				            for ($i=0; $i < count($player_name); $i++)
 				            {
-				            	$members_data = array(
+				            	$player_data = array(
 				            		'tim_id' 		=> $id,
 				            		'name'			=> $player_name[$i],
 				            		'description'	=> ''
@@ -208,14 +211,14 @@ class Register extends Public_Controller {
 
 				            	foreach ($file_type as $key => $value)
 				            	{
-				            		$members_file_id[$value] = $file_id[$value][$i]; 
+				            		$player_file_id[$value] = $file_id[$value][$i]; 
 				            	}
-				            	$members_id[] = $this->public_model->input_members($content, $members_data, $members_file_id);
+				            	$player_id[] = $this->public_model->input_members('futsal', $player_data, $player_file_id);
 				            }
 
-				            if ($members_id != FALSE)
+				            if ($player_id != FALSE)
 				            {
-								redirect(current_url('?status=success&id='.$id));
+								redirect('upload/futsal?status=success&id='.$id);
 				            }
 			            }
 			            else

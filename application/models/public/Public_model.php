@@ -184,7 +184,3 @@ class Public_model extends CI_Model {
 		return $ip_address;
 	}
 }
-
-
-
-
