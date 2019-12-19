@@ -14,7 +14,10 @@ class Public_model extends CI_Model {
 
     public function input_participant($table, $data)
     {
-
+    	if (is_array($data[0]))
+    	{
+	    	return $this->db->insert_batch($table, $data);
+    	}
     	return $this->db->insert($table, $data);
     }
     

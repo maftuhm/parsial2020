@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Nama Pemain</label>
 							</div>
 							<div class="input">
-								<input type="text" name="name[]" placeholder="misal: Fathur" <?php if($i<=5){echo 'required';}?> />
+								<input type="text" name="name[]" placeholder="misal: Fathur" <?php if($i<=2){echo 'required';}?> />
 							</div>
 						</div>
 						<div class="form-grup">
@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>Foto pemain</label>
 							</div>
 							<div class="input">
-								<input type="file" class="form-upload" name="photo[]" <?php if($i<=5){echo 'required';}?> />
+								<input type="file" class="form-upload" name="photo[]" <?php if($i<=2){echo 'required';}?> />
 							</div>
 						</div>
 						<div class="form-grup">
@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<label>KTM Pemain</label>
 						</div>
 							<div class="input">
-								<input type="file" class="form-upload" name="ktm[]" <?php if($i<=5){echo 'required';}?> />
+								<input type="file" class="form-upload" name="ktm[]" <?php if($i<=2){echo 'required';}?> />
 							</div>
 						</div>
 					</fieldset>
