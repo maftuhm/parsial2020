@@ -127,136 +127,136 @@ class Register extends Public_Controller {
         $this->template->public_form_render('public/futsal', $this->data);
 	}
 
-	// public function upload($content = NULL, $id = NULL)
-	// {
-	// 	$tables 			= $this->config->item('tables');
-	// 	$table  			= $tables['content_prefix'] . $content;
-	// 	$table_member  		= $table . $tables['members_suffix'];
-	// 	$table_member_media	= $table_member . $tables['media_suffix'];
+	public function upload($content = NULL, $id = NULL)
+	{
+		$tables 			= $this->config->item('tables');
+		$table  			= $tables['content_prefix'] . $content;
+		$table_member  		= $table . $tables['members_suffix'];
+		$table_member_media	= $table_member . $tables['media_suffix'];
 
-	// 	$content_exist = $this->public_model->check_any($tables['contents'], array('slug' => $content));
+		$content_exist = $this->public_model->check_any($tables['contents'], array('slug' => $content));
 
- //        if (!$content_exist){
-	// 		show_404();
- //        }
- //        else
-	// 	{
-	//         $data_content = (array) $this->contents_common_model->get_contents($content, '*');
- //        	$this->data['header'] = $data_content['title'];
- //        	$content_id = $data_content['id'];
+        if (!$content_exist){
+			show_404();
+        }
+        else
+		{
+	        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
+        	$this->data['header'] = $data_content['title'];
+        	$content_id = $data_content['id'];
 
-	// 		$this->data['page_title'] = 'Upload';
-	//         $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
+			$this->data['page_title'] = 'Upload';
+	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
 
- //        	$this->data['show_email_form'] = TRUE;
-	// 		$id_file = FALSE;
-	// 		$file_type = array('photo', 'ktm');
+        	$this->data['show_email_form'] = TRUE;
+			$id_file = FALSE;
+			$file_type = array('photo', 'ktm');
 
 
-	//         if ($id != '') {
-	//         	$this->data['show_email_form'] = FALSE;
-	//         	$id = (int) $id;
-	//         }
-	//         else
-	//         {
-	// 	        $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table.']');
+	        if ($id != '') {
+	        	$this->data['show_email_form'] = FALSE;
+	        	$id = (int) $id;
+	        }
+	        else
+	        {
+		        $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table.']');
 
-	// 	        if ($this->form_validation->run() == TRUE)
-	// 	        {
-	// 	        	$email = $this->input->post('email');
-	// 	        	$data = $this->public_model->get_participant($table, $email, 'email');
-	// 	        	foreach ($data as $key) {
-	// 	        		$id = $key->id;
-	// 	        	}
-	// 	        }
-	//         }
+		        if ($this->form_validation->run() == TRUE)
+		        {
+		        	$email = $this->input->post('email');
+		        	$data = $this->public_model->get_participant($table, $email, 'email');
+		        	foreach ($data as $key) {
+		        		$id = $key->id;
+		        	}
+		        }
+	        }
 
-	// 		if ($this->form_validation->run() == TRUE && isset($id))
-	// 		{
-	// 			if ($content_id != NULL && $id != NULL)
-	// 			{
-	// 	            if ($this->public_model->check_any($table_member, array('tim_id' => $id)))
-	// 	            {
-	// 	            	$members_data = $this->public_model->get_participant($table_member, $id, 'tim_id');
-	// 	            	foreach ($members_data as $column) {
-	// 	            		$member_id[] = $column->id;
-	// 	            	}
+			if ($this->form_validation->run() == TRUE && isset($id))
+			{
+				if ($content_id != NULL && $id != NULL)
+				{
+		            if ($this->public_model->check_any($table_member, array('tim_id' => $id)))
+		            {
+		            	$members_data = $this->public_model->get_participant($table_member, $id, 'tim_id');
+		            	foreach ($members_data as $column) {
+		            		$member_id[] = $column->id;
+		            	}
 
-	// 	            	if ($this->public_model->check_any($table_member_media, array('member_id' => $member_id[0])))
-	// 	            	{
-	// 	            		$atts = array(
-	// 							'icon'		=> 'error',
-	// 							'title' 	=> 'Terjadi kesalahan!',
-	// 							'text'		=> 'Anda sudah upload data tim!'
-	// 						);
-	// 						$this->data['alert_modal'] = sweet_alert($atts);
-	// 	            	}
-	// 	            	else
-	// 	            	{
-	// 	            		if (!empty($_FILES))
-	// 	            		{
-	// 							$file_id = $this->multiple_upload($content.'/data/', $file_type);
-	// 	            		}
-	// 	            	}
-	// 	            }
-	// 	            else
-	// 	            {
-	// 					$file_id = $this->multiple_upload($content.'/data/', $file_type);
-	// 	            	if ($file_id != FALSE)
-	// 		            {
-	// 			            $player_name = array_filter($this->input->post('name'));
-	// 			            for ($i=0; $i < count($player_name); $i++)
-	// 			            {
-	// 			            	$player_data = array(
-	// 			            		'tim_id' 		=> $id,
-	// 			            		'name'			=> $player_name[$i],
-	// 			            		'description'	=> ''
-	// 			            		);
+		            	if ($this->public_model->check_any($table_member_media, array('member_id' => $member_id[0])))
+		            	{
+		            		$atts = array(
+								'icon'		=> 'error',
+								'title' 	=> 'Terjadi kesalahan!',
+								'text'		=> 'Anda sudah upload data tim!'
+							);
+							$this->data['alert_modal'] = sweet_alert($atts);
+		            	}
+		            	else
+		            	{
+		            		if (!empty($_FILES))
+		            		{
+								$file_id = $this->multiple_upload($content.'/data/', $file_type);
+		            		}
+		            	}
+		            }
+		            else
+		            {
+						$file_id = $this->multiple_upload($content.'/data/', $file_type);
+		            	if ($file_id != FALSE)
+			            {
+				            $player_name = array_filter($this->input->post('name'));
+				            for ($i=0; $i < count($player_name); $i++)
+				            {
+				            	$player_data = array(
+				            		'tim_id' 		=> $id,
+				            		'name'			=> $player_name[$i],
+				            		'description'	=> ''
+				            		);
 
-	// 			            	foreach ($file_type as $key => $value)
-	// 			            	{
-	// 			            		$player_file_id[$value] = $file_id[$value][$i]; 
-	// 			            	}
-	// 			            	$player_id[] = $this->public_model->input_members('futsal', $player_data, $player_file_id);
-	// 			            }
+				            	foreach ($file_type as $key => $value)
+				            	{
+				            		$player_file_id[$value] = $file_id[$value][$i]; 
+				            	}
+				            	$player_id[] = $this->public_model->input_members('futsal', $player_data, $player_file_id);
+				            }
 
-	// 			            if ($player_id != FALSE)
-	// 			            {
-	// 							redirect('upload/futsal?status=success&id='.$id);
-	// 			            }
-	// 		            }
-	// 		            else
-	// 		            {
-	// 						$atts = array(
-	// 							'icon'		=> 'error',
-	// 							'title' 	=> 'Terjadi kesalahan!',
-	// 							'html'		=> $this->data['error']
-	// 						);
-	// 						$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
-	// 		            }
-	// 		        }
-	// 			}
-	// 		}
-	// 		$status = $this->input->get('status');
-	// 		$id = $this->input->get('id');
+				            if ($player_id != FALSE)
+				            {
+								redirect('upload/futsal?status=success&id='.$id);
+				            }
+			            }
+			            else
+			            {
+							$atts = array(
+								'icon'		=> 'error',
+								'title' 	=> 'Terjadi kesalahan!',
+								'html'		=> $this->data['error']
+							);
+							$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			            }
+			        }
+				}
+			}
+			$status = $this->input->get('status');
+			$id = $this->input->get('id');
 
-	// 		if ($status == 'success'&& isset($id)) {
-	// 			$atts = array(
-	// 				'icon'		=> 'success',
-	// 				'title' 	=> 'Berhasil!',
-	// 				'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
-	// 				'showConfirmButton' => 'false',
-	// 				'footer'	=> anchor('payment/futsal/'.$id, 'Pembayaran')
-	// 			);
-	// 			$this->data['alert_modal'] = sweet_alert($atts);
-	// 		}
-	// 		else
-	// 		{
-	// 			$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
-	// 		}
- //        	$this->template->public_form_render('public/futsal_upload', $this->data);
-	// 	}
-	// }
+			if ($status == 'success'&& isset($id)) {
+				$atts = array(
+					'icon'		=> 'success',
+					'title' 	=> 'Berhasil!',
+					'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+					'showConfirmButton' => 'false',
+					'footer'	=> anchor('payment/futsal/'.$id, 'Pembayaran')
+				);
+				$this->data['alert_modal'] = sweet_alert($atts);
+			}
+			else
+			{
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			}
+        	$this->template->public_form_render('public/futsal_upload', $this->data);
+		}
+	}
 
 	// public function upload_mcc($content = NULL, $id = NULL)
 	// {
@@ -372,18 +372,12 @@ class Register extends Public_Controller {
         $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
 
     	$this->data['show_email_form'] = TRUE;
-		$file_type = 'ktm';
-		$this->data['all_file'] = '';
 
         if ($id != '')
         {
-	        	$id = (int) $id;
-	        	
-	        	if(!$this->public_model->check_any($table, array('id' => $id)))
-	        	{
-					show_404();
-	        	}
-	        	$this->data['show_email_form'] = FALSE;
+			$id = (int) $id;
+			if(!$this->public_model->check_any($table, array('id' => $id))){show_404();}
+			$this->data['show_email_form'] = FALSE;
         }
         else
         {
@@ -427,44 +421,42 @@ class Register extends Public_Controller {
 	            	}
 	            	else
 	            	{
-	            		if (!empty($_FILES))
-	            		{
-							$file_id = $this->multiple_upload($content.'/data/', $file_type);
-				            if ($file_id != FALSE)
+						$file_type = 'ktm';
+						$file_id = $this->multiple_upload($content.'/data/', $file_type);
+			            if ($file_id != FALSE)
+			            {
+			            	$members_media = [];
+				            for ($i=0; $i < count($member_id); $i++)
 				            {
-				            	$members_media = [];
-					            for ($i=0; $i < count($member_id); $i++)
-					            {
-					            	$members_media_data = array(
-					            		'member_id' 	=> $member_id[$i],
-					            		'media_id'		=> $file_id[$i]
-					            		);
-						            array_push($members_media, $members_media_data);
-					            }
-
-								$this->data['all_file'] = $members_media[0];
-					            if ($this->public_model->input_participant($table_member_media, $members_media))
-					            {
-									$atts = array(
-										'icon'		=> 'success',
-										'title' 	=> 'Berhasil!',
-										'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
-										'showConfirmButton' => 'false',
-										'footer'	=> anchor('payment/mcc/'.$id, 'Pembayaran')
-									);
-									$this->data['alert_modal'] = sweet_alert($atts);
-					            }
+				            	$members_media_data = array(
+				            		'member_id' 	=> $member_id[$i],
+				            		'media_id'		=> $file_id[$i]
+				            		);
+					            array_push($members_media, $members_media_data);
 				            }
-				            else
+
+							$this->data['all_file'] = $members_media[0];
+				            if ($this->public_model->input_participant($table_member_media, $members_media))
 				            {
 								$atts = array(
-									'icon'		=> 'error',
-									'title' 	=> 'Terjadi kesalahan!',
-									'html'		=> $this->data['error']
+									'icon'		=> 'success',
+									'title' 	=> 'Berhasil!',
+									'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+									'showConfirmButton' => 'false',
+									'footer'	=> anchor('payment/mcc/'.$id, 'Pembayaran')
 								);
-								$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+								$this->data['alert_modal'] = sweet_alert($atts);
 				            }
-	            		}
+			            }
+			            else
+			            {
+							$atts = array(
+								'icon'		=> 'error',
+								'title' 	=> 'Terjadi kesalahan!',
+								'html'		=> $this->data['error']
+							);
+							$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			            }
 	            	}
 	            }
 			}
@@ -478,55 +470,60 @@ class Register extends Public_Controller {
 		$content = 'futsal';
 		$tables = $this->config->item('tables');
 		$table  = $tables['content_prefix'] . $content;
+		$table_member  = $table . $tables['members_suffix'];
 		$content_exist = $this->public_model->check_any($tables['contents'], array('slug' => $content));
 
-        if (!$content_exist){
-			show_404();
-        }
-        else
+		$data_content = (array) $this->contents_common_model->get_contents($content, '*');
+		$this->data['header'] = $data_content['title'];
+		$content_id = $data_content['id'];
+
+		$this->data['page_title'] = 'Upload';
+		$this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
+
+		$this->data['show_email_form'] = TRUE;
+
+		if ($id != '')
 		{
+			$id = (int) $id;
+			if(!$this->public_model->check_any($table, array('id' => $id))){show_404();}
+			$this->data['show_email_form'] = FALSE;
+		}
+		else
+		{
+		    $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table.']');
 
-	        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
-        	$this->data['header'] = $data_content['title'];
-        	$content_id = $data_content['id'];
+		    if ($this->form_validation->run() == TRUE)
+		    {
+		    	$email = $this->input->post('email');
+		    	$data = $this->public_model->get_participant($table, $email, 'email');
+		    	foreach ($data as $key) {
+		    		$id = $key->id;
+		    	}
+		    }
+		    else
+		    {
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+		    }
+		}
 
-			$this->data['page_title'] = 'Upload';
-	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
-
-        	$this->data['show_email_form'] = TRUE;
-			$id_file = FALSE;
-
-	        if ($id != '')
-	        {
-	        	$id = (int) $id;
-	        	
-	        	if(!$this->public_model->check_any($table, array('id' => $id)))
-	        	{
-					show_404();
-	        	}
-	        	$this->data['show_email_form'] = FALSE;
-	        }
-	        else
-	        {
-		        $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table.']');
-
-		        if ($this->form_validation->run() == TRUE)
-		        {
-		        	$email = $this->input->post('email');
-		        	$data = $this->public_model->get_participant($table, $email, 'email');
-		        	foreach ($data as $key) {
-		        		$id = $key->id;
-		        	}
-		        }
-	        }
-
-			if (isset($id) && !empty($_FILES))
-			{
-				if ($content_id != NULL && $id != NULL)
-				{
+		if (isset($id) && !empty($_FILES))
+		{
+			if ($content_id != NULL && $id != NULL)
+			{				
+		    	if ($this->public_model->check_any($table_member, array('tim_id' => $id)))
+		    	{
+		    		$atts = array(
+						'icon'		=> 'error',
+						'title' 	=> 'Terjadi kesalahan!',
+						'text'		=> 'Anda sudah upload data tim!'
+					);
+					$this->data['alert_modal'] = sweet_alert($atts);
+		    	}
+		    	else
+		    	{
 					$file_type = array('photo', 'ktm');
 					$file_id = $this->multiple_upload('futsal/data/', $file_type);
-
+		            
 		            if ($file_id != FALSE)
 		            {
 			            $player_name = array_filter($this->input->post('name'));
@@ -543,13 +540,20 @@ class Register extends Public_Controller {
 			            	{
 			            		$player_file_id[$value] = $file_id[$value][$i]; 
 			            	}
-			            	$player_id[] = $this->public_model->input_members('futsal', $player_data, $player_file_id);
+							$player_id[] = $this->public_model->input_members('futsal', $player_data, $player_file_id);
 			            }
 
 			            if ($player_id != FALSE)
 			            {
-							redirect('upload/futsal?status=success&id='.$id);
-			            }
+							$atts = array(
+								'icon'		=> 'success',
+								'title' 	=> 'Berhasil!',
+								'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+								'showConfirmButton' => 'false',
+								'footer'	=> anchor('payment/futsal/'.$id, 'Pembayaran')
+							);
+							$this->data['alert_modal'] = sweet_alert($atts);
+						}
 		            }
 		            else
 		            {
@@ -560,27 +564,14 @@ class Register extends Public_Controller {
 						);
 						$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
 		            }
-				}
+		    	}
 			}
-			$status = $this->input->get('status');
-			$id = $this->input->get('id');
-
-			if ($status == 'success'&& isset($id)) {
-				$atts = array(
-					'icon'		=> 'success',
-					'title' 	=> 'Berhasil!',
-					'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
-					'showConfirmButton' => 'false',
-					'footer'	=> anchor('payment/futsal/'.$id, 'Pembayaran')
-				);
-				$this->data['alert_modal'] = sweet_alert($atts);
-			}
-			else
-			{
-				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
-			}
-        	$this->template->public_form_render('public/futsal_upload', $this->data);
 		}
+		else
+		{
+			$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+		}
+		$this->template->public_form_render('public/futsal_upload', $this->data);
 	}
 
 	public function payment($content = '', $id = '')
@@ -830,68 +821,3 @@ class Register extends Public_Controller {
 		return FALSE;
 	}
 }
-
-// Array(
-// 	[ktm] => Array(
-// 		[name] => Array(
-// 			[0] => 14236-200.png
-// 			[1] => 6a8d3bea3a0f89ad83b42904911427a1--tom-holland-spiderman-marvel-movies.jpg
-// 		)
-// 		[type] => Array(
-// 			[0] => image/png
-// 			[1] => image/jpeg)
-// 		[tmp_name] => Array(
-// 			[0] => C:\xampp\tmp\php869F.tmp
-// 			[1] => C:\xampp\tmp\php86A0.tmp)
-// 		[error] => Array(
-// 			[0] => 0
-// 			[1] => 0
-// 		)
-// 		[size] => Array(
-// 			[0] => 4349
-// 			[1] => 56940
-// 		)
-// 	)
-// )
-
-// Array(
-// 	[ktm_1] => Array(
-// 		[name] => 14236-200.png
-// 		[type] => image/png
-// 		[tmp_name] => C:\xampp\tmp\php3B07.tmp
-// 		[error] => 0
-// 		[size] => 4349
-// 	)
-// 	[ktm_2] => Array(
-// 		[name] => 6a8d3bea3a0f89ad83b42904911427a1--tom-holland-spiderman-marvel-movies.jpg
-// 		[type] => image/jpeg
-// 		[tmp_name] => C:\xampp\tmp\php3B08.tmp
-// 		[error] => 0\[size] => 56940))
-
-// Array(
-// 	[ktm] => Array(
-// 		[0] => 41
-// 		[1] => 42
-// 	)
-// )
-
-// Array(
-// 	[0] => Array(
-// 		[member_id] => 1
-// 		[media_id] => 51)
-// 	[1] => Array(
-// 		[member_id] => 2
-// 		[media_id] => 52
-// 	)
-// )
-
-// Array(
-// 	[0] => Array(
-// 		[member_id] => 1
-// 		[media_id] => 53
-// 	)
-// 	[1] => Array(
-// 		[member_id] => 2
-// 		[media_id] => 54)
-// )
-
