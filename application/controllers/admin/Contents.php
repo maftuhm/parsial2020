@@ -17,6 +17,9 @@ class Contents extends Admin_Controller {
         $this->breadcrumbs->unshift(1, lang('menu_contents'), 'admin/contents');
 
         $this->load->model('admin/contents_model');
+
+        /* Table name */
+		$this->tables = $this->config->item('tables');
     }
 
 
@@ -39,6 +42,8 @@ class Contents extends Admin_Controller {
         }
 	}
 
+	/* SAMPE SINI DULU!!! MAU TIDUR UDAH SUBUH */
+
 	public function page($content_name)
 	{
         if ( ! $this->ion_auth->logged_in())
@@ -59,10 +64,11 @@ class Contents extends Admin_Controller {
 	            /* Breadcrumbs */
 	            $this->data['breadcrumb'] = $this->breadcrumbs->show();
 	            /* Get all contents */
+	            $table_name = $this->_table_name($content_name);
+	            $content = $this->unset_key((array)$this->contents_model->get_data($table_name, NULL, NULL, FALSE));
 
-	            $content = $this->unset_key((array)$this->contents_model->get_data('content_'.$content_name.'_sementara', NULL, NULL, FALSE));
 	            $this->data['contents_keys'] = array_keys($content);
-	            $this->data['contents'] = $this->contents_model->get_data('content_'.$content_name.'_sementara');
+	            $this->data['contents'] = $this->contents_model->get_data($table_name);
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/page', $this->data);
 			}
@@ -559,38 +565,19 @@ class Contents extends Admin_Controller {
 		}
 		return $data;
 	}
+
+	public function _table_name($content_name, $type = '')
+	{
+		$table = $this->tables['content_prefix'] . $content_name;
+		if ($type == 'members' || $type == 'media') 
+		{
+			$table .= $this->tables['members_suffix'];
+			
+			if ($type == 'media')
+			{
+				$table .= $this->tables[$type.'_suffix'];
+			}
+		}
+		return $table;
+	}
 }
-
-// Array(
-// 	[0] => stdClass Object(
-// 		[id] => 1
-// 		[created_on] => 1575839259
-// 		[ip_address] => ::1
-// 		[tim_name] => himatika
-// 		[university] => uin jakarta
-// 		[leader_name] => maftuh mashuri
-// 		[leader_major] => matematika
-// 		[leader_email] => maftuh@gmail.com
-// 		[leader_phone] => 085777455031
-// 		[member_name] => lintang
-// 		[member_major] => mtk
-// 		[member_email] => maftuh@gmail.com
-// 		[member_phone] => 90438987
-// 	)
-// )
-
-// Array(
-// 	[id] => 1
-// 	[created_on] => 1575839259
-// 	[ip_address] => ::1
-// 	[tim_name] => himatika
-// 	[university] => uin jakarta
-// 	[leader_name] => maftuh mashuri
-// 	[leader_major] => matematika
-// 	[leader_email] => maftuh@gmail.com
-// 	[leader_phone] => 085777455031
-// 	[member_name] => lintang
-// 	[member_major] => mtk
-// 	[member_email] => maftuh@gmail.com
-// 	[member_phone] => 90438987
-// )
