@@ -1,20 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Contents extends Admin_Controller {
+class Contents_data extends Admin_controller {
 
+	private $content_title = '';
+	private $content_slug  = '';
     public function __construct()
     {
         parent::__construct();
-
         $this->lang->load(array('admin/contents', 'admin/users'));
-
-        /* Title Page :: Common */
-        $this->page_title->push(lang('menu_contents'));
-        $this->data['pagetitle'] = $this->page_title->show();
-
-        /* Breadcrumbs :: Common */
-        $this->breadcrumbs->unshift(1, lang('menu_contents'), 'admin/contents');
 
         $this->load->model('admin/contents_model');
 
@@ -22,8 +16,7 @@ class Contents extends Admin_Controller {
 		$this->tables = $this->config->item('tables');
     }
 
-
-	public function index()
+	public function page($content_slug)
 	{
         if ( ! $this->ion_auth->logged_in())
         {
@@ -31,14 +24,80 @@ class Contents extends Admin_Controller {
         }
         else
         {
-            /* Breadcrumbs */
-            $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
+        	$this->data['content_slug'] = $content_slug;
 
-            /* Get all contents */
-            $this->data['contents'] = $this->contents_model->get_data('contents');
+			if($this->data['content_details'] == FALSE)
+			{
+				show_404();
+			}
+			else
+			{
+				$contents_title = ((array)$this->data['content_details'])['title'];
+		        /* Title Page :: Common */
+		        $this->page_title->push($contents_title);
+		        $this->data['pagetitle'] = $this->page_title->show();
 
-            /* Load Template */
-            $this->template->admin_render('admin/contents/index', $this->data);
+	            /* Breadcrumbs */
+		        $this->breadcrumbs->unshift(1, $contents_title, 'admin/contents/p/'.$content_slug);
+	            $this->data['breadcrumb'] = $this->breadcrumbs->show();
+
+	            /* Get all contents */
+	            $table_name = $this->_table_name($content_slug);
+	            $content = $this->unset_key((array)$this->contents_model->get_data($table_name, NULL, NULL, FALSE));
+	            $this->data['content_keys'] = array_keys($content);
+	            $this->data['content_data'] = $this->contents_model->get_data($table_name);
+
+	            /* Load Template */
+	            $this->template->admin_render('admin/contents/page', $this->data);
+			}
+        }
+	}
+
+	public function details($content_slug, $id)
+	{
+        if ( ! $this->ion_auth->logged_in())
+        {
+            redirect('auth/login', 'refresh');
+        }
+        else
+        {
+        	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
+        	$this->data['content_slug'] = $content_slug;
+
+			if($this->data['content_details'] == FALSE)
+			{
+				show_404();
+			}
+			else
+			{
+				$contents_title = ((array)$this->data['content_details'])['title'];
+		        /* Title Page :: Common */
+		        $this->page_title->push($contents_title);
+		        $this->data['pagetitle'] = $this->page_title->show();
+
+	            /* Breadcrumbs */
+		        $this->breadcrumbs->unshift(1, $contents_title, 'admin/contents/p/'.$content_slug);
+		        $this->breadcrumbs->unshift(2, lang('menu_users_profile'), 'admin/contents/p/'.$content_slug.'/details');
+	            $this->data['breadcrumb'] = $this->breadcrumbs->show();
+
+	            /* Get all contents */
+	            $table_name = $this->_table_name($content_slug);
+	            if(!$this->data['is_admin']){
+	            	$unset = array('id', 'ip_address');
+	            }
+	            else
+	            {
+	            	$unset = 'id';
+	            }
+
+	            $this->data['participant_data'] = $this->unset_key((array)$this->contents_model->get_data($table_name, $id, 'id', FALSE), $unset);
+	            // $this->data['participant_keys'] = array_keys($participant_data);
+	            // $this->data['participant_data'] = $this->contents_model->get_data($table_name, $id, 'id');
+
+	            /* Load Template */
+	            $this->template->admin_render('admin/contents/details', $this->data);
+			}
         }
 	}
 
@@ -118,93 +177,6 @@ class Contents extends Admin_Controller {
         }
 	}
 
-	public function create_question($slug)
-	{
-		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
-		{
-			redirect('auth', 'refresh');
-		}
-        /* Breadcrumbs */
-        $this->breadcrumbs->unshift(2, lang('menu_contents_create_quest'), 'admin/contents/create');
-        $this->data['breadcrumb'] = $this->breadcrumbs->show();
-        $this->data['contents'] = $this->contents_model->get_data('contents', $slug, 'slug');
-        if ($this->data['contents'] == FALSE) {
-        	show_404();
-        }
-        else
-        {
-	        foreach ($this->data['contents'] as $content) {
-	        	$this->data['num_of_quest'] = $content->num_of_question;
-	        	$this->data['content_id']	= $content->id;
-	        }
-
-	        for ($i=0; $i < $this->data['num_of_quest']; $i++) { 
-				$this->form_validation->set_rules('question_'.$i, 'lang:contents_quest', 'required');
-				$this->form_validation->set_rules('question_type_'.$i, 'lang:contents_quest_type', 'required');
-	        }
-
-			if ($this->form_validation->run() == TRUE)
-			{
-				$question_data = [];
-				for ($i=0; $i < $this->data['num_of_quest']; $i++) {
-					$quest = array(
-								'question'   => $this->input->post('question_'.$i),
-								'type'		 => $this->input->post('question_type_'.$i),
-								'placeholder'=> $this->input->post('question_placeholder_'.$i),
-								'description'=> '',
-								'required'   => 0,
-								'form_order' => $i+1
-								);
-					array_push($question_data, $quest);
-				}
-			}
-
-			if ($this->form_validation->run() == TRUE && $this->contents_model->create_question($question_data))
-			{
-				$this->data['detail'] = $id;
-			}
-			$option_type = array(
-								'text' => 'Text',
-								'phone'=> 'Phone',
-								'email'=> 'Email'
-							);
-            $this->data['message'] = validation_errors();
-            $this->data['questions'] = array();
-            for ($i=0; $i < $this->data['num_of_quest']; $i++) {
-				$question = array(
-					'name'  => 'question_'.$i,
-					'placeholder'=> lang('contents_quest'),
-					'type'  => 'text',
-	                'class' => 'form-control',
-					'value' => $this->form_validation->set_value('question_'.$i)
-				);
-				$question_type = array(
-					'name'  => 'question_type_'.$i,
-	                'class' => 'form-control',
-	                'options'=> $option_type,
-					'selected' => $this->form_validation->set_value('question_type_'.$i)
-				);
-				$question_placeholder = array(
-					'name'  => 'question_placeholder_'.$i,
-					'placeholder'=> lang('contents_quest'),
-					'type'  => 'text',
-	                'class' => 'form-control',
-					'value' => $this->form_validation->set_value('question_placeholder_'.$i)
-				);
-				$required = array(
-					'name'  => 'required_'.$i,
-					'type'  => 'checkbox',
-		            'checked'	=> set_checkbox('required_quest')
-				);
-				$question_group = array($question, $question_type, $question_placeholder, $required);
-				array_push($this->data['questions'], $question_group);
-            }
-            /* Load Template */
-            $this->template->admin_render('admin/contents/create_question', $this->data);
-
-	    }
-    }
-
 	public function delete($id = NULL)
 	{
         /* Load Template */
@@ -249,7 +221,6 @@ class Contents extends Admin_Controller {
 			redirect('admin/contents', 'refresh');
 		}
 	}
-
 
 	public function edit($id)
 	{
@@ -479,27 +450,6 @@ class Contents extends Admin_Controller {
 		}
 	}
 
-
-	public function profile($id)
-	{
-        /* Breadcrumbs */
-        $this->breadcrumbs->unshift(2, lang('menu_contents_profile'), 'admin/groups/profile');
-        $this->data['breadcrumb'] = $this->breadcrumbs->show();
-
-        /* Data */
-        $id = (int) $id;
-
-        $this->data['user_info'] = $this->ion_auth->user($id)->result();
-        foreach ($this->data['user_info'] as $k => $user)
-        {
-            $this->data['user_info'][$k]->groups = $this->ion_auth->get_contents_groups($user->id)->result();
-        }
-
-        /* Load Template */
-		$this->template->admin_render('admin/contents/profile', $this->data);
-	}
-
-
 	public function _get_csrf_nonce()
 	{
 		$this->load->helper('string');
@@ -522,5 +472,36 @@ class Contents extends Admin_Controller {
 		{
 			return FALSE;
 		}
+	}
+
+	function unset_key($data, $unset_data = array('id', 'ip_address'))
+	{
+		if (is_array($unset_data))
+		{
+			foreach ($unset_data as $key => $value)
+			{
+				unset($data[$value]);
+			}
+		}
+		else
+		{
+			unset($data[$unset_data]);
+		}
+		return $data;
+	}
+
+	public function _table_name($content_name, $type = '')
+	{
+		$table = $this->tables['content_prefix'] . $content_name;
+		if ($type == 'members' || $type == 'media') 
+		{
+			$table .= $this->tables['members_suffix'];
+			
+			if ($type == 'media')
+			{
+				$table .= $this->tables[$type.'_suffix'];
+			}
+		}
+		return $table;
 	}
 }

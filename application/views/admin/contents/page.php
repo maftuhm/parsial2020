@@ -49,9 +49,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 $value_delete_btn  = '<span class="label label-danger"><i class="fa fa-trash" aria-hidden="true"></i> <span>'.lang('actions_delete').'</span>';
 
                                                                 echo '<td class="name">';
-                                                                echo anchor('admin/contents/p/'.$content_slug.'/profile/'.$content->id, $content->$value, $atts_profile);
+                                                                echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $content->$value, $atts_profile);
                                                                 echo '<div class="actions show-actions">';
-                                                                echo anchor('admin/contents/p/'.$content_slug.'/profile/'.$content->id, $value_profile_btn, $atts_profile);
+                                                                echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $value_profile_btn, $atts_profile);
                                                                 echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$content->id, $value_edit_btn, $atts_edit);
                                                                 echo anchor('admin/contents/p/'.$content_slug.'/delete/'.$content->id, $value_delete_btn, $atts_delete);
                                                                 echo '</div>';

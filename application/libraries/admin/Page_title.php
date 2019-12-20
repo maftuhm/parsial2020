@@ -26,6 +26,12 @@ class Page_title {
         array_unshift($this->page_title, array('title' => $title, 'subtitle' => $subtitle));
 	}
 
+    function set($title, $subtitle = '')
+    {
+        if (!$title) return;
+        $this->page_title = array();
+        array_unshift($this->page_title, array('title' => $title, 'subtitle' => $subtitle));
+    }
 
 	function show()
 	{
