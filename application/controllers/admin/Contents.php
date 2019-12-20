@@ -9,10 +9,6 @@ class Contents extends Admin_Controller {
 
         $this->lang->load(array('admin/contents', 'admin/users'));
 
-        /* Title Page :: Common */
-        $this->page_title->push(lang('menu_contents'));
-        $this->data['pagetitle'] = $this->page_title->show();
-
         /* Breadcrumbs :: Common */
         $this->breadcrumbs->unshift(1, lang('menu_contents'), 'admin/contents');
 
@@ -31,6 +27,10 @@ class Contents extends Admin_Controller {
         }
         else
         {
+	        /* Title Page :: Common */
+	        $this->page_title->push(lang('menu_contents'));
+	        $this->data['pagetitle'] = $this->page_title->show();
+
             /* Breadcrumbs */
             $this->data['breadcrumb'] = $this->breadcrumbs->show();
 
@@ -44,7 +44,7 @@ class Contents extends Admin_Controller {
 
 	/* SAMPE SINI DULU!!! MAU TIDUR UDAH SUBUH */
 
-	public function page($content_name)
+	public function page($content_slug)
 	{
         if ( ! $this->ion_auth->logged_in())
         {
@@ -52,23 +52,30 @@ class Contents extends Admin_Controller {
         }
         else
         {
-        	$this->data['content_data'] = $this->contents_model->get_data('contents', $content_name, 'slug');
-        	$this->data['content_name'] = $content_name;
+        	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
+        	$this->data['content_slug'] = $content_slug;
 
-			if($this->data['content_data'] == FALSE)
+			if($this->data['content_details'] == FALSE)
 			{
 				show_404();
 			}
 			else
 			{
-	            /* Breadcrumbs */
-	            $this->data['breadcrumb'] = $this->breadcrumbs->show();
-	            /* Get all contents */
-	            $table_name = $this->_table_name($content_name);
-	            $content = $this->unset_key((array)$this->contents_model->get_data($table_name, NULL, NULL, FALSE));
+				$contents_title = ((array)$this->data['content_details'])['title'];
+		        /* Title Page :: Common */
+		        $this->page_title->push($contents_title);
+		        $this->data['pagetitle'] = $this->page_title->show();
 
-	            $this->data['contents_keys'] = array_keys($content);
-	            $this->data['contents'] = $this->contents_model->get_data($table_name);
+	            /* Breadcrumbs */
+		        $this->breadcrumbs->unshift(2, $contents_title, 'admin/contents');
+	            $this->data['breadcrumb'] = $this->breadcrumbs->show();
+
+	            /* Get all contents */
+	            $table_name = $this->_table_name($content_slug);
+	            $content = $this->unset_key((array)$this->contents_model->get_data($table_name, NULL, NULL, FALSE));
+	            $this->data['content_keys'] = array_keys($content);
+	            $this->data['content_data'] = $this->contents_model->get_data($table_name);
+
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/page', $this->data);
 			}

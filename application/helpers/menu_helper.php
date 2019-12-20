@@ -15,11 +15,22 @@ if ( ! function_exists('active_link_controller'))
 
 if ( ! function_exists('active_link_function'))
 {
-    function active_link_function($controller)
+    function active_link_function($method)
     {
         $CI    =& get_instance();
         $class = $CI->router->fetch_method();
 
-        return ($class == $controller) ? 'active' : NULL;
+        return ($class == $method) ? 'active' : NULL;
+    }
+}
+
+if ( ! function_exists('active_link_function_paramater'))
+{
+    function active_link_function_paramater($object)
+    {
+        $CI    =& get_instance();
+        $class = $CI->uri->segment(4);
+
+        return ($class == $object) ? 'active' : NULL;
     }
 }

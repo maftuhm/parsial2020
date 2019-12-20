@@ -28,3 +28,10 @@ $lang['contents_member_major']			= 'Member Major';
 $lang['contents_member_email']			= 'Member Email';
 $lang['contents_member_phone']			= 'Member Phone';
 
+/*====== Futsal ======*/
+$lang['contents_player_name']			= 'Player Name';
+$lang['contents_grade']					= 'Grade';
+$lang['contents_phone']					= 'Phone';
+$lang['contents_email']					= 'Email';
+$lang['contents_official']				= 'Official';
+$lang['contents_coach']					= 'Coach';

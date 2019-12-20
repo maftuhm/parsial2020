@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <tbody>
                                         <?php foreach ($contents as $content):?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($content->created_on, ENT_QUOTES, 'UTF-8');?></td>
+                                                <td><?php echo date('D, d M Y H:i', $content->created_on);?></td>
                                                 <td><?php echo htmlspecialchars($content->name, ENT_QUOTES, 'UTF-8');?></td>
                                                 <td><?php echo htmlspecialchars($content->title, ENT_QUOTES, 'UTF-8');?></td>
                                                 <td><?php echo htmlspecialchars($content->description, ENT_QUOTES, 'UTF-8');?></td>

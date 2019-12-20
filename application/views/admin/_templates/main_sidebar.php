@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?php if ($admin_prefs['contents_menu'] == TRUE): if($count_contents):?>
                         <li class="header text-uppercase"><?php echo lang('menu_contents'); ?></li>
                         <?php foreach ($menu_contents as $content):?>
-                            <li class="<?=active_link_controller($content->slug)?>">
+                            <li class="<?=active_link_function_paramater($content->slug)?>">
                                 <a href="<?php echo site_url('admin/contents/p/'.$content->slug); ?>">
                                     <i class="fa fa-book"></i> <span><?php echo $content->title; ?></span>
                                 </a>
