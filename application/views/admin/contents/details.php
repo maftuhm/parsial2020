@@ -43,12 +43,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-6">
                              <div class="box">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Members Details</h3>
+                                    <h3 class="box-title">Payment Details</h3>
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                     </div>
                                 </div>
-                                <pre><?php //print_r($members_data)?></pre>
+                                <div class="box-body">
+                                    <!-- <pre><?php //print_r($members_data)?></pre> -->
+                                    <table class="table table-striped table-hover">
+                                        <!-- <tbody>
+                                            <tr>
+                                                <th><?php //echo lang('payment'); ?></th>
+                                                    <?php //if ($u->payment == FALSE): $image_dir = 'upload/images/';?>
+                                                <td><?php //echo lang('not_paid'); ?></td>
+                                                    <?php //else: foreach ($u->payment as $pay) {$image = $pay->file_name;}?>
+                                                <td><?php //echo lang('paid'); ?></td>
+                                                    <?php //endif;?>
+                                            </tr>
+                                            <tr>
+                                                <th><?php //echo lang('pof'); ?></th>
+                                                <td>
+                                                    <img style="width: auto; max-width: 100%; max-height: 250px;" src="<?php //echo base_url($image_dir.$image);?>">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th><?php //echo lang('action'); ?></th>
+                                                <td>
+                                                    <?php //echo anchor('admin/futsal/edit/'.$u->id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
+                                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button>
+                                                </td>
+                                            </tr>
+                                        </tbody> -->
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -69,18 +96,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $i = 1;foreach ($members_data as $member => $value):?>
-                                            <tr>
-                                                <td><?php echo $i;?></td>
-                                                <?php foreach ($members_keys as $key => $k):?>
-                                                <td><?php echo $value[$k];?></td>
-                                                <?php endforeach;?>
-                                                
-                                                <?php foreach ($media_keys as $key => $k):?>
-                                                <td><img class="image-pa" src="<?php echo base_url('media/futsal/data/'.$value[$k]);?>"></td>
-                                                <?php endforeach;?>
-                                            </tr>
-                                            <?php $i++;endforeach;?>
+                                            <?php
+                                                $i = 1;
+                                                foreach ($members_data as $member => $value)
+                                                {
+                                                    echo '<tr>';
+                                                    if ($inputed_members)
+                                                    {
+                                                        echo '<td>'.$i.'</td>';
+                                                        foreach ($members_keys as $keys => $key)
+                                                        {
+                                                            echo '<td>'.$value[$key].'</td>';
+                                                        }
+
+                                                        if ($uploaded)
+                                                        {
+                                                            foreach ($media_keys as $keys => $key)
+                                                            {
+                                                                echo '<td><img class="image-pa" src="'.base_url('media/'.$content_slug.'/data/'.$value[$key]) .'"></td>';
+                                                            }
+                                                        }
+                                                    }
+                                                    echo '</tr>';
+                                                    $i++;
+                                                }
+                                            ?>
                                         </tbody>
                                         <tfoot>
                                             <tr>

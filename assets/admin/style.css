@@ -12,3 +12,7 @@
 .show-actions{
 	display: block;
 }
+.image-pa{
+	max-width: 250px;
+	max-height: 250px;
+}

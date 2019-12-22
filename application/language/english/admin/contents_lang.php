@@ -18,6 +18,7 @@ $lang['contents_status']              = 'Status';
 $lang['contents_ip_address']          = 'IP Address';
 $lang['contents_photo']          	  = 'Photo';
 $lang['contents_ktm']	          	  = 'KTM';
+$lang['contents_major']          	  = 'Major';
 
 /*====== MCC ======*/
 $lang['contents_tim_name']				= 'Tim Name';

@@ -64,7 +64,9 @@ class Contents_data extends Admin_controller {
         {
         	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
         	$this->data['content_slug'] = $content_slug;
-
+        	$this->data['uploaded'] = FALSE;
+        	$this->data['inputed_members'] = FALSE;
+        	$this->data['all_keys'] = array();
 			if($this->data['content_details'] == FALSE)
 			{
 				show_404();
@@ -93,24 +95,40 @@ class Contents_data extends Admin_controller {
 
 	            $this->data['participant_data'] = $this->unset_key((array)$this->contents_model->get_data($table_name, $id, 'id', FALSE), $unset);
 	            $this->data['members_data']		= $this->contents_model->get_members_data($content_slug, $id);
-	            $this->data['members_keys'] 	= $this->unset_key(array_keys($this->data['members_data'][0]), array(0, 1));
 
-		        foreach ($this->data['members_data'] as $k => $member)
-		        {
-		            $this->data['members_data'][$k]['media_details'] = $this->contents_model->get_members_media($content_slug, $member['id']);
-			        
-			        foreach ($this->data['members_data'][$k]['media_details'] as $media => $value)
+	            if ($this->data['members_data'] != FALSE)
+	            {
+	            	$this->data['members_keys'] 	= $this->unset_key(array_keys($this->data['members_data'][0]), array(0, 1));
+			        foreach ($this->data['members_data'] as $k => $member)
 			        {
-				        $this->data['members_data'][$k][$value['name']] = $value['file_name'];
+			            $this->data['members_data'][$k]['media_details'] = $this->contents_model->get_members_media($content_slug, $member['id']);
+				        
+				        if ($this->data['members_data'][$k]['media_details'] != FALSE)
+				        {
+					        foreach ($this->data['members_data'][$k]['media_details'] as $media => $value)
+					        {
+						        $this->data['members_data'][$k][$value['name']] = $value['file_name'];
+					        }
+					        $this->data['uploaded'] = TRUE;			        	
+				        }
 			        }
-		        }
 
-		        foreach ($this->data['members_data'][0]['media_details'] as $media => $value)
-		        {
-		        	$this->data['media_keys'][] = $value['name'];
-		        }
+			        if ($this->data['uploaded'])
+			        {			        	
+				        foreach ($this->data['members_data'][0]['media_details'] as $media => $value)
+				        {
+				        	$this->data['media_keys'][] = $value['name'];
+				        }
 
-		        $this->data['all_keys'] = array_merge($this->data['members_keys'], $this->data['media_keys']);
+				        $this->data['all_keys'] = array_merge($this->data['members_keys'], $this->data['media_keys']);
+			        }
+			        else
+			        {
+			        	$this->data['all_keys'] = $this->data['members_keys'];
+			        }
+			        $this->data['inputed_members'] = TRUE;
+	            }
+
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/details', $this->data);
 			}
