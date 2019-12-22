@@ -33,6 +33,11 @@ class Contents_model extends CI_Model {
 		return isset($result) ? $result : FALSE;
 	}
 
+    public function get_members_data($content_slug, $tim_id, $member_id = array())
+    {
+        $table_name = $this->_table_name($content_slug);
+    }
+
     public function register_content($name, $title, $description, $slug, $num_of_question)
     {
         $data = array(
@@ -79,5 +84,20 @@ class Contents_model extends CI_Model {
 
         return $this->db->delete($table, array('content_id' => $content_id));
 
+    }
+
+    public function _table_name($content_name, $type = '')
+    {
+        $table = $this->tables['content_prefix'] . $content_name;
+        if ($type == 'members' || $type == 'media') 
+        {
+            $table .= $this->tables['members_suffix'];
+            
+            if ($type == 'media')
+            {
+                $table .= $this->tables[$type.'_suffix'];
+            }
+        }
+        return $table;
     }
 }

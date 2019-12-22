@@ -92,9 +92,7 @@ class Contents_data extends Admin_controller {
 	            }
 
 	            $this->data['participant_data'] = $this->unset_key((array)$this->contents_model->get_data($table_name, $id, 'id', FALSE), $unset);
-	            // $this->data['participant_keys'] = array_keys($participant_data);
-	            // $this->data['participant_data'] = $this->contents_model->get_data($table_name, $id, 'id');
-
+	            $this->data['members_data']		= 
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/details', $this->data);
 			}
