@@ -68,7 +68,7 @@ class Contents_data extends Admin_controller {
         	$this->data['inputed_members'] = FALSE;
         	$this->data['paid'] = FALSE;
         	$this->data['all_keys'] = array();
-
+        	$this->data['upload_dir'] .= '/'.$content_slug.'/';
 
 			if($this->data['content_details'] == FALSE)
 			{
@@ -99,6 +99,7 @@ class Contents_data extends Admin_controller {
 	            }
 
 	            $this->data['participant_data'] = $this->unset_key((array)$this->contents_model->get_data($table_name, $id, 'id', FALSE), $unset);
+	            $this->data['participant_id'] 	= $id;
 	            $this->data['members_data']		= $this->contents_model->get_members_data($content_slug, $id);
 
 	            if ($this->data['members_data'] != FALSE)
@@ -124,7 +125,7 @@ class Contents_data extends Admin_controller {
 				        {
 				        	$this->data['media_keys'][] = $value['name'];
 				        }
-
+				        $this->data['upload_data_dir'] = $this->data['upload_dir'].'/data/';
 				        $this->data['all_keys'] = array_merge($this->data['members_keys'], $this->data['media_keys']);
 			        }
 			        else
@@ -135,19 +136,20 @@ class Contents_data extends Admin_controller {
 	            }
 
 	            $this->data['participant_payment'] = $this->contents_model->get_participant_payment($contents_id, $id);
-
+            	$this->data['payment_keys'] = array('upload_time', 'bank_name', 'account_owner', 'account_number');
 	            if ($this->data['participant_payment'] != FALSE)
 	            {
-	            	$this->data['payment_keys'] = array('upload_time', 'bank_name', 'account_owner', 'account_number');
 	            	$this->data['participant_payment'] = $this->data['participant_payment'][0];
 
 	            	/* === remove key time === */
 	            	$this->data['participant_payment']['upload_time'] = $this->data['participant_payment']['time'];
 					unset($this->data['participant_payment']['time']);
 
-
-
 	            	$this->data['paid'] = TRUE;
+	            }
+	            else
+	            {
+		        	$this->data['participant_payment']['file_name'] = 'default-thumbnail.jpg';
 	            }
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/details', $this->data);

@@ -58,29 +58,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 if ($paid){echo lang('contents_paid');}else{echo lang('contents_not_paid');}
                                                 echo '<td>';
                                             echo '</tr>';
-                                            foreach ($payment_keys as $keys => $key)
-                                            {
-                                                echo '<tr>';
-                                                    echo '<th>'.lang('contents_'.$key).'</th>';
-                                                    echo '<td>';
-                                                    if($key == 'upload_time'){echo date('D, d M Y H:i', $participant_payment[$key]);}
-                                                    else{echo $participant_payment[$key];}
-                                                    echo '</td>';
-                                                echo '</tr>';
+                                            if ($paid){
+                                                foreach ($payment_keys as $keys => $key)
+                                                {
+                                                    echo '<tr>';
+                                                        echo '<th>'.lang('contents_'.$key).'</th>';
+                                                        echo '<td>';
+                                                        if($key == 'upload_time'){echo date('D, d M Y H:i', $participant_payment[$key]);}
+                                                        else{echo $participant_payment[$key];}
+                                                        echo '</td>';
+                                                    echo '</tr>';
 
+                                                }
                                             }
                                             ?>
                                             <tr>
                                                 <th><?php echo lang('contents_proof_payment'); ?></th>
                                                 <td>
                                                     <img style="width: auto; max-width: 100%; max-height: 250px;" 
-                                                    src="<?php echo base_url('media/'.$content_slug.'/'.$participant_payment['file_name']);?>">
+                                                    src="<?php echo base_url($upload_dir.$participant_payment['file_name']);?>">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th><?php echo lang('contents_action'); ?></th>
                                                 <td>
-                                                    <?php echo anchor('admin/contents/p/futsal/edit/'.$participant_payment['id'], '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
+                                                    <?php echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
                                                     <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php echo lang('delete');?></button>
                                                 </td>
                                             </tr>
@@ -127,7 +129,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         {
                                                             foreach ($media_keys as $keys => $key)
                                                             {
-                                                                echo '<td><img class="image-pa" src="'.base_url('media/'.$content_slug.'/data/'.$value[$key]) .'"></td>';
+                                                                echo '<td><img class="image-pa" src="'.base_url($upload_data_dir.$value[$key]) .'"></td>';
                                                             }
                                                         }
                                                     }
