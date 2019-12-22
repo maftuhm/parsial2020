@@ -92,7 +92,25 @@ class Contents_data extends Admin_controller {
 	            }
 
 	            $this->data['participant_data'] = $this->unset_key((array)$this->contents_model->get_data($table_name, $id, 'id', FALSE), $unset);
-	            $this->data['members_data']		= 
+	            $this->data['members_data']		= $this->contents_model->get_members_data($content_slug, $id);
+	            $this->data['members_keys'] 	= $this->unset_key(array_keys($this->data['members_data'][0]), array(0, 1));
+
+		        foreach ($this->data['members_data'] as $k => $member)
+		        {
+		            $this->data['members_data'][$k]['media_details'] = $this->contents_model->get_members_media($content_slug, $member['id']);
+			        
+			        foreach ($this->data['members_data'][$k]['media_details'] as $media => $value)
+			        {
+				        $this->data['members_data'][$k][$value['name']] = $value['file_name'];
+			        }
+		        }
+
+		        foreach ($this->data['members_data'][0]['media_details'] as $media => $value)
+		        {
+		        	$this->data['media_keys'][] = $value['name'];
+		        }
+
+		        $this->data['all_keys'] = array_merge($this->data['members_keys'], $this->data['media_keys']);
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/details', $this->data);
 			}
@@ -502,4 +520,21 @@ class Contents_data extends Admin_controller {
 		}
 		return $table;
 	}
+
+	// function object_to_array($object)
+	// {
+	// 	if (is_array($object))
+	// 	{
+	// 		foreach ($object as $key => $value)
+	// 		{
+	// 			$object[$key] = (array)$value;
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		$object = (array)$object[0];
+	// 	}
+	// 	return (array)$object;
+	// }
 }
+

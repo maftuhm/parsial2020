@@ -33,9 +33,35 @@ class Contents_model extends CI_Model {
 		return isset($result) ? $result : FALSE;
 	}
 
-    public function get_members_data($content_slug, $tim_id, $member_id = array())
+    public function get_members_data($content_slug, $tim_id)
     {
-        $table_name_member = $this->_table_name($content_slug);
+        $table_member = $this->_table_name($content_slug, 'members');        
+
+        $this->db->select('*');
+        $this->db->from($table_member);
+        $this->db->where('tim_id', $tim_id);
+        return $this->db->get()->result('array');
+    }
+
+    public function get_members_media($content_slug, $member_id)
+    {
+        $table_media = $this->tables['media'];
+        $table_member_media = $this->_table_name($content_slug, 'media');
+
+        $this->db->select('*');
+        $this->db->from($table_member_media);
+        $this->db->join($table_media, $table_media.'.id = '.$table_member_media.'.media_id');
+        $this->db->where('member_id', $member_id);
+        return $this->db->get()->result('array');
+    }
+
+    public function get_count_members($content_slug, $tim_id)
+    {
+        $table_media = $this->tables['media'];
+        $table_member = $this->_table_name($content_slug, 'members');
+
+        $this->db->where(array('tim_id'=> $tim_id));
+        return  $this->db->count_all_results($table_member);
     }
 
     public function register_content($name, $title, $description, $slug, $num_of_question)

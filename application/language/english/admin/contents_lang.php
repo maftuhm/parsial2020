@@ -16,6 +16,8 @@ $lang['contents_deactivate_question'] = 'Are you sure you want to deactivate the
 $lang['contents_edit']           	  = 'Edit content';
 $lang['contents_status']              = 'Status';
 $lang['contents_ip_address']          = 'IP Address';
+$lang['contents_photo']          	  = 'Photo';
+$lang['contents_ktm']	          	  = 'KTM';
 
 /*====== MCC ======*/
 $lang['contents_tim_name']				= 'Tim Name';
