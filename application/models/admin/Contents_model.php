@@ -35,7 +35,7 @@ class Contents_model extends CI_Model {
 
     public function get_members_data($content_slug, $tim_id, $member_id = array())
     {
-        $table_name = $this->_table_name($content_slug);
+        $table_name_member = $this->_table_name($content_slug);
     }
 
     public function register_content($name, $title, $description, $slug, $num_of_question)
