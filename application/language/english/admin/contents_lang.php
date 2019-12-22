@@ -20,6 +20,16 @@ $lang['contents_photo']          	  = 'Photo';
 $lang['contents_ktm']	          	  = 'KTM';
 $lang['contents_major']          	  = 'Major';
 
+/*===== Payemnt =====*/
+$lang['contents_upload_time']		  = 'Upload Time';
+$lang['contents_bank_name']			  = 'Bank Name';
+$lang['contents_account_owner']		  = 'Account Owner';
+$lang['contents_account_number']	  = 'Account Number';
+$lang['contents_payment']			  = 'Payment';
+$lang['contents_paid']				  = 'Paid';
+$lang['contents_not_paid']			  = 'Not Paid';
+$lang['contents_proof_payment']		  = 'Proof of Payment';
+
 /*====== MCC ======*/
 $lang['contents_tim_name']				= 'Tim Name';
 $lang['contents_university']			= 'University';

@@ -66,7 +66,10 @@ class Contents_data extends Admin_controller {
         	$this->data['content_slug'] = $content_slug;
         	$this->data['uploaded'] = FALSE;
         	$this->data['inputed_members'] = FALSE;
+        	$this->data['paid'] = FALSE;
         	$this->data['all_keys'] = array();
+
+
 			if($this->data['content_details'] == FALSE)
 			{
 				show_404();
@@ -74,6 +77,7 @@ class Contents_data extends Admin_controller {
 			else
 			{
 				$contents_title = ((array)$this->data['content_details'])['title'];
+				$contents_id = ((array)$this->data['content_details'])['id'];
 		        /* Title Page :: Common */
 		        $this->page_title->push($contents_title);
 		        $this->data['pagetitle'] = $this->page_title->show();
@@ -85,6 +89,7 @@ class Contents_data extends Admin_controller {
 
 	            /* Get all contents */
 	            $table_name = $this->_table_name($content_slug);
+
 	            if(!$this->data['is_admin']){
 	            	$unset = array('id', 'ip_address');
 	            }
@@ -129,6 +134,21 @@ class Contents_data extends Admin_controller {
 			        $this->data['inputed_members'] = TRUE;
 	            }
 
+	            $this->data['participant_payment'] = $this->contents_model->get_participant_payment($contents_id, $id);
+
+	            if ($this->data['participant_payment'] != FALSE)
+	            {
+	            	$this->data['payment_keys'] = array('upload_time', 'bank_name', 'account_owner', 'account_number');
+	            	$this->data['participant_payment'] = $this->data['participant_payment'][0];
+
+	            	/* === remove key time === */
+	            	$this->data['participant_payment']['upload_time'] = $this->data['participant_payment']['time'];
+					unset($this->data['participant_payment']['time']);
+
+
+
+	            	$this->data['paid'] = TRUE;
+	            }
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/details', $this->data);
 			}

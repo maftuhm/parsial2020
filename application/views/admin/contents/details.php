@@ -49,31 +49,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <!-- <pre><?php //print_r($members_data)?></pre> -->
                                     <table class="table table-striped table-hover">
-                                        <!-- <tbody>
+                                        <tbody>
+                                            <?php 
+                                            echo '<tr>';
+                                                echo '<th>'.lang('contents_payment').'</th>';
+                                                echo '<td>';
+                                                if ($paid){echo lang('contents_paid');}else{echo lang('contents_not_paid');}
+                                                echo '<td>';
+                                            echo '</tr>';
+                                            foreach ($payment_keys as $keys => $key)
+                                            {
+                                                echo '<tr>';
+                                                    echo '<th>'.lang('contents_'.$key).'</th>';
+                                                    echo '<td>';
+                                                    if($key == 'upload_time'){echo date('D, d M Y H:i', $participant_payment[$key]);}
+                                                    else{echo $participant_payment[$key];}
+                                                    echo '</td>';
+                                                echo '</tr>';
+
+                                            }
+                                            ?>
                                             <tr>
-                                                <th><?php //echo lang('payment'); ?></th>
-                                                    <?php //if ($u->payment == FALSE): $image_dir = 'upload/images/';?>
-                                                <td><?php //echo lang('not_paid'); ?></td>
-                                                    <?php //else: foreach ($u->payment as $pay) {$image = $pay->file_name;}?>
-                                                <td><?php //echo lang('paid'); ?></td>
-                                                    <?php //endif;?>
-                                            </tr>
-                                            <tr>
-                                                <th><?php //echo lang('pof'); ?></th>
+                                                <th><?php echo lang('contents_proof_payment'); ?></th>
                                                 <td>
-                                                    <img style="width: auto; max-width: 100%; max-height: 250px;" src="<?php //echo base_url($image_dir.$image);?>">
+                                                    <img style="width: auto; max-width: 100%; max-height: 250px;" 
+                                                    src="<?php echo base_url('media/'.$content_slug.'/'.$participant_payment['file_name']);?>">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th><?php //echo lang('action'); ?></th>
+                                                <th><?php echo lang('contents_action'); ?></th>
                                                 <td>
-                                                    <?php //echo anchor('admin/futsal/edit/'.$u->id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
-                                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button>
+                                                    <?php echo anchor('admin/contents/p/futsal/edit/'.$participant_payment['id'], '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
+                                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php echo lang('delete');?></button>
                                                 </td>
                                             </tr>
-                                        </tbody> -->
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -83,7 +94,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-12">
                              <div class="box">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><?php //print_r($player);?></h3>
+                                    <h3 class="box-title">Members Details</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div>
                                 </div>
                                 <div class="box-body">
                                     <table id="dataTable" class="table table-striped table-hover">
