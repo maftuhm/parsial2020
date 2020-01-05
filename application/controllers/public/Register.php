@@ -134,37 +134,39 @@ class Register extends Public_Controller {
 		$table  = $tables['content_prefix'] . $content;
 
 		/* Validate form input */
-		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
-		$this->form_validation->set_rules('player_name', 'lang:player_name', 'required');
-		$this->form_validation->set_rules('grade', 'lang:grade', 'required');
-		$this->form_validation->set_rules('university', 'lang:university', 'required');
+		$this->form_validation->set_rules('name', 'lang:name', 'required');
+		$this->form_validation->set_rules('school', 'lang:school', 'required');
+		$this->form_validation->set_rules('birth_place', 'lang:birth_place', 'required');
+		$this->form_validation->set_rules('birth_date', 'lang:birth_date', 'required');
 		$this->form_validation->set_rules('phone', 'lang:phone', 'required');
 		$this->form_validation->set_rules('email', 'lang:email', 'required|valid_email|is_unique['.$table.'.email]');
-		$this->form_validation->set_rules('official', 'lang:official', 'required');
-		$this->form_validation->set_rules('coach', 'lang:coach', 'required');
+		$this->form_validation->set_rules('address', 'lang:address', 'required');
+		$this->form_validation->set_rules('tutor_name', 'lang:tutor_name', 'required');
+		$this->form_validation->set_rules('tutor_phone', 'lang:tutor_phone', 'required');
 		$this->form_validation->set_message('is_unique', 'Email ' . set_value('email') . ' sudah terdaftar.');
 
 		$id = FALSE;
 		if ($this->form_validation->run() == TRUE) {
 
 			$data = array(
-					'tim_name'		=> $this->input->post('tim_name'),
-					'player_name'	=> $this->input->post('player_name'),
-					'grade'			=> $this->input->post('grade'),
-					'university'	=> $this->input->post('university'),
+					'name'			=> $this->input->post('name'),
+					'school'		=> $this->input->post('school'),
+					'birth_place'	=> $this->input->post('birth_place'),
+					'birth_date'	=> strtotime($this->input->post('birth_date')),
+					'address'		=> $this->input->post('address'),
 					'phone'			=> $this->input->post('phone'),
 					'email'			=> $this->input->post('email'),
-					'official'		=> $this->input->post('official'),
-					'coach'			=> $this->input->post('coach')
+					'tutor_name'	=> $this->input->post('tutor_name'),
+					'tutor_phone'	=> $this->input->post('tutor_phone')
 				);
 			$id = $this->public_model->register($table, $data);
 			if ($id != FALSE) {
 				$atts = array(
 					'icon'		=> 'success',
 					'title' 	=> 'Berhasil!',
-					'text'		=> 'Anda berhasil mendaftar. Silahkan lanjutkan ke langkah berikutnya.',
+					'text'		=> 'Data anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
 					'showConfirmButton' => 'false',
-					'footer'	=> anchor('upload/futsal/'.$id, 'Upload Berkas')
+					'footer'	=> anchor('payment/mathcomp/'.$id, 'Pembayaran')
 				);
 				$this->data['alert_modal'] = sweet_alert($atts);
 			}
@@ -752,7 +754,7 @@ class Register extends Public_Controller {
 							$atts = array(
 								'icon'		=> 'error',
 								'title' 	=> 'Terjadi kesalahan!',
-								'text'		=> $this->upload->display_errors()
+								'html'		=> $this->upload->display_errors()
 							);
 							$this->data['alert_modal'] = (validation_errors(sweet_alert_open(), sweet_alert_close()) ? validation_errors(sweet_alert_open(), sweet_alert_close()) : sweet_alert($atts));
 			            }

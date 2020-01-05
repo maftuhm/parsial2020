@@ -76,6 +76,7 @@ legend{
 	margin-right: 17px;
 	color: #fff;
 }
+
 .button-submit{
 	margin-bottom: 0;
 }
@@ -114,6 +115,16 @@ legend{
 	outline: none;
 }
 
+.birthday-form-grup input[type=text] {
+	width: 40%;
+}
+.birthday-form-grup input[type=date] {
+	width: 50%;
+	padding: 7px 6px;
+	margin-left: 5px;
+	float: right;
+	margin-right: 0;
+}
 .form-grup hr{
 	margin-left: 11px;
 	color: #5e558e;
@@ -269,6 +280,15 @@ footer{
 		margin-left: 0;
 		margin-top: 8px;
 		width: 90%;
+	}
+	.birthday-form-grup input[type=text] {
+		width: 100%;
+	}
+	.birthday-form-grup input[type=date] {
+		width: 100%;
+		padding: 8px;
+		margin-left: 0;
+		float: none;
 	}
 	#header h3{
 		float: none;
