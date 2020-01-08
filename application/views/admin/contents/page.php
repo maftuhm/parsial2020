@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             {
                                                                 echo '<td>'.date('D, d M Y H:i', $content->$value).'</td>';
                                                             }
-                                                            elseif($value == 'tim_name')
+                                                            elseif($value == 'tim_name' OR $value == 'name')
                                                             {
                                                                 $atts_profile   = array('class' => 'url_action', 'title' => lang('actions_see').' '.$content->$value);
                                                                 $atts_edit      = array('class' => 'url_action', 'title' => lang('actions_edit').' '.$content->$value);

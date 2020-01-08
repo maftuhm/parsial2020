@@ -92,6 +92,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
+                    <?php if($content_team_group == TRUE):?>
                     <div class="row">
                         <div class="col-md-12">
                              <div class="box">
@@ -151,5 +152,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
+                    <?php endif;?>
                 </section>
             </div>

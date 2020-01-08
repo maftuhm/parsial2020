@@ -78,6 +78,8 @@ class Contents_data extends Admin_controller {
 			{
 				$contents_title = ((array)$this->data['content_details'])['title'];
 				$contents_id = ((array)$this->data['content_details'])['id'];
+				$this->data['content_team_group'] = ((array)$this->data['content_details'])['team_group'];
+
 		        /* Title Page :: Common */
 		        $this->page_title->push($contents_title);
 		        $this->data['pagetitle'] = $this->page_title->show();
@@ -90,7 +92,8 @@ class Contents_data extends Admin_controller {
 	            /* Get all contents */
 	            $table_name = $this->_table_name($content_slug);
 
-	            if(!$this->data['is_admin']){
+	            if(!$this->data['is_admin'])
+	            {
 	            	$unset = array('id', 'ip_address');
 	            }
 	            else
@@ -100,39 +103,43 @@ class Contents_data extends Admin_controller {
 
 	            $this->data['participant_data'] = $this->unset_key((array)$this->contents_model->get_data($table_name, $id, 'id', FALSE), $unset);
 	            $this->data['participant_id'] 	= $id;
-	            $this->data['members_data']		= $this->contents_model->get_members_data($content_slug, $id);
 
-	            if ($this->data['members_data'] != FALSE)
+	            if ($this->data['content_team_group'] == TRUE) 
 	            {
-	            	$this->data['members_keys'] 	= $this->unset_key(array_keys($this->data['members_data'][0]), array(0, 1));
-			        foreach ($this->data['members_data'] as $k => $member)
-			        {
-			            $this->data['members_data'][$k]['media_details'] = $this->contents_model->get_members_media($content_slug, $member['id']);
-				        
-				        if ($this->data['members_data'][$k]['media_details'] != FALSE)
+		            $this->data['members_data']		= $this->contents_model->get_members_data($content_slug, $id);
+		            
+		            if ($this->data['members_data'] != FALSE)
+		            {
+		            	$this->data['members_keys'] 	= $this->unset_key(array_keys($this->data['members_data'][0]), array(0, 1));
+				        foreach ($this->data['members_data'] as $k => $member)
 				        {
-					        foreach ($this->data['members_data'][$k]['media_details'] as $media => $value)
+				            $this->data['members_data'][$k]['media_details'] = $this->contents_model->get_members_media($content_slug, $member['id']);
+					        
+					        if ($this->data['members_data'][$k]['media_details'] != FALSE)
 					        {
-						        $this->data['members_data'][$k][$value['name']] = $value['file_name'];
+						        foreach ($this->data['members_data'][$k]['media_details'] as $media => $value)
+						        {
+							        $this->data['members_data'][$k][$value['name']] = $value['file_name'];
+						        }
+						        $this->data['uploaded'] = TRUE;			        	
 					        }
-					        $this->data['uploaded'] = TRUE;			        	
 				        }
-			        }
 
-			        if ($this->data['uploaded'])
-			        {			        	
-				        foreach ($this->data['members_data'][0]['media_details'] as $media => $value)
-				        {
-				        	$this->data['media_keys'][] = $value['name'];
+				        if ($this->data['uploaded'])
+				        {			        	
+					        foreach ($this->data['members_data'][0]['media_details'] as $media => $value)
+					        {
+					        	$this->data['media_keys'][] = $value['name'];
+					        }
+					        $this->data['upload_data_dir'] = $this->data['upload_dir'].'/data/';
+					        $this->data['all_keys'] = array_merge($this->data['members_keys'], $this->data['media_keys']);
 				        }
-				        $this->data['upload_data_dir'] = $this->data['upload_dir'].'/data/';
-				        $this->data['all_keys'] = array_merge($this->data['members_keys'], $this->data['media_keys']);
-			        }
-			        else
-			        {
-			        	$this->data['all_keys'] = $this->data['members_keys'];
-			        }
-			        $this->data['inputed_members'] = TRUE;
+				        else
+				        {
+				        	$this->data['all_keys'] = $this->data['members_keys'];
+				        }
+				        $this->data['inputed_members'] = TRUE;
+		            }
 	            }
 
 	            $this->data['participant_payment'] = $this->contents_model->get_participant_payment($contents_id, $id);
