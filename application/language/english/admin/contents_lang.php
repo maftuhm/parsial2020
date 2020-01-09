@@ -49,3 +49,11 @@ $lang['contents_phone']					= 'Phone';
 $lang['contents_email']					= 'Email';
 $lang['contents_official']				= 'Official';
 $lang['contents_coach']					= 'Coach';
+
+/*====== Mathcomp ======*/
+$lang['contents_school']				= 'School';
+$lang['contents_birth_place']			= 'Birth Place';
+$lang['contents_birth_date']			= 'Birth Date';
+$lang['contents_address']				= 'Address';
+$lang['contents_tutor_name']			= 'Tutor Name';
+$lang['contents_tutor_phone']			= 'Tutor Phone';

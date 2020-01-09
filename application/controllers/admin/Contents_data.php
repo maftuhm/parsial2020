@@ -111,6 +111,7 @@ class Contents_data extends Admin_controller {
 		            if ($this->data['members_data'] != FALSE)
 		            {
 		            	$this->data['members_keys'] 	= $this->unset_key(array_keys($this->data['members_data'][0]), array(0, 1));
+
 				        foreach ($this->data['members_data'] as $k => $member)
 				        {
 				            $this->data['members_data'][$k]['media_details'] = $this->contents_model->get_members_media($content_slug, $member['id']);
@@ -243,9 +244,9 @@ class Contents_data extends Admin_controller {
 	public function delete($id = NULL)
 	{
         /* Load Template */
-		if ( ! $this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
+		if ( ! $this->ion_auth->logged_in())
 		{
-            return show_error('You must be an administrator to view this page.');
+			redirect('auth', 'refresh');
 		}
 
         /* Breadcrumbs */

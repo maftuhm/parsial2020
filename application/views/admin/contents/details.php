@@ -29,8 +29,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 echo '<th>' . lang('contents_'.$key) . '</th>';
                                                 echo '<td>:</td>';
                                                 echo '<td>';
-                                                if ($key == 'created_on'){echo date('D, d M Y H:i', $value);}
-                                                else{echo $value;}
+                                                if ($key == 'created_on')
+                                                {
+                                                    echo date('D, d M Y H:i', $value);
+                                                }
+                                                elseif (preg_match('/_date$/', $key))
+                                                {
+                                                    echo date('l, d M Y', $value);
+                                                }
+                                                else
+                                                {
+                                                    echo $value;
+                                                }
                                                 echo '</td>';
                                                 echo '</tr>';
                                             }
@@ -82,8 +92,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <tr>
                                                 <th><?php echo lang('contents_action'); ?></th>
                                                 <td>
-                                                    <?php echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
-                                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php echo lang('delete');?></button>
+                                                    <?php //echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
+                                                    <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button> -->
                                                 </td>
                                             </tr>
                                         </tbody>

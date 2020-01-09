@@ -39,6 +39,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             {
                                                                 echo '<td>'.date('D, d M Y H:i', $content->$value).'</td>';
                                                             }
+                                                            elseif(preg_match('/_date$/', $value))
+                                                            {
+                                                                echo '<td>'.date('d F Y', $content->$value).'</td>';
+                                                            }
                                                             elseif($value == 'tim_name' OR $value == 'name')
                                                             {
                                                                 $atts_profile   = array('class' => 'url_action', 'title' => lang('actions_see').' '.$content->$value);
@@ -50,10 +54,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                                                 echo '<td class="name">';
                                                                 echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $content->$value, $atts_profile);
-                                                                echo '<div class="actions show-actions">';
-                                                                echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $value_profile_btn, $atts_profile);
-                                                                echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$content->id, $value_edit_btn, $atts_edit);
-                                                                echo anchor('admin/contents/p/'.$content_slug.'/delete/'.$content->id, $value_delete_btn, $atts_delete);
+                                                                // echo '<div class="actions show-actions">';
+                                                                // echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $value_profile_btn, $atts_profile);
+                                                                // echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$content->id, $value_edit_btn, $atts_edit);
+                                                                // echo anchor('admin/contents/p/'.$content_slug.'/delete/'.$content->id, $value_delete_btn, $atts_delete);
                                                                 echo '</div>';
                                                                 echo '</td>';
                                                             }
