@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<nav class="navbar navbar-expand-sm fixed-top">
 				<div class="container">
 					<a class="navbar-brand" href="index.html">
-						<img src="images/logoparsial50px.png" alt="Logo PARSIAL 2020" title="Travel Across The Universe" class="img-logo">
+						<img src="<?php echo base_url($templates_dir . '/images/logoparsial50px.png'); ?>" alt="Logo PARSIAL 2020" title="Travel Across The Universe" class="img-logo">
 					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>

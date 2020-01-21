@@ -202,21 +202,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="container py-xl-5 py-lg-3">
                 <div class="row about-bottom-w3l mt-4 mb-4">
                     <div class="col-sm-4 about-grid">
-                        <div class="about-grid-main"><img src="images/comp.jpg" alt="" class="img-fluid">
+                        <div class="about-grid-main"><img src="<?php echo base_url($templates_dir . '/images/comp.jpg'); ?>" alt="" class="img-fluid">
                             <h4 class="my-4">MCC</h4>
                             <p>Here is where you can show off your computer programming skills.</p><a href="http://www.parsialhimatika.com/mcc" class="button-w3ls btn mt-sm-5 mt-4">Register now!</a>
                         </div>
                     </div>
 
                     <div class="col-sm-4 about-grid">
-                        <div class="about-grid-main"><img src="images/mathcomp.jpg" alt="" class="img-fluid">
+                        <div class="about-grid-main"><img src="<?php echo base_url($templates_dir . '/images/mathcomp.jpg'); ?>" alt="" class="img-fluid">
                             <h4 class="my-4">Mathcomp</h4>
                             <p>Challenge yourself and measure your skill against other math fans.</p><a href="http://www.parsialhimatika.com/mathcomp" class="button-w3ls btn mt-sm-5 mt-4">Register now!</a>
                         </div>
                     </div>
 
                     <div class="col-sm-4 about-grid">
-                        <div class="about-grid-main"><img src="images/futsal.jpg" alt="" class="img-fluid">
+                        <div class="about-grid-main"><img src="<?php echo base_url($templates_dir . '/images/futsal.jpg'); ?>" alt="" class="img-fluid">
                             <h4 class="my-4">Futsal</h4>
                             <p>You have to be united in order to win and become a new champion.</p><a href="http://parsialhimatika.com/futsal" class="button-w3ls btn mt-sm-5 mt-4">Register now!</a>
                         </div>
