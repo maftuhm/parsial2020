@@ -2,10 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
-			<!-- header -->
+		<div class="main-top" id="home">
 			<nav class="navbar navbar-expand-sm fixed-top">
 				<div class="container">
-					<a class="navbar-brand" href="index.html">
+					<a class="navbar-brand" href="<?php echo base_url('/'); ?>">
 						<img src="<?php echo base_url($templates_dir . '/images/logoparsial50px.png'); ?>" alt="Logo PARSIAL 2020" title="Travel Across The Universe" class="img-logo">
 					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

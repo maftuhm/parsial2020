@@ -55,5 +55,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</head>
 
 	<body>
-		<div class="main-top" id="home">
-			<!-- header -->
