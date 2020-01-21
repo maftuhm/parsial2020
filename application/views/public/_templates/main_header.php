@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<li class="nav-item"><a class="nav-link" href="#mcc">MCC</a></li>
 							<li class="nav-item"><a class="nav-link" href="#mathcomp">Mathcomp</a></li>
 							<li class="nav-item"><a class="nav-link" href="#futsal">Futsal</a></li>
-							<li class="nav-item"><a class="nav-link" href="coming_soon/index_cs.html" title="Seminar" title="Seminar">Seminar</a></li>
+							<li class="nav-item"><a class="nav-link" href="<?php echo base_url('/coming-soon'); ?>" title="Seminar" title="Seminar">Seminar</a></li>
 							<li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
 						</ul>
 					</div>

@@ -61,6 +61,7 @@ $route['admin/contents/p/(:any)']			= 'admin/contents_data/page/$1';
 $route['admin/contents/p/(:any)/(:any)/(:any)']	= 'admin/contents_data/$2/$1/$3';
 
 /* ===== PUBLIC ROUTES ===== */
+$route['coming-soon'] 			= 'public/coming_soon';
 $route['(:any)'] 				= 'public/register/$1';
 $route['upload/mcc'] 			= 'public/register/upload_mcc';
 $route['upload/mcc/(:any)'] 	= 'public/register/upload_mcc/$1';

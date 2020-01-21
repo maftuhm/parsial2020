@@ -36,6 +36,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="icon" href="<?php echo base_url($templates_dir . '/images/logoparsial-icon.png'); ?>">
 
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext">
+	    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bungee+Inline|Luckiest+Guy&display=swap" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Athiti|Fredericka+the+Great&display=swap" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Vast+Shadow&display=swap" rel="stylesheet">
 		<script>
 			addEventListener("load", function () {
 				setTimeout(hideURLbar, 0);
