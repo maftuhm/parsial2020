@@ -46,8 +46,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 		</script>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/bootstrap.css'); ?>">
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/style.css'); ?>">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/font-awesome.min.css'); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/style.css'); ?>">
 
 	</head>
 
