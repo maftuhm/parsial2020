@@ -59,6 +59,7 @@ class Register extends Public_Controller {
 				);
 				if ($this->public_model->input_participant($table_member, $members_data))
 				{
+					$id = encrypt_url($id);
 					$atts = array(
 						'icon'		=> 'success',
 						'title' 	=> 'Berhasil!',
@@ -74,6 +75,7 @@ class Register extends Public_Controller {
 		{
 			$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
 		}
+		// $this->data['tes_encrypt'] = encrypt_url('15');
         $this->template->public_form_render('public/mcc', $this->data);
 	}
 
@@ -427,7 +429,7 @@ class Register extends Public_Controller {
 
         if ($id != '')
         {
-			$id = (int) $id;
+			$id = (int) decrypt_url($id);
 			if(!$this->public_model->check_any($table, array('id' => $id))){show_404();}
 			$this->data['show_email_form'] = FALSE;
         }
@@ -462,6 +464,7 @@ class Register extends Public_Controller {
 
 	            	if ($this->public_model->check_any($table_member_media, array('member_id' => $member_id[0])))
 	            	{
+						$id = encrypt_url($id);
 	            		$atts = array(
 							'icon'		=> 'error',
 							'title' 	=> 'Terjadi kesalahan!',
@@ -490,6 +493,7 @@ class Register extends Public_Controller {
 							$this->data['all_file'] = $members_media[0];
 				            if ($this->public_model->input_participant($table_member_media, $members_media))
 				            {
+								$id = encrypt_url($id);
 								$atts = array(
 									'icon'		=> 'success',
 									'title' 	=> 'Berhasil!',
