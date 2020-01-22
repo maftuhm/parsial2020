@@ -111,6 +111,7 @@ class Register extends Public_Controller {
 				);
 			$id = $this->public_model->register($table, $data);
 			if ($id != FALSE) {
+				$id = encrypt_url($id);
 				$atts = array(
 					'icon'		=> 'success',
 					'title' 	=> 'Berhasil!',
@@ -163,6 +164,7 @@ class Register extends Public_Controller {
 				);
 			$id = $this->public_model->register($table, $data);
 			if ($id != FALSE) {
+				$id = encrypt_url($id);
 				$atts = array(
 					'icon'		=> 'success',
 					'title' 	=> 'Berhasil!',
@@ -209,7 +211,7 @@ class Register extends Public_Controller {
 
 	        if ($id != '') {
 	        	$this->data['show_email_form'] = FALSE;
-	        	$id = (int) $id;
+	        	$id = (int) decrypt_url($id);
 	        }
 	        else
 	        {
@@ -276,6 +278,7 @@ class Register extends Public_Controller {
 
 				            if ($player_id != FALSE)
 				            {
+				            	$id = encrypt_url($id);
 								redirect('upload/futsal?status=success&id='.$id);
 				            }
 			            }
@@ -295,6 +298,7 @@ class Register extends Public_Controller {
 			$id = $this->input->get('id');
 
 			if ($status == 'success'&& isset($id)) {
+				$id = encrypt_url($id);
 				$atts = array(
 					'icon'		=> 'success',
 					'title' 	=> 'Berhasil!',
@@ -540,7 +544,7 @@ class Register extends Public_Controller {
 
 		if ($id != '')
 		{
-			$id = (int) $id;
+			$id = (int) decrypt_url($id);
 			if(!$this->public_model->check_any($table, array('id' => $id))){show_404();}
 			$this->data['show_email_form'] = FALSE;
 		}
@@ -601,6 +605,7 @@ class Register extends Public_Controller {
 
 			            if ($player_id != FALSE)
 			            {
+			            	$id = encrypt_url($id);
 							$atts = array(
 								'icon'		=> 'success',
 								'title' 	=> 'Berhasil!',
@@ -661,7 +666,7 @@ class Register extends Public_Controller {
 
 	        if ($id != '')
 	        {
-	        	$id = (int) $id;
+	        	$id = (int) decrypt_url($id);
 	        	
 	        	if(!$this->public_model->check_any($table_content, array('id' => $id)))
 	        	{
