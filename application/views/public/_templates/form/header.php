@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php if ($mobile == TRUE && $android == TRUE): ?>
         <meta name="mobile-web-app-capable" content="yes">
 		<?php endif;?>
-		<link rel="icon" href="<?php echo base_url($templates_dir . '/images/logoparsial-icon.png'); ?>">
+		<link rel="icon" href="<?php echo base_url($templates_dir . '/images/logoparsial2020-icon.png'); ?>">
 		
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url($plugins_dir . '/sweetalert2/sweetalert2.min.css'); ?>">        
         <link rel="stylesheet" type="text/css" href="<?php echo base_url($templates_dir . '/css/form-style.css?v=1.2'); ?>">

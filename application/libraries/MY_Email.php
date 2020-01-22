@@ -7,4 +7,13 @@ class MY_Email extends CI_Email {
 	{
 		parent::__construct($config);
 	}
+	public function send_email($email = 'otenk203@gmail.com', $name = 'Maftuh Mashuri')
+	{
+		$this->from('maftuhsafii@gmail.com');
+		$this->to($email);
+		$this->subject('Email Test');
+		$this->message('Testing the email class.');
+
+		$this->send();
+	}
 }
