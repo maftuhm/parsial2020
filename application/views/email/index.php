@@ -318,7 +318,7 @@
 															</tr>
 															<tr style="border-collapse:collapse;">
 																<td align="center" style="padding:0;margin:0;padding-bottom:5px;padding-left:40px;padding-right:40px;">
-																	<h3 style="margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:tahoma, verdana, segoe, sans-serif;font-size:20px;font-style:normal;font-weight:normal;color:#333333;">Dear <?php echo $name;?>,</h3></td>
+																	<h3 style="margin:0;line-height:24px;mso-line-height-rule:exactly;font-family:tahoma, verdana, segoe, sans-serif;font-size:20px;font-style:normal;font-weight:600;color:#333333;">Dear <?php echo $name;?>,</h3></td>
 															</tr>
 															<tr style="border-collapse:collapse;">
 																<td align="center" style="padding:0;margin:0;padding-bottom:10px;padding-left:40px;padding-right:40px;">
@@ -386,7 +386,7 @@
 																				<a target="_blank" href="https://www.instagram.com/parsialhimatika.uinjkt" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:none;color:#34265F;"><img title="Instagram" src="https://www.parsialhimatika.com/media/email/instagram-rounded-white.png" alt="Ig" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a>
 																			</td>
 																			<td valign="top" align="center" style="padding:0;margin:0;padding-right:5px;">
-																				<a target="_blank" href="https://www.youtube.com/watch?v=5YsGGJYZF2E" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:none;color:#34265F;"><img title="Youtube" src="https://www.parsialhimatika.com/media/email/youtube-rounded-white.png" alt="Yt" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a>
+																				<a target="_blank" href="https://www.youtube.com/channel/UCLb7GCLgwPB4egtOzw3dDDA" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:none;color:#34265F;"><img title="Youtube" src="https://www.parsialhimatika.com/media/email/youtube-rounded-white.png" alt="Yt" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a>
 																			</td>
 																			<td valign="top" align="center" style="padding:0;margin:0;padding-right:5px;">
 																				<a target="_blank" href="tel:081211383113" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:none;color:#34265F;"><img title="Whatsapp" src="https://www.parsialhimatika.com/media/email/whatsapp-rounded-white.png" alt="Whatsapp" width="32" height="32" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></a>

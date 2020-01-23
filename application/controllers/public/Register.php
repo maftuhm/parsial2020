@@ -17,8 +17,6 @@ class Register extends Public_Controller {
 		$tables 		= $this->config->item('tables');
 		$table 			= $tables['content_prefix'] . $content;
 		$table_member 	= $table . $tables['members_suffix'];
-		$content_title  = $this->contents_common_model->get_contents($content, 'title')['title'];
-		$this->data['title'] = $content_title . ' | ' . $this->data['title'];
 
 		/* Validate form input */
 		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
@@ -70,9 +68,9 @@ class Register extends Public_Controller {
 						'footer'	=> anchor('upload/mcc/'.$id, 'Upload KTM')
 					);
 					$this->data['alert_modal'] = sweet_alert($atts);
-
-					$this->email_success($content, $content_title, $id, $members_data[0]['name'], 'members');
-					$this->email->send_email($subject, $message, $tim_data['email']);
+					$tim_data['id_encript'] = $id;
+					$tim_data['name'] = $members_data[0]['name'];
+					$this->email_success($content, $content_title, $tim_data, 'members');
 				}
 			}
 		}
@@ -89,6 +87,8 @@ class Register extends Public_Controller {
 		$content = 'futsal';
 		$tables = $this->config->item('tables');
 		$table  = $tables['content_prefix'] . $content;
+		$content_title  = $this->contents_common_model->get_contents($content, 'title')['title'];
+		$this->data['title'] = $content_title . ' | ' . $this->data['title'];
 
 		/* Validate form input */
 		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
@@ -125,6 +125,8 @@ class Register extends Public_Controller {
 					'footer'	=> anchor('upload/futsal/'.$id, 'Upload Berkas')
 				);
 				$this->data['alert_modal'] = sweet_alert($atts);
+				$tim_data = array('id_encript' => $id, 'name' => $data['player_name'], 'email' => $data['email']);
+				$this->email_success($content, $content_title, $tim_data, 'members');
 			}
 		}
 		else
@@ -140,6 +142,8 @@ class Register extends Public_Controller {
 		$content = 'mathcomp';
 		$tables = $this->config->item('tables');
 		$table  = $tables['content_prefix'] . $content;
+		$content_title  = $this->contents_common_model->get_contents($content, 'title')['title'];
+		$this->data['title'] = $content_title . ' | ' . $this->data['title'];
 
 		/* Validate form input */
 		$this->form_validation->set_rules('name', 'lang:name', 'required');
@@ -178,6 +182,8 @@ class Register extends Public_Controller {
 					'footer'	=> anchor('payment/mathcomp/'.$id, 'Pembayaran')
 				);
 				$this->data['alert_modal'] = sweet_alert($atts);
+				$participant_data = array('id_encript' => $id, 'name' => $data['name'], 'email' => $data['email']);
+				$this->email_success($content, $content_title, $participant_data, 'payment');
 			}
 		}
 		else
@@ -435,11 +441,24 @@ class Register extends Public_Controller {
         $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
 
     	$this->data['show_email_form'] = TRUE;
+    	$tim_data = array();
 
         if ($id != '')
         {
+        	$tim_data['id_encript'] = $id;
 			$id = (int) decrypt_url($id);
-			if(!$this->public_model->check_any($table, array('id' => $id))){show_404();}
+			if(!$this->public_model->check_any($table, array('id' => $id)))
+			{
+				show_404();
+			}
+			else
+			{
+	        	$data = $this->public_model->get_participant($table, $id, 'id');
+	        	foreach ($data as $key) {
+	        		$email = $key->email;
+	        	}
+	        	$tim_data['email'] = $email;				
+			}
 			$this->data['show_email_form'] = FALSE;
         }
         else
@@ -453,6 +472,8 @@ class Register extends Public_Controller {
 	        	foreach ($data as $key) {
 	        		$id = $key->id;
 	        	}
+	        	$tim_data['id_encript'] = encrypt_url($id);
+	        	$tim_data['email']		= $email;
 	        }
 	        else
 	        {
@@ -469,6 +490,7 @@ class Register extends Public_Controller {
 	            	$members_data = $this->public_model->get_participant($table_member, $id, 'tim_id');
 	            	foreach ($members_data as $column) {
 	            		$member_id[] = $column->id;
+	            		$member_name[] = $column->name;
 	            	}
 
 	            	if ($this->public_model->check_any($table_member_media, array('member_id' => $member_id[0])))
@@ -511,6 +533,9 @@ class Register extends Public_Controller {
 									'footer'	=> anchor('payment/mcc/'.$id, 'Pembayaran')
 								);
 								$this->data['alert_modal'] = sweet_alert($atts);
+								$tim_data['name'] = $member_name[0];
+								$this->email_success($content, $data_content['title'], $tim_data, 'payment');
+
 				            }
 			            }
 			            else
@@ -550,7 +575,23 @@ class Register extends Public_Controller {
 		if ($id != '')
 		{
 			$id = (int) decrypt_url($id);
-			if(!$this->public_model->check_any($table, array('id' => $id))){show_404();}
+			if(!$this->public_model->check_any($table, array('id' => $id)))
+			{
+				show_404();
+			}
+			else
+			{
+	        	$data = $this->public_model->get_participant($table, $id, 'id');
+	        	foreach ($data as $key) {
+	        		$email = $key->email;
+	        		$name = $key->player_name;
+	        	}
+	        	$tim_data = array(
+		    		'id_encript' => encrypt_url($id),
+		    		'name'		 => $name,
+		    		'email'		 => $email
+		    	);
+			}
 			$this->data['show_email_form'] = FALSE;
 		}
 		else
@@ -563,7 +604,13 @@ class Register extends Public_Controller {
 		    	$data = $this->public_model->get_participant($table, $email, 'email');
 		    	foreach ($data as $key) {
 		    		$id = $key->id;
+		    		$name = $key->player_name;
 		    	}
+		    	$tim_data = array(
+		    		'id_encript' => encrypt_url($id),
+		    		'name'		 => $name,
+		    		'email'		 => $email
+		    	);
 		    }
 		    else
 		    {
@@ -619,6 +666,7 @@ class Register extends Public_Controller {
 								'footer'	=> anchor('payment/futsal/'.$id, 'Pembayaran')
 							);
 							$this->data['alert_modal'] = sweet_alert($atts);
+							$this->email_success($content, $data_content['title'], $tim_data, 'payment');
 						}
 		            }
 		            else
@@ -657,8 +705,8 @@ class Register extends Public_Controller {
         	$this->data['header'] = $data_content['title'];
         	$content_id = $data_content['id'];
 
-			$this->data['page_title'] = 'Upload Bukti Pembayaran';
-	        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' - ' . $this->data['title'];
+			$this->data['page_title'] = 'Upload Bukti Pembayaran' . ' ' . $this->data['header'] . ' ' . $this->data['title'];
+	        $this->data['title'] = $this->data['page_title'];
 
 
 			$this->form_validation->set_rules('bank_name', 'lang:bank_name', 'required');
@@ -677,6 +725,26 @@ class Register extends Public_Controller {
 	        	{
 					show_404();
 	        	}
+				else
+				{
+		        	$data = $this->public_model->get_participant($table_content, $id, 'id');
+		        	foreach ($data as $key) {
+		        		$email = $key->email;
+		        		if ($content == 'futsal')
+		        		{
+		        			$name = $key->player_name;
+		        		}
+		        		else
+		        		{
+			        		$name = $key->name;
+		        		}
+		        	}
+		        	$tim_data = array(
+			    		'id_encript' => encrypt_url($id),
+			    		'name'		 => $name,
+			    		'email'		 => $email
+			    	);
+				}
 	        	$this->data['show_email_form'] = FALSE;
 	        }
 	        else
@@ -689,7 +757,20 @@ class Register extends Public_Controller {
 		        	$data = $this->public_model->get_participant($table_content, $email, 'email');
 		        	foreach ($data as $key) {
 		        		$id = $key->id;
+		        		if ($content == 'futsal')
+		        		{
+		        			$name = $key->player_name;
+		        		}
+		        		else
+		        		{
+			        		$name = $key->name;
+		        		}
 		        	}
+		        	$tim_data = array(
+			    		'id_encript' => encrypt_url($id),
+			    		'name'		 => $name,
+			    		'email'		 => $email
+			    	);
 		        }
 		        else
 		        {
@@ -742,6 +823,7 @@ class Register extends Public_Controller {
 										'text'		=> 'Upload bukti pembayaran berhasil.'
 									);
 									$this->data['alert_modal'] = sweet_alert($atts);
+									$this->email_success($content, $data_content['title'], $tim_data);
 								}
 								else
 								{
@@ -897,11 +979,11 @@ class Register extends Public_Controller {
 		return FALSE;
 	}
 
-	function email_success($content, $content_title,  $id_encript, $name = 'Peserta', $button = FALSE)
+	function email_success($content, $content_title, $data_participant, $button = FALSE)
 	{
 		$data = array(
 			'base_url'		=> base_url('/'),
-			'name'			=> $name,
+			'name'			=> $data_participant['name'],
 			'title' 		=> 'Pendaftaran Berhasil!',
 			'infoblock' 	=> 'Pendaftaran berhasil! Terimakasih atas partisipasi anda.',
 			'message'		=> 'Terimakasih atas partisipasi anda pada kegiatan ' . $content_title . '.',
@@ -911,22 +993,27 @@ class Register extends Public_Controller {
 		if ($button == 'payment')
 		{
 			$data['message'] .= ' Pendaftaran yang anda lakukan telah berhasil, silahkan lakukan pembayaran dan upload bukti pembayaran melalui url berikut atau klik tombol dibawah:';
-			$url = str_replace($protocol, '', site_url(array('payment', $content , $id_encript)));
+			$url = str_replace($protocol, '', site_url(array('payment', $content , $data_participant['id_encript'])));
 
 			$data['link'] = $url;
 			$data['button'] = array('url' => $url, 'value' => 'Pembayaran');
 		}
 		elseif ($button == 'members') {
 			$data['message'] .= ' Pendaftaran yang anda lakukan telah berhasil, silahkan upload data tim melalui url berikut atau klik tombol upload dibawah:';
-			$url = str_replace($protocol, '', site_url(array('upload', $content , $id_encript)));
+			$url = str_replace($protocol, '', site_url(array('upload', $content , $data_participant['id_encript'])));
 			$data['link'] = $url;
 			$data['button'] = array('url' => $url, 'value' => 'Upload');
+			$data['title']	= 'Upload Berhasil!';
+			$data['infoblock'] = $data['title'] . 'Terimakasih atas partisipasi anda.';
 		}
 		else
 		{
 			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil.';
+			$data['title']	= 'Upload Bukit Pembayaran Berhasil!';
+			$data['infoblock'] = $data['title'] . 'Terimakasih atas partisipasi anda.';
 		}
 
-		$this->load->view('email/index', $data/*, TRUE*/);
+		$message = $this->load->view('email/index', $data, TRUE);
+		return $this->email->send_email($data['title'], $message, $data_participant['email']);
 	}
 }

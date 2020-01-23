@@ -7,12 +7,12 @@ class MY_Email extends CI_Email {
 	{
 		parent::__construct($config);
 	}
-	public function send_email($subject, $message, $to = 'otenk203@gmail.com', $from = 'parsialhimatika.uinjkt@gmail.com')
+	public function send_email($subject, $message, $to = 'otenk203@gmail.com', $from = 'parsialhimatika.uinjkt@gmail.com', $name = 'PARSIAL HIMATIKA 2020')
 	{
 		$config['mailtype'] = 'html';
 		$this->initialize($config);
 		$this->to($to);
-		$this->from($from);
+		$this->from($from, $name);
 		$this->message($message);
 		$this->subject($subject);
 		$this->send();
