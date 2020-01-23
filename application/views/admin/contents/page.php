@@ -47,17 +47,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             {
                                                                 $atts_profile   = array('class' => 'url_action', 'title' => lang('actions_see').' '.$content->$value);
                                                                 $atts_edit      = array('class' => 'url_action', 'title' => lang('actions_edit').' '.$content->$value);
-                                                                $atts_delete    = array('class' => 'url_action', 'title' => lang('actions_delete').' '.$content->$value);
-                                                                $value_profile_btn  = '<span class="label label-primary"><i class="fa fa-user" aria-hidden="true"></i> <span>'.lang('actions_see').'</span>';
-                                                                $value_edit_btn  = '<span class="label label-warning"><i class="fa fa-edit" aria-hidden="true"></i> <span>'.lang('actions_see').'</span>';
-                                                                $value_delete_btn  = '<span class="label label-danger"><i class="fa fa-trash" aria-hidden="true"></i> <span>'.lang('actions_delete').'</span>';
+                                                                $atts_delete    = array(
+                                                                    'type' => 'button',
+                                                                    'class' => 'url_action',
+                                                                    'title' => lang('actions_delete').' '.$content->$value,
+                                                                    'data-toggle' => 'modal', 
+                                                                    'data-target'=> '#modal-danger', 
+                                                                    'data-value' => $content->id
+                                                                );
+
+                                                                $value_profile_btn  = '<span class="label label-primary"><i class="fa fa-user" aria-hidden="true"></i> '.lang('actions_see').'</span>';
+                                                                $value_edit_btn  = '<span class="label label-warning"><i class="fa fa-edit" aria-hidden="true"></i> '.lang('actions_edit').'</span>';
+                                                                $value_delete_btn  = '<span class="label label-danger"><i class="fa fa-trash" aria-hidden="true"></i> '.lang('actions_delete').'</span>';
 
                                                                 echo '<td class="name">';
                                                                 echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $content->$value, $atts_profile);
-                                                                // echo '<div class="actions show-actions">';
-                                                                // echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $value_profile_btn, $atts_profile);
+                                                                echo '<div class="actions show-actions">';
+                                                                echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $value_profile_btn, $atts_profile);
                                                                 // echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$content->id, $value_edit_btn, $atts_edit);
-                                                                // echo anchor('admin/contents/p/'.$content_slug.'/delete/'.$content->id, $value_delete_btn, $atts_delete);
+                                                                $site_url =  site_url('admin/contents/p/' . $content_slug . '/delete/' . $content->id);
+                                                                echo '<a href="#" type="button" data-toggle="modal" data-target="#modal-danger" data-name="'.$content->$value.'" data-url="'.$site_url.'">' . $value_delete_btn . '</a>';
                                                                 echo '</div>';
                                                                 echo '</td>';
                                                             }
@@ -86,4 +95,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                          </div>
                     </div>
                 </section>
+            </div>
+            <div class="modal modal-danger fade" id="modal-danger">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"><?php echo lang('actions_delete') . ' participant?';?></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure want to delete </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                            <?php echo anchor('#', lang('actions_delete'), array('class' => 'btn btn-outline btn-delete')); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
