@@ -475,6 +475,7 @@
 															<tr style="border-collapse:collapse;">
 																<td align="center" style="padding:10px;margin:0;">
 																	<p style="margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#999999;">Jalan Ir. Juanda Nomor 95, Ciputat, Tangerang Selatan, Banten, 15412</p>
+																	<a href="#" style="display: none;"><?php echo $link; ?></a>
 																</td>
 															</tr>
 														</table>
