@@ -20,7 +20,7 @@ class Contents_common_model extends CI_Model {
                                 ->where($key, $value)
                                 ->limit(1)
                                 ->get($this->tables['contents'])
-                                ->row();
+                                ->row_array();
             return $query;
         }
     }

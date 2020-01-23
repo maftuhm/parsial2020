@@ -17,6 +17,8 @@ class Register extends Public_Controller {
 		$tables 		= $this->config->item('tables');
 		$table 			= $tables['content_prefix'] . $content;
 		$table_member 	= $table . $tables['members_suffix'];
+		$content_title  = $this->contents_common_model->get_contents($content, 'title')['title'];
+		$this->data['title'] = $content_title . ' | ' . $this->data['title'];
 
 		/* Validate form input */
 		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
@@ -68,6 +70,9 @@ class Register extends Public_Controller {
 						'footer'	=> anchor('upload/mcc/'.$id, 'Upload KTM')
 					);
 					$this->data['alert_modal'] = sweet_alert($atts);
+
+					$this->email_success($content, $content_title, $id, $members_data[0]['name'], 'members');
+					$this->email->send_email($subject, $message, $tim_data['email']);
 				}
 			}
 		}
@@ -890,5 +895,38 @@ class Register extends Public_Controller {
 		}
 		$this->form_validation->set_message('email_exists', 'Email '. $value . ' belum terdaftar.');
 		return FALSE;
+	}
+
+	function email_success($content, $content_title,  $id_encript, $name = 'Peserta', $button = FALSE)
+	{
+		$data = array(
+			'base_url'		=> base_url('/'),
+			'name'			=> $name,
+			'title' 		=> 'Pendaftaran Berhasil!',
+			'infoblock' 	=> 'Pendaftaran berhasil! Terimakasih atas partisipasi anda.',
+			'message'		=> 'Terimakasih atas partisipasi anda pada kegiatan ' . $content_title . '.',
+			'button'		=> ''
+		);
+		$protocol = array('http://', 'https://');
+		if ($button == 'payment')
+		{
+			$data['message'] .= ' Pendaftaran yang anda lakukan telah berhasil, silahkan lakukan pembayaran dan upload bukti pembayaran melalui url berikut atau klik tombol dibawah:';
+			$url = str_replace($protocol, '', site_url(array('payment', $content , $id_encript)));
+
+			$data['link'] = $url;
+			$data['button'] = array('url' => $url, 'value' => 'Pembayaran');
+		}
+		elseif ($button == 'members') {
+			$data['message'] .= ' Pendaftaran yang anda lakukan telah berhasil, silahkan upload data tim melalui url berikut atau klik tombol upload dibawah:';
+			$url = str_replace($protocol, '', site_url(array('upload', $content , $id_encript)));
+			$data['link'] = $url;
+			$data['button'] = array('url' => $url, 'value' => 'Upload');
+		}
+		else
+		{
+			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil.';
+		}
+
+		$this->load->view('email/index', $data/*, TRUE*/);
 	}
 }

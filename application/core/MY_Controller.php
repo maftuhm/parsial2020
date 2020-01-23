@@ -13,7 +13,7 @@ class MY_Controller extends CI_Controller
         $this->load->add_package_path(APPPATH . 'third_party/ion_auth/');
         $this->load->config('common/dp_config');
         $this->load->config('common/dp_language');
-        $this->load->library(array('form_validation', 'ion_auth', 'template', 'common/mobile_detect'));
+        $this->load->library(array('form_validation', 'ion_auth', 'template', 'common/mobile_detect', 'email'));
         $this->load->helper(array('array', 'language', 'url', 'menu', 'modal', 'security'));
         $this->load->model(array('common/prefs_model', 'common/contents_common_model', 'public/public_model'));
 

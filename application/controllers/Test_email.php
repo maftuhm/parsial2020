@@ -18,10 +18,7 @@ class Test_email extends Public_Controller {
 								'url'	=> 'https://www.parsialhimatika.com/mcc',
 								'value'	=> 'www.parsialhimatika.com/mcc',
 								),
-			'button'		=> array(
-								'url'	=> 'https://www.parsialhimatika.com/payment/mcc',
-								'value'	=> 'Pembayaran',
-								),
+			'button'		=> ''
 		);
 		$message = $this->load->view('email/index', $data/*, TRUE*/);
 		// $this->email->send_email($message);
