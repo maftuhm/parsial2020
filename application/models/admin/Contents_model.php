@@ -6,7 +6,6 @@ class Contents_model extends CI_Model {
     public function __construct()
     {
         parent::__construct();
-        // initialize db tables data
         $this->tables = $this->config->item('tables');
     }
 
@@ -120,6 +119,121 @@ class Contents_model extends CI_Model {
 
         return $this->db->delete($table, array('content_id' => $content_id));
 
+    }
+
+    public function delete_members($content_slug, $participant_id, $members_id = array())
+    {
+    	// $this->db->trans_begin();
+		if(is_array($members_id))
+		{
+			$this->db->where_in('id', $members_id);
+		}
+		else
+		{
+			$this->db->where('id', $members_id);
+		}
+		$this->db->where('tim_id', $participant_id);
+
+   //  	if (!is_array($members_id))
+   //  	{
+			// $this->db->where($this->tables['payments'].'.id', $payment_data[0]['payment_id']);
+			// $this->db->delete($this->tables['payments']);
+			// if ($this->db->trans_status() === FALSE)
+			// {
+			// 	$this->db->trans_rollback();
+			// }
+			// else
+			// {
+			// 	$this->db->trans_commit();
+			// 	$this->db->where($this->tables['media'].'.id', $payment_data[0]['media_id']);
+			// 	$this->db->delete($this->tables['media']);
+
+			// 	if ($this->db->trans_status() === FALSE)
+			// 	{
+			// 		$this->db->trans_rollback();
+			// 	}
+			// 	else
+			// 	{
+			// 		$this->db->trans_commit();
+			// 		$this->db->where($this->tables['payments_media'].'.participant_id', $payment_data[0]['participant_id']);
+			// 		$this->db->where($this->tables['payments_media'].'.content_id', $payment_data[0]['content_id']);
+			// 		$this->db->delete($this->tables['payments_media']);
+			// 		if ($this->db->trans_status() === FALSE)
+			// 		{
+			// 			$this->db->trans_rollback();
+			// 		}
+			// 		else
+			// 		{
+			// 			$this->db->trans_commit();
+			// 			return TRUE;
+
+			// 		}
+			// 	}
+			// }
+			// return FALSE;
+   //  	}
+    	return $this->db->last_query();
+    }
+
+    public function delete_payment($content_slug, $participant_id)
+    {
+    	$payment_data = $this->get_participant_payment($content_slug, $participant_id);
+    	if (!empty($payment_data))
+    	{
+	        $this->db->trans_begin();
+			$this->db->where($this->tables['payments'].'.id', $payment_data[0]['payment_id']);
+			$this->db->delete($this->tables['payments']);
+			if ($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+			}
+			else
+			{
+				$this->db->trans_commit();
+				$this->db->where($this->tables['media'].'.id', $payment_data[0]['media_id']);
+				$this->db->delete($this->tables['media']);
+
+				if ($this->db->trans_status() === FALSE)
+				{
+					$this->db->trans_rollback();
+				}
+				else
+				{
+					$this->db->trans_commit();
+					$this->db->where($this->tables['payments_media'].'.participant_id', $payment_data[0]['participant_id']);
+					$this->db->where($this->tables['payments_media'].'.content_id', $payment_data[0]['content_id']);
+					$this->db->delete($this->tables['payments_media']);
+					if ($this->db->trans_status() === FALSE)
+					{
+						$this->db->trans_rollback();
+					}
+					else
+					{
+						$this->db->trans_commit();
+						return TRUE;
+
+					}
+				}
+			}
+			return FALSE;
+    	}
+    	return TRUE;
+    }
+
+    public function delete_participant($content_id, $participant_id, $tim = TRUE)
+    {
+        $this->db->trans_begin();
+
+        $this->delete_members($id);
+
+        $this->db->delete($this->tables['contents'], array('id' => $id));
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        $this->db->trans_commit();
     }
 
     public function _table_name($content_name, $type = '')

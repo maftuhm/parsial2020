@@ -59,6 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body">
+                                    <pre><?php /*print_r($query);*//*print_r($tes_payment);*/ ?></pre>
                                     <table class="table table-striped table-hover">
                                         <tbody>
                                             <?php 

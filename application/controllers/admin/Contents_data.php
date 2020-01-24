@@ -144,7 +144,9 @@ class Contents_data extends Admin_controller {
 	            }
 
 	            $this->data['participant_payment'] = $this->contents_model->get_participant_payment($contents_id, $id);
+	            $this->data['tes_payment'] = $this->data['participant_payment'];
             	$this->data['payment_keys'] = array('upload_time', 'bank_name', 'account_owner', 'account_number');
+            	// $this->data['query'] = $this->contents_model->delete_payment($content_slug, $id);
 	            if ($this->data['participant_payment'] != FALSE)
 	            {
 	            	$this->data['participant_payment'] = $this->data['participant_payment'][0];
@@ -241,48 +243,27 @@ class Contents_data extends Admin_controller {
         }
 	}
 
-	public function delete($id = NULL)
+	public function delete($content_slug, $id = NULL)
 	{
-        /* Load Template */
 		if ( ! $this->ion_auth->logged_in())
 		{
 			redirect('auth', 'refresh');
 		}
-
-        /* Breadcrumbs */
-        $this->breadcrumbs->unshift(2, lang('menu_contents_delete'), 'admin/contents/delete');
-        $this->data['breadcrumb'] = $this->breadcrumbs->show();
-
-		/* Validate form input */
-		$this->form_validation->set_rules('confirm', 'lang:delete_validation_confirm_label', 'required');
-		$this->form_validation->set_rules('id', 'lang:delete_validation_user_id_label', 'required|alpha_numeric');
-
-		$id = (int) $id;
-		if ($this->form_validation->run() === FALSE)
-		{
-            $contents	  = $this->contents_model->get_data('contents', $id);
-            foreach ($contents as $content) {
-            	$this->data['contents_id']    = (int) $content->id;
-            	$this->data['contents_title'] = $content->title;
-            }
-            $this->data['csrf']       = $this->_get_csrf_nonce();
-            /* Load Template */
-            $this->template->admin_render('admin/contents/delete', $this->data);
-		}
 		else
 		{
-            if ($this->input->post('confirm') == 'yes')
+			if (!isset($id) OR $id == NULL)
 			{
-                if ($this->_valid_csrf_nonce() === FALSE OR $id != $this->input->post('id'))
-				{
-                    show_error($this->lang->line('error_csrf'));
-				}
-				else
-				{
-		            $this->contents_model->delete_content($id);
-				}
+				redirect('admin/contents/p/'.$content_slug, 'refresh');
 			}
-			redirect('admin/contents', 'refresh');
+			else
+			{
+				$id = (int) $id;
+	        	$content_id = (int)((array)$this->contents_model->get_data('contents', $content_slug, 'slug', FALSE))['id'];
+	            if($this->contents_model->delete_payment($content_id, $id))
+	            {
+	            	redirect('admin/contents/p/'.$content_slug, 'refresh');
+	            }
+	        }
 		}
 	}
 

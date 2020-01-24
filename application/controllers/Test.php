@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Test_email extends Public_Controller {
+class Test extends Public_Controller {
 
 	public function __construct()
 	{
@@ -9,7 +9,7 @@ class Test_email extends Public_Controller {
 		$this->load->library('email');
 	}
 
-	public function index(){
+	public function email(){
 		$data = array(
 			'title' 		=> 'Pendaftaran Berhasil!',
 			'infoblock' 	=> 'Pendaftaran berhasil! Silahkan lanjutkan ke tahap berikutnya',
