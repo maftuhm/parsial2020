@@ -17,6 +17,7 @@ class Register extends Public_Controller {
 		$tables 		= $this->config->item('tables');
 		$table 			= $tables['content_prefix'] . $content;
 		$table_member 	= $table . $tables['members_suffix'];
+		$content_title  = $this->contents_common_model->get_contents($content, 'title')['title'];
 
 		/* Validate form input */
 		$this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
@@ -68,8 +69,9 @@ class Register extends Public_Controller {
 						'footer'	=> anchor('upload/mcc/'.$id, 'Upload KTM')
 					);
 					$this->data['alert_modal'] = sweet_alert($atts);
-					$tim_data['id_encript'] = $id;
-					$tim_data['name'] = $members_data[0]['name'];
+					// $tim_data['id_encript'] = $id;
+					// $tim_data['name'] = $members_data[0]['name'];
+					$tim_data = array('id_encript' => $id, 'name' => $members_data[0]['name'], 'email' => $members_data[0]['email']);
 					$this->email_success($content, $content_title, $tim_data, 'members');
 				}
 			}
@@ -693,6 +695,8 @@ class Register extends Public_Controller {
 		$tables 				= $this->config->item('tables');
 		$table_content 			= $tables['content_prefix'] . $content;
 		$table_payments_media	= $tables['payments_media'];
+		$table_member  			= $table_content . $tables['members_suffix'];
+
 		$content_exist 			= $this->public_model->check_any($tables['contents'], array('slug' => $content));
 
         if (!$content_exist)
@@ -714,7 +718,7 @@ class Register extends Public_Controller {
 
         	$this->data['show_email_form'] = TRUE;
 			$id_file = FALSE;
-
+			$data = array();
 			$this->config_upload($content.'/');
 
 	        if ($id != '')
@@ -727,23 +731,9 @@ class Register extends Public_Controller {
 	        	}
 				else
 				{
-		        	$data = $this->public_model->get_participant($table_content, $id, 'id');
-		        	foreach ($data as $key) {
-		        		$email = $key->email;
-		        		if ($content == 'futsal')
-		        		{
-		        			$name = $key->player_name;
-		        		}
-		        		else
-		        		{
-			        		$name = $key->name;
-		        		}
-		        	}
-		        	$tim_data = array(
-			    		'id_encript' => encrypt_url($id),
-			    		'name'		 => $name,
-			    		'email'		 => $email
-			    	);
+		        	$data = $this->public_model->get_participant($table_content, $id);
+		        	$this->data['tes'] = $data;
+		        	$email = $data[0]->email;
 				}
 	        	$this->data['show_email_form'] = FALSE;
 	        }
@@ -755,29 +745,42 @@ class Register extends Public_Controller {
 		        {
 		        	$email = $this->input->post('email');
 		        	$data = $this->public_model->get_participant($table_content, $email, 'email');
-		        	foreach ($data as $key) {
-		        		$id = $key->id;
-		        		if ($content == 'futsal')
-		        		{
-		        			$name = $key->player_name;
-		        		}
-		        		else
-		        		{
-			        		$name = $key->name;
-		        		}
-		        	}
-		        	$tim_data = array(
-			    		'id_encript' => encrypt_url($id),
-			    		'name'		 => $name,
-			    		'email'		 => $email
-			    	);
+		        	$id = $data[0]->id;
 		        }
 		        else
 		        {
 					$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
 		        }
 	        }
-
+	        if (!empty($data))
+	        {
+				if ($content == 'futsal')
+	    		{
+	    			$name = $data[0]->player_name;
+	    		}
+	    		elseif ($content == 'mcc')
+	    		{
+	            	$members_data = $this->public_model->get_participant($table_member, $email, 'email');
+	        		$name = $members_data[0]->name;
+	    		}
+	    		else
+	    		{
+	        		$name = $data[0]->name;
+	    		}
+	        	$tim_data = array(
+		    		'id_encript' => encrypt_url($id),
+		    		'name'		 => $name,
+		    		'email'		 => $email
+		    	);
+	        }
+	        else
+	        {
+	        	$tim_data = array(
+		    		'id_encript' => encrypt_url($id)? $id : 'error',
+		    		'name'		 => 'Maftuh',
+		    		'email'		 => 'maftuhsafii@gmail.com'
+		    	);
+	        }
 	        if (isset($id) && !empty($_FILES))
 	        {
 				if ($content_id != NULL && $id != NULL)
@@ -979,7 +982,7 @@ class Register extends Public_Controller {
 		return FALSE;
 	}
 
-	function email_success($content, $content_title, $data_participant, $button = FALSE)
+	function email_success($content, $content_title, $data_participant, $button = '')
 	{
 		$table_timeline = array(
 			'mathcomp' => '<table class="table-striped" cellspacing="0" cellpadding="0"><tbody><tr><td colspan="3" align="center"><strong>Jadwal Mathematics Competition</strong></td></tr><tr><td></td><td><strong>Hari, Tanggal</strong></td><td><strong>Jam</strong></td></tr><tr><td><strong>Babak penyisihan</strong></td><td>Selasa, 10 Maret 2020</td><td>07.15 s/d selesai</td></tr><tr><td><strong>Babak Semifinal</strong></td><td>Rabu, 11 Maret 2020</td><td>07.15 s/d selesai</td></tr><tr><td><strong>Babak final</strong></td><td>Kamis, 12 Maret 2020</td><td>07.15 s/d selesai</td></tr></tbody></table>',
@@ -1020,7 +1023,25 @@ class Register extends Public_Controller {
 			$data['table'] = $table_timeline[$content];
 		}
 
-		$this->load->view('email/index', $data/*, TRUE*/);
+		return $this->load->view('email/index', $data/*, TRUE*/);
 		// return $this->email->send_email($data['title'], $message, $data_participant['email']);
 	}
 }
+// Array(
+// 	[0] => stdClass Object(
+// 		[id] => 1
+// 		[tim_id] => 1
+// 		[name] => maftuh mashuri
+// 		[major] => matematika
+// 		[email] => maftuh@gmail.com
+// 		[phone] => 085777455031
+// 		[description] =>)
+// 	[1] => stdClass Object(
+// 		[id] => 2
+// 		[tim_id] => 1
+// 		[name] => maftuh
+// 		[major] => matematika
+// 		[email] => maftuh@gmail.com
+// 		[phone] => 90438987[description] =>
+// 	)
+// )

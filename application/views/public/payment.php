@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 			<div id="header">
-				<h3><?php echo $page_title; ?></h3>
+				<h3><?php echo $page_title;// print_r($tes);?></h3>
 			</div>
 
 			<div class="form-container upload-btn-wrapper">
