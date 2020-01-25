@@ -820,7 +820,7 @@ class Register extends Public_Controller {
 									$atts = array(
 										'icon'		=> 'success',
 										'title' 	=> 'Berhasil!',
-										'text'		=> 'Upload bukti pembayaran berhasil.'
+										'text'		=> 'Upload bukti pembayaran berhasil. Periksa email anda, Pembayaran Anda akan diverifikasi dan kami akan mengirimkan email konfirmasi melalui email Anda. Jika pembayaran Anda belum juga dikonfirmasi 60 menit setelah Anda mengunggah bukti pembayaran, silakan hubungi contact person yang sudah disedikan. Periksa juga folder spam.'
 									);
 									$this->data['alert_modal'] = sweet_alert($atts);
 									$this->email_success($content, $data_content['title'], $tim_data);
@@ -830,7 +830,7 @@ class Register extends Public_Controller {
 									$atts = array(
 										'icon'		=> 'error',
 										'title' 	=> 'Terjadi kesalahan!',
-										'text'		=> 'Mohon maaf atas ketidaknyamanan anda. Harap hubungi contact person yang sudah disedikan'
+										'text'		=> 'Mohon maaf atas ketidaknyamanan anda. Harap hubungi contact person yang sudah disedikan.'
 									);
 									$this->data['alert_modal'] = sweet_alert($atts);
 								}
@@ -840,7 +840,7 @@ class Register extends Public_Controller {
 									$atts = array(
 										'icon'		=> 'error',
 										'title' 	=> 'Terjadi kesalahan!',
-										'text'		=> 'Mohon maaf atas ketidaknyamanan anda. Harap hubungi contact person yang sudah disedikan'
+										'text'		=> 'Mohon maaf atas ketidaknyamanan anda. Harap hubungi contact person yang sudah disedikan.'
 									);
 									$this->data['alert_modal'] = sweet_alert($atts);
 							}
@@ -981,6 +981,11 @@ class Register extends Public_Controller {
 
 	function email_success($content, $content_title, $data_participant, $button = FALSE)
 	{
+		$table_timeline = array(
+			'mathcomp' => '<table class="table-striped" cellspacing="0" cellpadding="0"><tbody><tr><td colspan="3" align="center"><strong>Jadwal Mathematics Competition</strong></td></tr><tr><td></td><td><strong>Hari, Tanggal</strong></td><td><strong>Jam</strong></td></tr><tr><td><strong>Babak penyisihan</strong></td><td>Selasa, 10 Maret 2020</td><td>07.15 s/d selesai</td></tr><tr><td><strong>Babak Semifinal</strong></td><td>Rabu, 11 Maret 2020</td><td>07.15 s/d selesai</td></tr><tr><td><strong>Babak final</strong></td><td>Kamis, 12 Maret 2020</td><td>07.15 s/d selesai</td></tr></tbody></table>',
+			'mcc' => '<table class="table-striped" cellspacing="0" cellpadding="0"><tbody><tr><td colspan="3" align="center"><strong>Jadwal Mathematics Computation Competition</strong></td></tr><tr><td></td><td><strong>Hari, Tanggal</strong></td><td><strong>Jam</strong></td></tr><tr><td><strong>Babak penyisihan (online)</strong></td><td>1 – 29 Februari 2020</td><td>-</td></tr><tr><td><strong>Babak final</strong></td><td>Jumat, 27 Maret 2020</td><td>13.00 – 17.35 WIB</td></tr></tbody></table>',
+			'futsal' => '<table class="table-striped" cellspacing="0" cellpadding="0"><tbody><tr><td colspan="2" align="center"><strong>Jadwal Futsal</strong></td></tr><tr><td></td><td><strong>Tanggal</strong></td></tr><tr><td><strong>IKAHIMATIKA</strong></td><td>21 - 22 Maret 2020</td></tr><tr><td><strong>Mahasiswa Umum</strong></td><td>16 - 19 Maret 2020</td></tr></tbody></table>'
+		);
 		$data = array(
 			'base_url'		=> base_url('/'),
 			'name'			=> $data_participant['name'],
@@ -989,6 +994,7 @@ class Register extends Public_Controller {
 			'message'		=> 'Terimakasih atas partisipasi anda pada kegiatan ' . $content_title . '.',
 			'button'		=> ''
 		);
+		$data['table'] = '';
 		$protocol = array('http://', 'https://');
 		if ($button == 'payment')
 		{
@@ -1008,12 +1014,13 @@ class Register extends Public_Controller {
 		}
 		else
 		{
-			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil.';
+			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil. Harap tunggu email balasan dari kami.';
 			$data['title']	= 'Upload Bukit Pembayaran Berhasil!';
 			$data['infoblock'] = $data['title'] . 'Terimakasih atas partisipasi anda.';
+			$data['table'] = $table_timeline[$content];
 		}
 
-		$message = $this->load->view('email/index', $data, TRUE);
-		return $this->email->send_email($data['title'], $message, $data_participant['email']);
+		$this->load->view('email/index', $data/*, TRUE*/);
+		// return $this->email->send_email($data['title'], $message, $data_participant['email']);
 	}
 }

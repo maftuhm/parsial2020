@@ -177,6 +177,9 @@
 			table.es-social td {
 				display: inline-block!important
 			}
+			.table-striped>tbody>tr>td{
+			    font-size: 12px !important;
+			}
 		}
 		
 		#outlook a {
@@ -218,6 +221,23 @@
 			max-height: 0;
 			line-height: 0;
 			mso-hide: all;
+		}
+		.table-striped>tbody>tr:nth-of-type(odd) {
+		    background-color: #f9f9f9;
+		}
+		.table-striped>tbody>tr>td{
+			padding: 8px;
+		    line-height: 1.42857143;
+		    vertical-align: top;
+		    border: 1px solid #ddd;
+		    font-size: 14px;
+		}
+		.table-striped {
+			mso-table-lspace:0pt;
+			mso-table-rspace:0pt;
+			border-collapse:collapse;
+			border-spacing:0px;
+			width:80%;
 		}
 	</style>
 </head>
@@ -334,6 +354,12 @@
 															</tr>
 															<tr style="border-collapse:collapse;">
 																<td align="center" style="margin:0;padding-top:10px;padding-left:10px;padding-right:10px;padding-bottom:15px;"><span class="es-button-border" style="border-style:solid;border-color:transparent;background:#34265F none repeat scroll 0% 0%;border-width:0px;display:inline-block;border-radius:5px;width:auto;"><a href="<?php echo $button['url']; ?>" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:18px;color:#FFFFFF;border-style:solid;border-color:#34265F;border-width:10px 20px 10px 20px;display:inline-block;background:#34265F none repeat scroll 0% 0%;border-radius:5px;font-weight:normal;font-style:normal;line-height:22px;width:auto;text-align:center;"><?php echo $button['value']; ?></a></span></td>
+															</tr>
+															<?php else:?>
+															<tr style="border-collapse:collapse;">
+																<td class="es-m-txt-l" align="center" style="margin:0;padding-top:5px;padding-left:15px;padding-right:15px;padding-bottom:20px;">
+																	<?php echo $table; ?>
+																</td>
 															</tr>
 															<?php endif;?>
 														</table>

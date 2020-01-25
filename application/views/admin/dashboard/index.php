@@ -111,7 +111,7 @@ if ($url_exist) {
                                         </div>
 										<div class="col-md-4">
 											<p class="text-center"><strong>Mathcomp</strong></p>
-											<table style="width: 100%;max-width: 100%;margin-bottom: 20px;">
+											<table class="table table-striped table-hover">
 												<tbody>
 													<tr>
 														<td colspan="3"><strong>Babak penyisihan</strong></td>
@@ -161,39 +161,15 @@ if ($url_exist) {
 												<tbody>
 													<tr>
 														<td><strong>IKAHIMATIKA</strong></td>
-														<td>Sabtu, 21 Maret 2020</td>
-														<td>-</td>
-														<td>Minggu, 22 Maret 2020</td>
+														<td>21 - 22 Maret 2020</td>
 													</tr>
 													<tr>
 														<td><strong>Mahasiswa Umum</strong></td>
-														<td>Senin, 16 Maret 2020</td>
-														<td>-</td>
-														<td>Kamis, 19 Maret 2020</td>
+														<td>16 - 19 Maret 2020</td>
 													</tr>
 												</tbody>
 											</table>
 										</div>
-                                        <!-- <div class="col-md-6">
-                                            <p class="text-center"><strong>xxx</strong></p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="text-center text-uppercase"><strong>Resources</strong></p>
-                                            <div class="progress-group">
-                                                <span class="progress-text">Disk use space</span>
-                                                <span class="progress-number"><strong><?php //echo byte_format($disk_usespace, 2); ?></strong>/<?php //echo byte_format($disk_totalspace, 2); ?></span>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="<?php //echo $disk_usepercent; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php //echo $disk_usepercent; ?>%"></div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-group">
-                                                <span class="progress-text">Memory usage</span>
-                                                <span class="progress-number"><strong><?php //echo byte_format($memory_usage, 2); ?></strong>/<?php //echo byte_format($memory_peak_usage, 2); ?></span>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="<?php //cho $memory_usepercent; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php //echo $memory_usepercent; ?>%"></div>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
