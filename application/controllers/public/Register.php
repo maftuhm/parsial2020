@@ -1012,12 +1012,12 @@ class Register extends Public_Controller {
 			$url = str_replace($protocol, '', site_url(array('upload', $content , $data_participant['id_encript'])));
 			$data['link'] = $url;
 			$data['button'] = array('url' => $url, 'value' => 'Upload');
-			$data['title']	= 'Upload Berhasil!';
-			$data['infoblock'] = $data['title'] . 'Terimakasih atas partisipasi anda.';
+			$data['title']	= 'Upload Bukti Pembayaran Berhasil!';
+			$data['infoblock'] = $data['title'] . 'Terimakasih atas partisipasi anda.';;
 		}
 		else
 		{
-			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil. Pembayaran Anda akan diverifikasi dan kami akan mengirimkan email konfirmasi melalui email Anda. Jika pembayaran Anda belum juga dikonfirmasi 60 menit setelah anda upload bukti pembayaran, silakan hubungi contact person yang sudah disediakan.';
+			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil. Pembayaran anda akan diverifikasi dan kami akan mengirimkan email konfirmasi melalui email anda. Jika pembayaran anda belum juga dikonfirmasi 60 menit setelah anda upload bukti pembayaran, silakan hubungi contact person yang sudah disediakan.';
 			$data['title']	= 'Upload Bukti Pembayaran Berhasil!';
 			$data['infoblock'] = $data['title'] . 'Terimakasih atas partisipasi anda.';
 			$data['table'] = $table_timeline[$content];
