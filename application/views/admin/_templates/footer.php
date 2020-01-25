@@ -11,42 +11,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </footer>
         </div>
 
-        <script src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
-        <script src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
-        <script src="<?php echo base_url($plugins_dir . '/slimscroll/slimscroll.min.js'); ?>"></script>
-        <!-- <script src="<?php //echo base_url($plugins_dir . '/icheck/js/icheck.min.js'); ?>"></script> -->
-        <!-- DataTables -->
-        <script src="<?php echo base_url($plugins_dir . '/datatables.net/jquery.dataTables.min.js');?>"></script>
-        <script src="<?php echo base_url($plugins_dir . '/datatables.net-bs/dataTables.bootstrap.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/slimscroll/slimscroll.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/icheck/icheck.min.js'); ?>"></script>
 
 <?php if ($mobile == TRUE): ?>
-        <script src="<?php echo base_url($plugins_dir . '/fastclick/fastclick.min.js'); ?>"></script>
-<?php else: ?>
-    <script type="text/javascript">
-            var action = '.actions';
-            $(action).removeClass('show-actions');
-            $('tr').hover(
-              function() {
-                $(this).find(action).addClass('show-actions');
-              },
-              function() {
-                $(this).find(action).removeClass('show-actions');
-              }
-            );
-    </script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/fastclick/fastclick.min.js'); ?>"></script>
+<?php endif; ?>
+<?php if ($this->router->fetch_class() == 'mailbox' && $this->router->fetch_method() == 'compose'): ?>
+		<script type="text/javascript" src="<?php echo base_url($plugins_dir . '/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>"></script>
+		<script type="text/javascript">$(function () {$("#compose-textarea").wysihtml5();});</script>
 <?php endif; ?>
 <?php if ($admin_prefs['transition_page'] == TRUE): ?>
-        <script src="<?php echo base_url($plugins_dir . '/animsition/animsition.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/animsition/animsition.min.js'); ?>"></script>
 <?php endif; ?>
 <?php if ($this->router->fetch_class() == 'users' && ($this->router->fetch_method() == 'create' OR $this->router->fetch_method() == 'edit')): ?>
-        <script src="<?php echo base_url($plugins_dir . '/pwstrength/pwstrength.min.js'); ?>"></script>
+        <script  type="text/javascript"src="<?php echo base_url($plugins_dir . '/pwstrength/pwstrength.min.js'); ?>"></script>
 <?php endif; ?>
 <?php if ($this->router->fetch_class() == 'groups' && ($this->router->fetch_method() == 'create' OR $this->router->fetch_method() == 'edit')): ?>
-        <script src="<?php echo base_url($plugins_dir . '/tinycolor/tinycolor.min.js'); ?>"></script>
-        <script src="<?php echo base_url($plugins_dir . '/colorpickersliders/colorpickersliders.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/tinycolor/tinycolor.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/colorpickersliders/colorpickersliders.min.js'); ?>"></script>
 <?php endif; ?>
-        <script src="<?php echo base_url($frameworks_dir . '/adminlte/js/adminlte.min.js'); ?>"></script>
-        <script src="<?php echo base_url($frameworks_dir . '/domprojects/js/dp.min.js'); ?>"></script>
+<?php if ($this->router->fetch_class() == 'users' OR $this->router->fetch_class() == 'contents'): ?>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net/jquery.dataTables.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net-bs/dataTables.bootstrap.min.js');?>"></script>
         <script type="text/javascript">
             $(function () {
                 $('#dataTable').DataTable({
@@ -67,25 +56,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					body.text(body.text() + name + '?')
 					modal.find('.btn-delete').attr('href', url)
 				})
-				// $('input').iCheck({
-				// 	checkboxClass: 'icheckbox_square-blue',
-				// 	radioClass: 'iradio_square-blue',
-				// 	increaseArea: '20%'
-				// });
-				$(".check-all").click(function(){
-					if($(this).is(":checked")){
-						$(".check-item").prop("checked", true);
-					}
-					else{
-						$(".check-item").prop("checked", false);
-					}
-				});
-				$(".check-item").each(function() {
-					if(!$(this).is(':checked')) {
-						$(".check-all").prop("checked", false);
-					}
-				});
+                $('.members-details input[type="checkbox"]').iCheck({
+                    checkboxClass: 'icheckbox_flat-blue',
+                    radioClass: 'iradio_flat-blue'
+                });
+
+                //Enable check and uncheck all functionality
+                $(".checkbox-toggle").click(function () {
+                    var clicks = $(this).data('clicks');
+                    if (clicks) {
+                        //Uncheck all checkboxes
+                        $(".members-details input[type='checkbox']").iCheck("uncheck");
+                        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+                    } else {
+                        //Check all checkboxes
+                        $(".members-details input[type='checkbox']").iCheck("check");
+                        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+                    }
+                    $(this).data("clicks", !clicks);
+                });
             });
         </script>
+        <?php if ($mobile == FALSE):?>
+	    <script type="text/javascript">
+	            var action = '.actions';
+	            $(action).removeClass('show-actions');
+	            $('tr').hover(
+	              function() {
+	                $(this).find(action).addClass('show-actions');
+	              },
+	              function() {
+	                $(this).find(action).removeClass('show-actions');
+	              }
+	            );
+	    </script>
+        <?php endif;?>
+<?php endif; ?>
+        <script type="text/javascript" src="<?php echo base_url($frameworks_dir . '/adminlte/js/adminlte.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($frameworks_dir . '/domprojects/js/dp.min.js'); ?>"></script>
     </body>
 </html>

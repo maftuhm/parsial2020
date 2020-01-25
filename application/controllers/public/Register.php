@@ -823,7 +823,7 @@ class Register extends Public_Controller {
 									$atts = array(
 										'icon'		=> 'success',
 										'title' 	=> 'Berhasil!',
-										'text'		=> 'Upload bukti pembayaran berhasil.' // Periksa email anda, Pembayaran Anda akan diverifikasi dan kami akan mengirimkan email konfirmasi melalui email Anda. Jika pembayaran Anda belum juga dikonfirmasi 60 menit setelah Anda mengunggah bukti pembayaran, silakan hubungi contact person yang sudah disedikan. Periksa juga folder spam.'
+										'text'		=> 'Upload bukti pembayaran berhasil. Harap periksa email anda.'
 									);
 									$this->data['alert_modal'] = sweet_alert($atts);
 									$this->email_success($content, $data_content['title'], $tim_data);

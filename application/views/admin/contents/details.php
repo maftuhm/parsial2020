@@ -93,7 +93,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <tr>
                                                 <th><?php echo lang('contents_action'); ?></th>
                                                 <td>
-                                                    <?php //echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action')); ?>
+                                                    <?php 
+                                                    // echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
+                                                    echo anchor('admin/contents/p/'.$content_slug.'/send_email/'.$participant_id, '<i class="fa fa-envelope"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
+                                                    ?>
                                                     <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button> -->
                                                 </td>
                                             </tr>
@@ -113,13 +116,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                     </div>
                                 </div>
-                                <div class="box-body">
+                                <div class="box-body members-details">
                                     <?php echo form_open(uri_string());?>
                                     <table id="dataTable" class="table table-striped table-hover">
                                         <thead>
                                             <tr>
+                                                <th><button style="width: 34px;" type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button></th>
                                                 <th>No</th>
-                                                <th><input type="checkbox" class="check-all check-item"></th>
                                                 <?php foreach ($all_keys as $key => $value):?>
                                                 <th><?php echo lang('contents_'.$value);?></th>
                                                 <?php endforeach;?>
@@ -133,8 +136,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     echo '<tr>';
                                                     if ($inputed_members)
                                                     {
+                                                        echo '<td class="checkbox-member"><input type="checkbox" name="members_id[]" value="'.$value['id'].'"></td>';
                                                         echo '<td>'.$i.'</td>';
-                                                        echo '<td><input type="checkbox" class="minimal check-item" name="members_id[]" value="'.$value['id'].'"></td>';
                                                         foreach ($members_keys as $keys => $key)
                                                         {
                                                             echo '<td>';
@@ -164,8 +167,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <th><button style="width: 34px;" type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button></th>
                                                 <th>No</th>
-                                                <th><input type="checkbox" class="check-all check-item"></th>
                                                 <?php foreach ($all_keys as $key => $value):?>
                                                 <th><?php echo lang('contents_'.$value);?></th>
                                                 <?php endforeach;?>
