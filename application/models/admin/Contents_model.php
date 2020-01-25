@@ -123,56 +123,58 @@ class Contents_model extends CI_Model {
 
     public function delete_members($content_slug, $participant_id, $members_id = array())
     {
-    	// $this->db->trans_begin();
-		if(is_array($members_id))
-		{
-			$this->db->where_in('id', $members_id);
-		}
-		else
-		{
-			$this->db->where('id', $members_id);
-		}
-		$this->db->where('tim_id', $participant_id);
+        $table_media = $this->tables['media'];
+        $table_member = $this->_table_name($content_slug, 'members');
+        $table_member_media = $this->_table_name($content_slug, 'media');
+    	if (!empty($members_id))
+    	{
+    		$this->db->select('media_id');
+    		$this->db->from($table_member_media);
 
-   //  	if (!is_array($members_id))
-   //  	{
-			// $this->db->where($this->tables['payments'].'.id', $payment_data[0]['payment_id']);
-			// $this->db->delete($this->tables['payments']);
-			// if ($this->db->trans_status() === FALSE)
-			// {
-			// 	$this->db->trans_rollback();
-			// }
-			// else
-			// {
-			// 	$this->db->trans_commit();
-			// 	$this->db->where($this->tables['media'].'.id', $payment_data[0]['media_id']);
-			// 	$this->db->delete($this->tables['media']);
-
-			// 	if ($this->db->trans_status() === FALSE)
-			// 	{
-			// 		$this->db->trans_rollback();
-			// 	}
-			// 	else
-			// 	{
-			// 		$this->db->trans_commit();
-			// 		$this->db->where($this->tables['payments_media'].'.participant_id', $payment_data[0]['participant_id']);
-			// 		$this->db->where($this->tables['payments_media'].'.content_id', $payment_data[0]['content_id']);
-			// 		$this->db->delete($this->tables['payments_media']);
-			// 		if ($this->db->trans_status() === FALSE)
-			// 		{
-			// 			$this->db->trans_rollback();
-			// 		}
-			// 		else
-			// 		{
-			// 			$this->db->trans_commit();
-			// 			return TRUE;
-
-			// 		}
-			// 	}
-			// }
-			// return FALSE;
-   //  	}
-    	return $this->db->last_query();
+			if(!is_array($members_id))
+			{
+				$members_id = array($members_id);
+			}
+			$this->db->where_in('member_id', $members_id);
+			$media_id_arr = $this->db->get()->result('array');
+			foreach ($media_id_arr as $key => $value)
+			{
+				$media_id[] = $value['media_id'];
+			}
+			$this->db->trans_begin();
+			$this->db->where_in('id', $media_id);
+			$this->db->delete($table_media);
+			if ($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+			}
+			else
+			{
+				$this->db->trans_commit();
+				$this->db->where_in('member_id', $members_id);
+				$this->db->delete($table_member_media);
+				if ($this->db->trans_status() === FALSE)
+				{
+					$this->db->trans_rollback();
+				}
+				else
+				{
+					$this->db->trans_commit();
+					$this->db->where_in('id', $members_id);
+					$this->db->delete($table_member);
+					if ($this->db->trans_status() === FALSE)
+					{
+						$this->db->trans_rollback();
+					}
+					else
+					{
+						$this->db->trans_commit();
+						return TRUE;
+					}
+				}
+			}
+    	}
+    	return TRUE;
     }
 
     public function delete_payment($content_slug, $participant_id)

@@ -14,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="<?php echo base_url($frameworks_dir . '/jquery/jquery.min.js'); ?>"></script>
         <script src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
         <script src="<?php echo base_url($plugins_dir . '/slimscroll/slimscroll.min.js'); ?>"></script>
+        <!-- <script src="<?php //echo base_url($plugins_dir . '/icheck/js/icheck.min.js'); ?>"></script> -->
         <!-- DataTables -->
         <script src="<?php echo base_url($plugins_dir . '/datatables.net/jquery.dataTables.min.js');?>"></script>
         <script src="<?php echo base_url($plugins_dir . '/datatables.net-bs/dataTables.bootstrap.min.js');?>"></script>
@@ -58,16 +59,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'autoWidth'     : false
                 })
 				$('#modal-danger').on('show.bs.modal', function (event) {
-					var button = $(event.relatedTarget) // Button that triggered the modal
+					var button = $(event.relatedTarget)
 					var url  = button.data('url')
-					var name = button.data('name') // Extract info from data-* attributes
-					// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-					// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+					var name = button.data('name')
 					var modal = $(this)
 					var body = modal.find('.modal-body p').first()
 					body.text(body.text() + name + '?')
 					modal.find('.btn-delete').attr('href', url)
 				})
+				// $('input').iCheck({
+				// 	checkboxClass: 'icheckbox_square-blue',
+				// 	radioClass: 'iradio_square-blue',
+				// 	increaseArea: '20%'
+				// });
+				$(".check-all").click(function(){
+					if($(this).is(":checked")){
+						$(".check-item").prop("checked", true);
+					}
+					else{
+						$(".check-item").prop("checked", false);
+					}
+				});
+				$(".check-item").each(function() {
+					if(!$(this).is(':checked')) {
+						$(".check-all").prop("checked", false);
+					}
+				});
             });
         </script>
     </body>

@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <pre><?php /*print_r($query);*//*print_r($tes_payment);*/ ?></pre>
+                                    <pre><?php /*print_r($query);*//*print_r($tes_member)*/; ?></pre>
                                     <table class="table table-striped table-hover">
                                         <tbody>
                                             <?php 
@@ -114,10 +114,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body">
+                                    <?php echo form_open(uri_string());?>
                                     <table id="dataTable" class="table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th><input type="checkbox" class="check-all check-item"></th>
                                                 <?php foreach ($all_keys as $key => $value):?>
                                                 <th><?php echo lang('contents_'.$value);?></th>
                                                 <?php endforeach;?>
@@ -132,9 +134,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     if ($inputed_members)
                                                     {
                                                         echo '<td>'.$i.'</td>';
+                                                        echo '<td><input type="checkbox" class="minimal check-item" name="members_id[]" value="'.$value['id'].'"></td>';
                                                         foreach ($members_keys as $keys => $key)
                                                         {
-                                                            echo '<td>'.$value[$key].'</td>';
+                                                            echo '<td>';
+                                                            if ($key == 'name')
+                                                            {
+                                                                echo '<a href="'.$value['id'].'">'.$value[$key].'</a>';
+                                                            }
+                                                            else
+                                                            {
+                                                                echo $value[$key];
+                                                            }
+                                                            echo '</td>';
                                                         }
 
                                                         if ($uploaded)
@@ -153,12 +165,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <tfoot>
                                             <tr>
                                                 <th>No</th>
+                                                <th><input type="checkbox" class="check-all check-item"></th>
                                                 <?php foreach ($all_keys as $key => $value):?>
                                                 <th><?php echo lang('contents_'.$value);?></th>
                                                 <?php endforeach;?>
                                             </tr>
                                         </tfoot>
                                     </table>
+                                    <?php //echo form_button(array('type' => 'submit', 'class' => 'btn btn-danger btn-flat', 'content' => lang('actions_delete'))); ?>
+                                    <?php echo form_close();?>
                                 </div>
                             </div>
                         </div>

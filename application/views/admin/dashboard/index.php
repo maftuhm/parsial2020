@@ -76,26 +76,124 @@ if ($url_exist) {
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                        	<p class="text-center"><strong>MCC</strong></p>
+											<table class="table table-striped table-hover">
+												<tbody>
+													<tr>
+														<td colspan="3"><strong>Babak penyisihan (online)</strong></td>
+													</tr>
+													<tr>
+														<td>Tanggal</td>
+													<td>:</td>
+														<td>1 – 29 Februari 2020</td>
+													</tr>
+													<tr>
+														<td>Pukul</td>
+														<td>:</td>
+														<td>-</td>
+													</tr>
+													<tr>
+														<td colspan="3"><strong>Babak final</strong></td>
+													</tr>
+													<tr>
+														<td>Hari, Tanggal</td>
+														<td>:</td>
+														<td>Jumat, 27 Maret 2020</td>
+													</tr>
+													<tr>
+														<td>Pukul</td>
+														<td>:</td>
+														<td>13.00 – 17.35 WIB</td>
+													</tr>
+												</tbody>
+											</table>
+                                        </div>
+										<div class="col-md-4">
+											<p class="text-center"><strong>Mathcomp</strong></p>
+											<table style="width: 100%;max-width: 100%;margin-bottom: 20px;">
+												<tbody>
+													<tr>
+														<td colspan="3"><strong>Babak penyisihan</strong></td>
+													</tr>
+													<tr>
+														<td>Hari, Tanggal</td>
+														<td>:</td>
+														<td>Selasa, 10 Maret 2020</td>
+													</tr>
+													<tr>
+														<td>Pukul</td>
+														<td>:</td>
+														<td>07.15 s/d selesai</td>
+													</tr>
+													<tr>
+														<td colspan="3"><strong>Babak Semifinal</strong></td>
+													</tr>
+													<tr>
+														<td>Hari, Tanggal</td>
+														<td>:</td>
+														<td>Rabu, 11 Maret 2020</td>
+													</tr>
+													<tr>
+														<td>Pukul</td>
+														<td>:</td>
+														<td>07.15 s/d selesai</td>
+													</tr>
+													<tr>
+														<td colspan="3"><strong>Babak final</strong></td>
+													</tr>
+													<tr>
+														<td>Hari, Tanggal</td>
+														<td>:</td>
+														<td>Kamis, 12 Maret 2020</td>
+													</tr>
+													<tr>
+														<td>Pukul</td>
+														<td>:</td>
+														<td>07.15 s/d selesai</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="col-md-4">
+											<p class="text-center"><strong>Futsal</strong></p>
+											<table class="table table-striped table-hover">
+												<tbody>
+													<tr>
+														<td><strong>IKAHIMATIKA</strong></td>
+														<td>Sabtu, 21 Maret 2020</td>
+														<td>-</td>
+														<td>Minggu, 22 Maret 2020</td>
+													</tr>
+													<tr>
+														<td><strong>Mahasiswa Umum</strong></td>
+														<td>Senin, 16 Maret 2020</td>
+														<td>-</td>
+														<td>Kamis, 19 Maret 2020</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+                                        <!-- <div class="col-md-6">
                                             <p class="text-center"><strong>xxx</strong></p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="text-center text-uppercase"><strong>Resources</strong></p>
                                             <div class="progress-group">
                                                 <span class="progress-text">Disk use space</span>
-                                                <span class="progress-number"><strong><?php echo byte_format($disk_usespace, 2); ?></strong>/<?php echo byte_format($disk_totalspace, 2); ?></span>
+                                                <span class="progress-number"><strong><?php //echo byte_format($disk_usespace, 2); ?></strong>/<?php //echo byte_format($disk_totalspace, 2); ?></span>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="<?php echo $disk_usepercent; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $disk_usepercent; ?>%"></div>
+                                                    <div class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="<?php //echo $disk_usepercent; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php //echo $disk_usepercent; ?>%"></div>
                                                 </div>
                                             </div>
                                             <div class="progress-group">
                                                 <span class="progress-text">Memory usage</span>
-                                                <span class="progress-number"><strong><?php echo byte_format($memory_usage, 2); ?></strong>/<?php echo byte_format($memory_peak_usage, 2); ?></span>
+                                                <span class="progress-number"><strong><?php //echo byte_format($memory_usage, 2); ?></strong>/<?php //echo byte_format($memory_peak_usage, 2); ?></span>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="<?php echo $memory_usepercent; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $memory_usepercent; ?>%"></div>
+                                                    <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="<?php //cho $memory_usepercent; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php //echo $memory_usepercent; ?>%"></div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
