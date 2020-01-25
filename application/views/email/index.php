@@ -222,14 +222,17 @@
 			line-height: 0;
 			mso-hide: all;
 		}
-		.table-striped>tbody>tr:nth-of-type(odd) {
+		.table-striped>tbody>tr {
 		    background-color: #f9f9f9;
+		}
+		.table-striped>tbody>tr:nth-of-type(odd) {
+		    background-color: #ededed;
 		}
 		.table-striped>tbody>tr>td{
 			padding: 8px;
 		    line-height: 1.42857143;
 		    vertical-align: top;
-		    border: 1px solid #ddd;
+		    border: 1px solid #000;
 		    font-size: 14px;
 		}
 		.table-striped {

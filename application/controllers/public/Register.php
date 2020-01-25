@@ -823,7 +823,7 @@ class Register extends Public_Controller {
 									$atts = array(
 										'icon'		=> 'success',
 										'title' 	=> 'Berhasil!',
-										'text'		=> 'Upload bukti pembayaran berhasil. Periksa email anda, Pembayaran Anda akan diverifikasi dan kami akan mengirimkan email konfirmasi melalui email Anda. Jika pembayaran Anda belum juga dikonfirmasi 60 menit setelah Anda mengunggah bukti pembayaran, silakan hubungi contact person yang sudah disedikan. Periksa juga folder spam.'
+										'text'		=> 'Upload bukti pembayaran berhasil.' // Periksa email anda, Pembayaran Anda akan diverifikasi dan kami akan mengirimkan email konfirmasi melalui email Anda. Jika pembayaran Anda belum juga dikonfirmasi 60 menit setelah Anda mengunggah bukti pembayaran, silakan hubungi contact person yang sudah disedikan. Periksa juga folder spam.'
 									);
 									$this->data['alert_modal'] = sweet_alert($atts);
 									$this->email_success($content, $data_content['title'], $tim_data);
@@ -1017,31 +1017,13 @@ class Register extends Public_Controller {
 		}
 		else
 		{
-			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil. Harap tunggu email balasan dari kami.';
-			$data['title']	= 'Upload Bukit Pembayaran Berhasil!';
+			$data['message'] .= ' Pendaftaran dan upload bukti pembayaran telah berhasil. Pembayaran Anda akan diverifikasi dan kami akan mengirimkan email konfirmasi melalui email Anda. Jika pembayaran Anda belum juga dikonfirmasi 60 menit setelah anda upload bukti pembayaran, silakan hubungi contact person yang sudah disediakan.';
+			$data['title']	= 'Upload Bukti Pembayaran Berhasil!';
 			$data['infoblock'] = $data['title'] . 'Terimakasih atas partisipasi anda.';
 			$data['table'] = $table_timeline[$content];
 		}
 
-		return $this->load->view('email/index', $data/*, TRUE*/);
-		// return $this->email->send_email($data['title'], $message, $data_participant['email']);
+		$message = $this->load->view('email/index', $data, TRUE);
+		return $this->email->send_email($data['title'], $message, $data_participant['email']);
 	}
 }
-// Array(
-// 	[0] => stdClass Object(
-// 		[id] => 1
-// 		[tim_id] => 1
-// 		[name] => maftuh mashuri
-// 		[major] => matematika
-// 		[email] => maftuh@gmail.com
-// 		[phone] => 085777455031
-// 		[description] =>)
-// 	[1] => stdClass Object(
-// 		[id] => 2
-// 		[tim_id] => 1
-// 		[name] => maftuh
-// 		[major] => matematika
-// 		[email] => maftuh@gmail.com
-// 		[phone] => 90438987[description] =>
-// 	)
-// )
