@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <link rel="stylesheet" type="text/css" href="<?php echo base_url($frameworks_dir . '/ionicons/css/ionicons.min.css'); ?>">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url($frameworks_dir . '/adminlte/css/adminlte.min.css'); ?>">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url($frameworks_dir . '/adminlte/css/skins/skin-blue.min.css'); ?>">
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url($plugins_dir . '/icheck/flat/blue.css'); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url($plugins_dir . '/icheck/square/grey.css'); ?>">
 <?php if ($this->router->fetch_class() == 'mailbox' && $this->router->fetch_method() == 'compose'): ?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url($plugins_dir . '/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>">
 <?php endif; ?>

@@ -64,20 +64,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/tinycolor/tinycolor.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/colorpickersliders/colorpickersliders.min.js'); ?>"></script>
 <?php endif; ?>
-<?php if ($this->router->fetch_class() == 'users' OR $this->router->fetch_class() == 'contents'): ?>
+<?php if ($this->router->fetch_class() == 'users' OR $this->router->fetch_class() == 'contents' OR $this->router->fetch_class() == 'contents_data'): ?>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net/jquery.dataTables.min.js');?>"></script>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net-bs/dataTables.bootstrap.min.js');?>"></script>
         <script type="text/javascript">
             $(function () {
-                $('#dataTable').DataTable({
-                "scrollX"       : true,
-                'paging'        : false,
-                'lengthChange'  : true,
-                'searching'     : false,
-                'ordering'      : true,
-                'info'          : true,
-                'autoWidth'     : false
-                })
+                $('#dataTable').DataTable({<?php echo $datatable_attributes;?>})
 				$('#modal-danger').on('show.bs.modal', function (event) {
 					var button = $(event.relatedTarget)
 					var url  = button.data('url')
@@ -87,9 +79,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					body.text(body.text() + name + '?')
 					modal.find('.btn-delete').attr('href', url)
 				})
+				
                 $('.members-details input[type="checkbox"]').iCheck({
-                    checkboxClass: 'icheckbox_flat-blue',
-                    radioClass: 'iradio_flat-blue'
+                    checkboxClass: 'icheckbox_square-grey',
+                    radioClass: 'iradio_square-grey'
                 });
 
                 //Enable check and uncheck all functionality

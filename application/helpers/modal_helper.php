@@ -111,6 +111,41 @@ if ( ! function_exists('attributes_to_string_'))
 	}
 }
 
+if ( ! function_exists('attributes_to_string2_'))
+{
+	function attributes_to_string2_($attributes)
+	{
+		if (empty($attributes))
+		{
+			return '';
+		}
+
+		if (is_object($attributes))
+		{
+			$attributes = (array) $attributes;
+		}
+
+		if (is_array($attributes))
+		{
+			$atts = '';
+
+			foreach ($attributes as $key => $val)
+			{
+				$atts .= " '".$key."':".$val.",";
+			}
+
+			return $atts;
+		}
+
+		if (is_string($attributes))
+		{
+			return " ".$attributes;
+		}
+
+		return FALSE;
+	}
+}
+
 if ( ! function_exists('parse_form_attributes_'))
 {
 	function parse_form_attributes_($attributes, $default)

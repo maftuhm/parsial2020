@@ -24,6 +24,8 @@ class Contents_data extends Admin_controller {
         }
         else
         {
+        	$this->data['datatable_attributes'] = attributes_to_string2_($this->data['datatable_attributes']);
+
         	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
         	$this->data['content_slug'] = $content_slug;
 
@@ -62,6 +64,11 @@ class Contents_data extends Admin_controller {
         }
         else
         {
+        	$this->data['datatable_attributes']['paging'] = 'false';
+        	$this->data['datatable_attributes']['ordering'] = 'false';
+        	$this->data['datatable_attributes']['info'] = 'false';
+        	$this->data['datatable_attributes'] = attributes_to_string2_($this->data['datatable_attributes']);
+
         	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
         	$this->data['content_slug'] = $content_slug;
         	$this->data['uploaded'] = FALSE;
@@ -244,7 +251,7 @@ class Contents_data extends Admin_controller {
         }
 	}
 
-	public function delete($content_slug, $id = NULL)
+	public function delete($content_slug, $id = NULL, $kind = '')
 	{
 		if ( ! $this->ion_auth->logged_in())
 		{
@@ -260,10 +267,18 @@ class Contents_data extends Admin_controller {
 			{
 				$id = (int) $id;
 	        	$content_id = (int)((array)$this->contents_model->get_data('contents', $content_slug, 'slug', FALSE))['id'];
-	            if($this->contents_model->delete_payment($content_id, $id))
-	            {
-	            	redirect('admin/contents/p/'.$content_slug, 'refresh');
-	            }
+	        	if ($kind == 'payment')
+	        	{
+	        		$this->contents_model->delete_payment($content_id, $id);
+	        	}
+	        	elseif ($kind == 'members') 
+	        	{
+	        		$this->contents_model->delete_members($content_id, $id);
+	        	}
+	        	else
+	        	{
+	        		
+	        	}
 	        }
 		}
 	}

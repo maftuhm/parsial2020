@@ -39,12 +39,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 }
                                                 else
                                                 {
+                                                    if ($key == 'name' OR $key == 'tim_name') {
+                                                        $name = $value;
+                                                    }
                                                     echo $value;
                                                 }
                                                 echo '</td>';
                                                 echo '</tr>';
                                             }
                                         ?>
+                                        <tr>
+                                            <th><?php echo lang('contents_action'); ?></th>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <?php 
+                                                        $site_url =  site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id));
+                                                        $attr_delete = 'title="'.lang('actions_delete').' '.$name.'" data-name="'.$name.'" data-url="'.$site_url.'"';
+                                                    ?>
+                                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger" <?php echo $attr_delete;?>><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
+                                                    <?php echo anchor(array('admin/contents/p', $content_slug, /*'edit', */'details', $participant_id), '<i class="fa fa-edit"></i> '.lang('actions_edit'), array('class' => 'btn btn-primary btn-action', 'title' => lang('actions_edit').' '.$name));
+                                                    ?>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -59,7 +77,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <pre><?php /*print_r($query);*//*print_r($tes_member)*/; ?></pre>
                                     <table class="table table-striped table-hover">
                                         <tbody>
                                             <?php 
@@ -106,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         }
                                                         echo form_hidden('email', $participant_data['email']);
                                                         echo form_hidden('content_slug', $content_slug);
-                                                        echo '<button type="submit" class="btn btn-primary btn-action"><i class="fa fa-envelope"></i> Konfirmasi pembayaran</button>';
+                                                        echo '<button type="submit" class="btn btn-primary btn-action" title="Confirm payment"><i class="fa fa-envelope"></i> Confirm</button>';
                                                         echo form_close();
                                                     ?>
                                                     <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button> -->
@@ -129,7 +146,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body members-details">
-                                    <?php echo form_open(uri_string());?>
+                                    <?php echo form_open(uri_string(), array('method' => 'GET'));?>
                                     <table id="dataTable" class="table table-striped table-hover">
                                         <thead>
                                             <tr>
@@ -187,7 +204,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    <?php //echo form_button(array('type' => 'submit', 'class' => 'btn btn-danger btn-flat', 'content' => lang('actions_delete'))); ?>
+                                    <?php 
+                                        $site_url =  site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id, '?'));
+                                        // $attr_delete = 'title="'.lang('actions_delete').' '.$name.'" data-name="'.$name.'" data-url="'.$site_url.'"';
+                                    ?>
+                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger" <?php //echo $attr_delete;?>><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
                                     <?php echo form_close();?>
                                 </div>
                             </div>
@@ -195,4 +216,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <?php endif;?>
                 </section>
+            </div>
+            <div class="modal modal-danger fade" id="modal-danger">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"><?php echo lang('actions_delete') . ' participant?';?></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure want to delete </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                            <?php echo anchor('#', lang('actions_delete'), array('class' => 'btn btn-outline btn-delete')); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
