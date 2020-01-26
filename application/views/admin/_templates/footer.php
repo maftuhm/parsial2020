@@ -21,7 +21,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php endif; ?>
 <?php if ($this->router->fetch_class() == 'mailbox' && $this->router->fetch_method() == 'compose'): ?>
 		<script type="text/javascript" src="<?php echo base_url($plugins_dir . '/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>"></script>
-		<script type="text/javascript">$(function () {$("#compose-textarea").wysihtml5();});</script>
+		<script type="text/javascript">
+			$(function () {
+				// var editor = new wysihtml5.Editor("#compose-textarea");
+				$("#compose-textarea").wysihtml5({
+					toolbar: {image: false}
+				});
+				// var message = $('#compose-textarea').val();
+				// editor.observe("load", function() {
+				// 	var message = $("#compose-textarea").data("editor", editor);
+				// });
+				// var message;$('#editor').find('iframe.wysihtml5-sandbox').contents().find('body').html();
+				// $('.wysihtml5-sandbox').contents().find('body').on('onChange',function() {
+				// 	message = $(this).html();
+				// });
+				// var message = $("#compose-textarea").data("wysihtml5", editor);
+				// console.log('wysihtml5Editor: '+ wysihtml5Editor);
+				// $('#modal-preview-email').on('show.bs.modal', function (event) {
+				// 	var button = $(event.relatedTarget);
+				// 	var name = button.data('name');
+				// 	var modal = $(this);
+				// 	var name_body = modal.find('.modal-body #name');
+				// 	var message_body = modal.find('.modal-body #message');
+				// 	name_body.text('Dear ' + name + ',');
+				// 	message_body.append(/*message*/);
+				// })
+				$('input[type="checkbox"]').iCheck({
+                    checkboxClass: 'icheckbox_flat-blue',
+                    radioClass: 'iradio_flat-blue'
+                });
+			});
+		</script>
 <?php endif; ?>
 <?php if ($admin_prefs['transition_page'] == TRUE): ?>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/animsition/animsition.min.js'); ?>"></script>

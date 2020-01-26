@@ -76,9 +76,10 @@ class Contents_data extends Admin_controller {
 			}
 			else
 			{
-				$contents_title = ((array)$this->data['content_details'])['title'];
 				$contents_id = ((array)$this->data['content_details'])['id'];
+				$contents_title = ((array)$this->data['content_details'])['title'];
 				$this->data['content_team_group'] = ((array)$this->data['content_details'])['team_group'];
+				$this->data['content_title'] = $contents_title;
 
 		        /* Title Page :: Common */
 		        $this->page_title->push($contents_title);
