@@ -98,16 +98,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     // echo anchor('admin/contents/p/'.$content_slug.'/send_email/'.$participant_id, '<i class="fa fa-envelope"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
                                                     ?>
                                                     <?php 
-                                                        echo form_open('admin/mailbox/compose');
+                                                        echo form_open('admin/mailbox/compose', array('method'=>'GET'));
                                                         if($content_team_group == TRUE){
                                                             echo form_hidden('name', $members_data[0]['name']);
                                                         }else{
                                                             echo form_hidden('name', $participant_data['name']);
                                                         }
                                                         echo form_hidden('email', $participant_data['email']);
-                                                        echo form_hidden('subject', 'Upload pembayaran berhasil!');
-                                                        $message = 'Terimakasih atas partisipasi anda pada kegiatan ' . $content_title . ' PARSIAL 2020.';
-                                                        echo form_hidden('message', $message);
                                                         echo form_hidden('content_slug', $content_slug);
                                                         echo '<button type="submit" class="btn btn-primary btn-action"><i class="fa fa-envelope"></i> Konfirmasi pembayaran</button>';
                                                         echo form_close();

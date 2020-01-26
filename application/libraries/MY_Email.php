@@ -10,12 +10,13 @@ class MY_Email extends CI_Email {
 	public function send_email($subject, $message, $to = 'otenk203@gmail.com', $from = 'parsialhimatika.uinjkt@gmail.com', $name = 'PARSIAL HIMATIKA 2020')
 	{
 		$config['mailtype'] = 'html';
+		$config['validation'] = TRUE;
 		$this->initialize($config);
 		$this->to($to);
 		$this->from($from, $name);
 		$this->message($message);
 		$this->subject($subject);
-		$this->send();
+		return $this->send();
 	}
 	// public function htmlmail()
 	// {

@@ -73,12 +73,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</div>
 										<div class="form-group">
 											<label for="subject">Subject:</label>
-											<input type="text" name="subject" class="form-control" placeholder="Subject:" value="<?php echo $email_data['subject'];?>" required>
+											<input type="text" name="subject" class="form-control" placeholder="Subject:" required>
 										</div>
 										<div id="editor" class="form-group">
-											<textarea name="message" id="compose-textarea" class="form-control" style="height: 300px">
-												<p><?php echo $email_data['message'];?></p>
-											</textarea>
+											<textarea name="message" id="compose-textarea" class="form-control" style="height: 300px"></textarea>
 										</div>
 										<div class="form-group mailbox-button">
 											<div class="btn-group">
@@ -92,6 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													<span> <i class="fa fa-table"></i> Add timeline table</span>
 												</span>
 												<select class="select-mail" name="content_slug">
+													<option value=""> -- </option>
 													<?php foreach ($menu_contents as $content){
 														if ($email_data['content_slug'] == $content->slug){
 															$selected = ' selected="selected"';
@@ -112,9 +111,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<div class="pull-right">
 											<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-preview-email" data-toggle="modal" data-name="<?php //echo $name?>" data-message=""><i class="fa fa-eye"></i> Preview</button> -->
 											<button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
-											<button type="submit" class="btn btn-default" onclick="javascript: form.action='<?php echo base_url('/admin/mailbox/preview_email');?>'; form.target='_blank';"><i class="fa fa-eye"></i> Preview</button>
+											<!-- <button type="submit" class="btn btn-default" onclick="javascript: form.action='<?php //echo base_url('/admin/mailbox/preview_email');?>'; form.target='_blank';"><i class="fa fa-eye"></i> Preview</button> -->
 											<button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>
-											<button type="submit" class="btn btn-primary" onclick="javascript: form.action='<?php echo current_url();?>'; form.target='';"><i class="fa fa-envelope-o"></i> Send</button>
+											<button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
 										</div>
 									</div>
 									<?php echo form_close();?>
