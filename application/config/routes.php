@@ -61,6 +61,7 @@ $route['admin/prefs/interfaces/(:any)'] 	= 'admin/prefs/interfaces/$1';
 $route['admin/contents/create/q/(:any)'] 	= 'admin/contents/create_question/$1';
 $route['admin/contents/p/(:any)']			= 'admin/contents_data/page/$1';
 $route['admin/contents/p/(:any)/(:any)/(:any)']	= 'admin/contents_data/$2/$1/$3';
+$route['admin/contents/p/(:any)/(:any)/(:any)/(:any)']	= 'admin/contents_data/$2/$1/$3/$4';
 
 /* ===== PUBLIC ROUTES ===== */
 $route['coming-soon'] 			= 'public/coming_soon';

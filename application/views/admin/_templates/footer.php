@@ -79,7 +79,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					body.text(body.text() + name + '?')
 					modal.find('.btn-delete').attr('href', url)
 				})
-				
+				$('#delete').click(function(){
+				    $('#members-form').submit();
+				});
+
                 $('.members-details input[type="checkbox"]').iCheck({
                     checkboxClass: 'icheckbox_square-grey',
                     radioClass: 'iradio_square-grey'

@@ -273,11 +273,15 @@ class Contents_data extends Admin_controller {
 	        	}
 	        	elseif ($kind == 'members') 
 	        	{
-	        		$this->contents_model->delete_members($content_id, $id);
+	        		$members_id = $this->input->get('members_id');
+	        		if ($this->contents_model->delete_members($content_slug, $id, $members_id)) 
+	        		{
+	        			redirect(array('admin/contents/p', $content_slug, 'details', $id), 'refresh');
+	        		}
 	        	}
 	        	else
 	        	{
-	        		
+
 	        	}
 	        }
 		}

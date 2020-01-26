@@ -177,9 +177,9 @@ class Contents_model extends CI_Model {
     	return TRUE;
     }
 
-    public function delete_payment($content_slug, $participant_id)
+    public function delete_payment($content_id, $participant_id)
     {
-    	$payment_data = $this->get_participant_payment($content_slug, $participant_id);
+    	$payment_data = $this->get_participant_payment($content_id, $participant_id);
     	if (!empty($payment_data))
     	{
 	        $this->db->trans_begin();
@@ -213,7 +213,6 @@ class Contents_model extends CI_Model {
 					{
 						$this->db->trans_commit();
 						return TRUE;
-
 					}
 				}
 			}
