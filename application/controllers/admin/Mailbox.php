@@ -31,11 +31,12 @@ class Mailbox extends Admin_Controller {
 				$data = array(
 					'email' 	=> $this->input->post('email'),
 					'subject' 	=> $this->input->post('subject'),
+					'message'	=> $this->input->post('message'),
 					'table'		=> ''
 				);
 				$data['name'] 	= $this->input->post('name') ? $this->input->post('name') : explode('@', $data['email'])[0];
 				$data['title'] 	= $data['subject'];
-				$data['infoblock'] = $data['subject'] . '. Terimakasih atas partisipasi anda pada kegiatan PARSIAL 2020';
+				$data['infoblock'] = $data['subject'] . ' Terimakasih atas partisipasi anda pada kegiatan PARSIAL 2020';
 
 				$content_slug = $this->input->post('content_slug');
 				$add_table = 	$this->input->post('add_table');
