@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<section class="content">
 						<div class="row">
 							<div class="col-md-3">
-								<a href="mailbox.html" class="btn btn-primary btn-block margin-bottom">Back to Inbox</a>
+								<a href="#" class="btn btn-primary btn-block margin-bottom">Back to Inbox</a>
 								<div class="box box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">Folders</h3>
@@ -82,10 +82,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</div>
 										<div class="form-group mailbox-button">
 											<div class="btn-group">
-												<div class="btn btn-default btn-file">
+												<!-- <div class="btn btn-default btn-file">
 													<i class="fa fa-paperclip"></i> Attachment
 													<input type="file" name="attachment">
-												</div>
+												</div> -->
+												<button type="button" class="btn btn-default" data-toggle="modal" data-target="#example-modal" data-toggle="modal"><i class="fa fa-book"></i> Example</button>
 												<span class="checkbox-mail">
 													<input type="checkbox" name="add_table">
 													<span> <i class="fa fa-table"></i> Add timeline table</span>
@@ -98,12 +99,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														else {
 															$selected = '';
 														}
-														echo '<option' . $selected . ' value="' . $content->slug . '">' . $content->title . '</option>';
+														echo '<option' . $selected . ' value="' . $content->slug . '">' . strtoupper($content->slug) . '</option>';
 													}
 													?>
 												</select>
 											</div>
-											<p class="help-block">Max. 32MB</p>
+											<!-- <p class="help-block">Max. 32MB</p> -->
 										</div>
 									</div>
 									<!-- /.box-body -->
@@ -122,6 +123,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 					</section>
 				</div>
+	            <div class="modal fade" id="example-modal">
+	                <div class="modal-dialog modal-email">
+	                    <div class="modal-content">
+	                    	<div class="modal-header">
+	                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                            <span aria-hidden="true">&times;</span></button>
+	                            <h4 class="modal-title">Example</h4>
+	                        </div>
+	                        <div class="modal-body">
+	                        	<pre>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran dan upload bukti pembayaran telah berhasil. Pembayaran sejumlah .. sudah kami terima. </pre>
+	                        	<pre>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran yang anda lakukan telah berhasil, silahkan lakukan pembayaran dan upload bukti pembayaran melalui url:</pre>
+	                        	<pre>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran yang anda lakukan telah berhasil, silahkan upload data tim melalui url berikut atau klik tombol upload dibawah:</pre>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
 	            <!-- <div class="modal fade" id="modal-preview-email">
 	                <div class="modal-dialog modal-email">
 	                    <div class="modal-content">

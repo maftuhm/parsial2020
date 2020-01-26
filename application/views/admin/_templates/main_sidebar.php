@@ -57,19 +57,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                            </span>
                             </a>
                             <ul class="treeview-menu">
-	                            <li class="<?=active_link_function('inbox')?>">
+	                            <!-- <li class="">
 		                            <a href="#">Inbox
-		                            <!-- <span class="pull-right-container">
+		                            <span class="pull-right-container">
 		                            	<span class="label label-primary pull-right">13</span>
-		                            </span> -->
+		                            </span>
 	                            </a>
-	                            </li>
+	                            </li> -->
 	                            <li class="<?=active_link_function('compose')?>">
 	                            	<a href="<?php echo site_url('admin/mailbox/compose'); ?>">Compose</a>
 	                            </li>
-	                            <li class="<?=active_link_function('inbox')?>">
+	                            <!-- <li class="">
 	                            	<a href="#">Read</a>
-	                            </li>
+	                            </li> -->
                             </ul>
                         </li>
                         <?php if ($admin_prefs['contents_menu'] == TRUE): if($count_contents):?>

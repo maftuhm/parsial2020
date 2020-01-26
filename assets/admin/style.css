@@ -57,6 +57,10 @@ td.checkbox-member{
 	margin-bottom: 5px;
 	margin-right: 5px;
 }
+#example-modal pre{
+    white-space: pre-wrap;
+    font-size: 14px;
+}
 @media (min-width: 768px){
 	.modal-email {
 	    width: 700px;
@@ -67,8 +71,8 @@ td.checkbox-member{
 	    width: 20%;
 	}
 }*/
-@media (max-width: 340px){
+/*@media (max-width: 340px){
 	.select-mail {
 		width: 100%;
 	}
-}
+}*/
