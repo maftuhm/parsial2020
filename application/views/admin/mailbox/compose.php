@@ -131,9 +131,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                            <h4 class="modal-title">Example</h4>
 	                        </div>
 	                        <div class="modal-body">
-	                        	<pre>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran dan upload bukti pembayaran telah berhasil. Pembayaran sejumlah .. sudah kami terima. </pre>
-	                        	<pre>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran yang anda lakukan telah berhasil, silahkan lakukan pembayaran dan upload bukti pembayaran melalui url:</pre>
-	                        	<pre>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran yang anda lakukan telah berhasil, silahkan upload data tim melalui url berikut atau klik tombol upload dibawah:</pre>
+	                        	<p>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran dan upload bukti pembayaran telah berhasil. Pembayaran sejumlah .. sudah kami terima. </p>
+	                        	<p>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran yang anda lakukan telah berhasil, silahkan lakukan pembayaran dan upload bukti pembayaran melalui url:</p>
+	                        	<p>Terimakasih atas partisipasi anda pada kegiatan ... PARSIAL 2020. Pendaftaran yang anda lakukan telah berhasil, silahkan upload data tim melalui url berikut:</p>
 	                        </div>
 	                    </div>
 	                </div>
