@@ -36,6 +36,46 @@ if ( ! function_exists('sweet_alert_close'))
     }
 }
 
+if ( ! function_exists('alert_admin_open'))
+{
+    function alert_admin_open($kind = 'success', $title = '')
+    {
+    	$header = '	<div id="alert-modal" class="modal fade modal-'.$kind.'">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title">'.$title.'</h4>
+								</div>
+								<div class="modal-body">';
+		return $header;
+    }
+}
+
+if ( ! function_exists('alert_admin_close'))
+{
+    function alert_admin_close()
+    {
+    	$footer = '				</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>';
+		return $footer;
+    }
+}
+
+if ( ! function_exists('alert_admin'))
+{
+    function alert_admin($kind = 'success', $title = '', $message = '')
+    {
+		return alert_admin_open($kind, $title) . $message . alert_admin_close();
+    }
+}
+
 if ( ! function_exists('attributes_to_string_'))
 {
 	function attributes_to_string_($attributes)

@@ -69,11 +69,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<div class="form-group">
                                             <?php echo form_hidden('name', $email_data['name']);?>
                                             <label for="email">To:</label>
-											<input type="email" name="email" class="form-control" placeholder="To:" value="<?php echo $email_data['email'];?>">
+											<input type="email" name="email" class="form-control" placeholder="To:" value="<?php echo $email_data['email'];?>" required>
 										</div>
 										<div class="form-group">
 											<label for="subject">Subject:</label>
-											<input type="text" name="subject" class="form-control" placeholder="Subject:" value="<?php echo $email_data['subject'];?>">
+											<input type="text" name="subject" class="form-control" placeholder="Subject:" value="<?php echo $email_data['subject'];?>" required>
 										</div>
 										<div id="editor" class="form-group">
 											<textarea name="message" id="compose-textarea" class="form-control" style="height: 300px">
@@ -139,6 +139,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	                    </div>
 	                </div>
 	            </div>
+				<?php echo $alert_modal;?>
+
 	            <!-- <div class="modal fade" id="modal-preview-email">
 	                <div class="modal-dialog modal-email">
 	                    <div class="modal-content">

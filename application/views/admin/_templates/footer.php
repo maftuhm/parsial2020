@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     checkboxClass: 'icheckbox_flat-blue',
                     radioClass: 'iradio_flat-blue'
                 });
+                <?php if (!empty($alert_modal)) {echo '$("#alert-modal").modal("show");';}?>
 			});
 		</script>
 <?php endif; ?>

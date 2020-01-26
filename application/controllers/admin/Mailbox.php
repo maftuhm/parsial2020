@@ -6,6 +6,8 @@ class Mailbox extends Admin_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->data['alert_modal'] = '';
+
     }
 
 	public function compose()
@@ -16,9 +18,23 @@ class Mailbox extends Admin_Controller {
         }
         else
         {
-            // $this->data['email'] = $this->input->post('email');
-            // $this->data['name'] = $this->input->post('name') ? $this->input->post('name') : explode('@', $this->data['email'])[0];
-            // $this->data['subject'] = $this->input->post('subject') ? $this->input->post('subject') : $this->data['email'];
+			$this->form_validation->set_rules('email', 'lang:email', 'required');
+			$this->form_validation->set_rules('subject', 'lang:subject', 'required');
+			if ($this->form_validation->run() == TRUE)
+			{
+				$data = $this->email_data();
+				$message = $this->load->view('email/email_admin', $data, TRUE);
+				if($this->email->send_email($data['title'], $message, $data['email']))
+				{
+					$message = '<p>Email berhasil dikirim</p>';
+					$this->data['alert_modal'] = alert_admin('success', 'Email Sent', $message);
+				}
+				else
+				{
+					$message = '<p>Terjadi kesalahan. Email gagal dikirim.</p>';
+					$this->data['alert_modal'] = alert_admin('danger', 'Send Email Failed', $message);
+				}
+			}
             $this->data['email_data'] = $this->email_data();
             /* Load Template */
             $this->template->admin_render('admin/mailbox/compose', $this->data);
