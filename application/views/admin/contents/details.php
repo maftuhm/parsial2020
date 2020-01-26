@@ -106,8 +106,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         }
                                                         echo form_hidden('email', $participant_data['email']);
                                                         echo form_hidden('subject', 'Upload pembayaran berhasil!');
-                                                        $message = 'Terimakasih atas partisipasi anda pada kegiatan ' . $content_title . '.';
+                                                        $message = 'Terimakasih atas partisipasi anda pada kegiatan ' . $content_title . ' PARSIAL 2020.';
                                                         echo form_hidden('message', $message);
+                                                        echo form_hidden('content_slug', $content_slug);
                                                         echo '<button type="submit" class="btn btn-primary btn-action"><i class="fa fa-envelope"></i> Konfirmasi pembayaran</button>';
                                                         echo form_close();
                                                     ?>

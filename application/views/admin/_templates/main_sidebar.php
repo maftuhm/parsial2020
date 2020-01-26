@@ -44,6 +44,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <i class="fa fa-dashboard"></i> <span><?php echo lang('menu_dashboard'); ?></span>
                             </a>
                         </li>
+                        <li class="treeview <?=active_link_controller('mailbox')?>">
+                            <a href="#">
+	                            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+	                            <!-- <span class="pull-right-container">
+	                            <small class="label pull-right bg-yellow">12</small>
+	                            <small class="label pull-right bg-green">16</small>
+	                            <small class="label pull-right bg-red">5</small>
+	                            </span> -->
+	                            <span class="pull-right-container">
+	                            <i class="fa fa-angle-left pull-right"></i>
+	                            </span>
+                            </a>
+                            <ul class="treeview-menu">
+	                            <li class="<?=active_link_function('inbox')?>">
+		                            <a href="#">Inbox
+		                            <!-- <span class="pull-right-container">
+		                            	<span class="label label-primary pull-right">13</span>
+		                            </span> -->
+	                            </a>
+	                            </li>
+	                            <li class="<?=active_link_function('compose')?>">
+	                            	<a href="<?php echo site_url('admin/mailbox/compose'); ?>">Compose</a>
+	                            </li>
+	                            <li class="<?=active_link_function('inbox')?>">
+	                            	<a href="#">Read</a>
+	                            </li>
+                            </ul>
+                        </li>
                         <?php if ($admin_prefs['contents_menu'] == TRUE): if($count_contents):?>
                         <li class="header text-uppercase"><?php echo lang('menu_contents'); ?></li>
                         <?php foreach ($menu_contents as $content):?>

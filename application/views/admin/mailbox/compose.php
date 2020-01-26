@@ -67,9 +67,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<!-- /.box-header -->
 									<div class="box-body">
 										<div class="form-group">
+                                            <?php echo form_hidden('name', $email_data['name']);?>
+                                            <label for="email">To:</label>
 											<input type="email" name="email" class="form-control" placeholder="To:" value="<?php echo $email_data['email'];?>">
 										</div>
 										<div class="form-group">
+											<label for="subject">Subject:</label>
 											<input type="text" name="subject" class="form-control" placeholder="Subject:" value="<?php echo $email_data['subject'];?>">
 										</div>
 										<div id="editor" class="form-group">
@@ -89,7 +92,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												</span>
 												<select class="select-mail" name="content_slug">
 													<?php foreach ($menu_contents as $content){
-														echo '<option value="' . $content->slug . '">' . $content->title . '</option>';
+														if ($email_data['content_slug'] == $content->slug){
+															$selected = ' selected="selected"';
+														}
+														else {
+															$selected = '';
+														}
+														echo '<option' . $selected . ' value="' . $content->slug . '">' . $content->title . '</option>';
 													}
 													?>
 												</select>

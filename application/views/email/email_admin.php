@@ -350,16 +350,7 @@
 																	</p>
 																</td>
 															</tr>
-															<?php if(!empty($button)): ?>
-															<tr style="border-collapse:collapse;">
-																<td class="es-m-txt-c" align="center" style="margin:0;padding-top:5px;padding-left:15px;padding-right:15px;padding-bottom:20px;">
-																	<p style="margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;"><a target="_blank" href="<?php echo $link; ?>" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:none;color:#34265F;"><?php echo $link; ?></a></p>
-																</td>
-															</tr>
-															<tr style="border-collapse:collapse;">
-																<td align="center" style="margin:0;padding-top:10px;padding-left:10px;padding-right:10px;padding-bottom:15px;"><span class="es-button-border" style="border-style:solid;border-color:transparent;background:#34265F none repeat scroll 0% 0%;border-width:0px;display:inline-block;border-radius:5px;width:auto;"><a href="<?php echo $button['url']; ?>" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:18px;color:#FFFFFF;border-style:solid;border-color:#34265F;border-width:10px 20px 10px 20px;display:inline-block;background:#34265F none repeat scroll 0% 0%;border-radius:5px;font-weight:normal;font-style:normal;line-height:22px;width:auto;text-align:center;"><?php echo $button['value']; ?></a></span></td>
-															</tr>
-															<?php else:?>
+															<?php if(!empty($table)): ?>
 															<tr style="border-collapse:collapse;">
 																<td class="es-m-txt-l" align="center" style="margin:0;padding-top:5px;padding-left:15px;padding-right:15px;padding-bottom:20px;">
 																	<?php echo $table; ?>
@@ -490,7 +481,7 @@
 															<tr style="border-collapse:collapse;">
 																<td align="center" style="padding:10px;margin:0;">
 																	<p style="margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#999999;">You are receiving this email because you have registered on our site.</p>
-																	<p style="margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#999999;"><a class="unsubscribe" href="https://#" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:12px;text-decoration:none;color:#34265F;">Unsubscribe</a> | <a style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:12px;text-decoration:none;color:#34265F;" href="https://#">Update Preferences</a></p>
+																	<p style="margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#999999;"><a class="unsubscribe" href="#" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:12px;text-decoration:none;color:#34265F;">Unsubscribe</a> | <a style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:12px;text-decoration:none;color:#34265F;" href="/#">Update Preferences</a></p>
 																</td>
 															</tr>
 															<tr style="border-collapse:collapse;">
@@ -505,7 +496,7 @@
 															<tr style="border-collapse:collapse;">
 																<td align="center" style="padding:10px;margin:0;">
 																	<p style="margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#999999;">Jalan Ir. Juanda Nomor 95, Ciputat, Tangerang Selatan, Banten, 15412</p>
-																	<a href="#" style="display: none;"><?php echo $link; ?></a>
+																	<a href="#" style="display: none;"><?php //echo $difference_thing; ?></a>
 																</td>
 															</tr>
 														</table>
