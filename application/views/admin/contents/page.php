@@ -15,6 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                              <div class="box">
                                 <div class="box-header with-border">
                                     <h3 class="box-title"></h3>
+                                    <pre><?php print_r($content_data);?></pre>
                                 </div>
                                 <div class="box-body">
                                     <div class="box-body">
@@ -88,11 +89,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 $value_edit_btn  = '<span class="label label-warning"><i class="fa fa-edit" aria-hidden="true"></i> '.lang('actions_edit').'</span>';
                                                                 $value_delete_btn  = '<span class="label label-danger"><i class="fa fa-trash" aria-hidden="true"></i> '.lang('actions_delete').'</span>';
 
-                                                                echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $content->$value, $atts_profile);
+                                                                echo anchor(array('admin/contents/p', $content_slug, 'details', $content->id), $content->$value, $atts_profile);
                                                                 echo '<div class="actions show-actions">';
-                                                                echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $value_profile_btn, $atts_profile);
-                                                                // echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$content->id, $value_edit_btn, $atts_edit);
-                                                                $site_url =  site_url('admin/contents/p/' . $content_slug . '/delete/' . $content->id);
+                                                                echo anchor(array('admin/contents/p', $content_slug, 'details', $content->id), $value_profile_btn, $atts_profile);
+                                                                echo anchor(array('admin/contents/p', $content_slug, 'edit', $content->id), $value_edit_btn, $atts_edit);
+                                                                $site_url =  site_url(array('admin/contents/p', $content_slug, 'delete', $content->id));
                                                                 echo '<a href="#" type="button" data-toggle="modal" data-target="#modal-danger" data-name="'.$content->$value.'" data-url="'.$site_url.'">' . $value_delete_btn . '</a>';
                                                                 echo '</div>';
                                                             }
@@ -153,7 +154,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<div class="table-responsive">
 								<table class="table table-striped">
 									<tr>
-										<td rowspan="4"><img style="max-width: 240px;max-height: 300px;" src="#" title="" alt=""></td>
+										<td rowspan="4" class="payment-proof"></td>
 										<th><?php echo lang('contents_upload_time')?></th>
 										<td class="upload_time">1</td>
 									</tr>

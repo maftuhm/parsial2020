@@ -106,8 +106,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <tr>
                                                     <th><?php echo lang('contents_proof_payment'); ?></th>
                                                     <td>
-                                                        <img style="width: auto; max-width: 100%; max-height: 250px;" 
-                                                        src="<?php echo base_url($upload_dir.$participant_payment['file_name']);?>">
+                                                        <?php 
+                                                        	$image_name = $participant_payment['file_name'];
+                                                        	$image_url = base_url($upload_dir.$image_name);
+                                                            if($participant_payment['file_ext'] == '.pdf')
+                                                            {
+                                                                echo '<iframe src="'.$image_url.'" type="application/pdf" width="300" height="400" frameBorder="0">This browser does not support PDFs.</iframe><div>Download the PDF : <a href="'.$image_name.'">'.$image_name.'</a></div>';
+                                                            }
+                                                            else
+                                                            {
+                                                            	echo '<img style="max-width: 300px;max-height: 250px;" src="'.$image_url.'" title="'.$image_name.'" alt="'.$image_name.'">';
+                                                            }
+                                                        ?>
                                                     </td>
                                                 </tr>
                                                 <tr>

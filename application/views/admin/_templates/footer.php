@@ -83,15 +83,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     var url  = button.data('url')
                     var title = button.data('file_name')
                     var modal = $(this)
-                    var img = modal.find('.modal-body img').first()
+                    var ext = title.split('.')
+                    if (ext[ext.length-1] == 'pdf'){
+                        var img = '<iframe src="' + url + '" type="application/pdf" width="240" height="300">This browser does not support PDFs.</iframe><div>Download the PDF : <a href="'+title+'">'+title+'</a></div>'
+                    }else{
+                        var img = '<img style="max-width: 240px;max-height: 300px;" src="'+url+'" title="'+title+'" alt="'+title+'">'
+                    }
+                    modal.find('.modal-body .payment-proof').first().html(img)
                     modal.find('.modal-body .upload_time').first().text(button.data('upload_time'))
                     modal.find('.modal-body .bank_name').first().text(button.data('bank_name'))
                     modal.find('.modal-body .account_owner').first().text(button.data('account_owner'))
                     modal.find('.modal-body .account_number').first().text(button.data('account_number'))
-
-                    img.attr('src', url)
-                    img.attr('title', title)
-                    img.attr('alt', title)
                 })
 				$('#delete').click(function(){
 				    $('#members-form').submit();

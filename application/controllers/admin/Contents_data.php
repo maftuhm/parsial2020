@@ -37,6 +37,7 @@ class Contents_data extends Admin_controller {
 			{
 				$contents_title = ((array)$this->data['content_details'])['title'];
 				$contents_id = ((array)$this->data['content_details'])['id'];
+
 		        /* Title Page :: Common */
 		        $this->page_title->push($contents_title);
 		        $this->data['pagetitle'] = $this->page_title->show();
@@ -180,6 +181,7 @@ class Contents_data extends Admin_controller {
 	            else
 	            {
 		        	$this->data['participant_payment']['file_name'] = 'default-thumbnail.jpg';
+		        	$this->data['participant_payment']['file_ext'] = '.jpg';
 	            }
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/details', $this->data);
