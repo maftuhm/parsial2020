@@ -27,10 +27,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 <h2>List Tables</h2>
-                                    <table class="dataTable table table-striped table-hover table-condensed">
+                                    <div class="scrolling-table" style="overflow: auto;white-space: nowrap;">
+                                    <table class="table table-striped table-hover table-condensed">
                                         <thead>
                                             <tr>
-                                                <th>&nbsp;</th>
+                                                <th></th>
                                                 <th>name</th>
                                                 <th>type</th>
                                                 <th>max_length</th>
@@ -38,25 +39,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tr>
                                         </thead>
                                         <tbody>
-<?php foreach ($list_tables as $db):?>
+                                        <?php foreach ($list_tables as $db):?>
                                             <tr class="info">
-                                                <th><?php echo $db; ?></th>
-                                                <th colspan="5">&nbsp;</th>
+                                                <?php $length = count($this->db->field_data($db))+1;?>
+                                                <th rowspan="<?php echo $length;?>"><strong><?php echo $db; ?></strong></th>
                                             </tr>
-<?php foreach ($this->db->field_data($db) as $field):?>
+                                            <?php foreach ($this->db->field_data($db) as $field):?>
                                             <tr>
-                                                <td>&nbsp;</td>
                                                 <td><?php echo $field->name; ?></td>
                                                 <td><?php echo $field->type; ?></td>
                                                 <td><?php echo $field->max_length; ?></td>
                                                 <td><?php echo $field->primary_key; ?></td>
                                             </tr>
-<?php endforeach;?>
-
-<?php endforeach;?>
+                                            <?php endforeach;?>
+                                        <?php endforeach;?>
                                         </tbody>
                                     </table>
-
+                                    </div>
 
 
 

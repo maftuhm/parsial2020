@@ -35,13 +35,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <?php foreach ($content_keys as $key => $value):?>
                                                     
                                                         <?php 
+                                                            echo '<td><div class="nowrap">';
                                                             if ($value == 'created_on')
                                                             {
-                                                                echo '<td>'.date('D, d M Y H:i', $content->$value).'</td>';
+                                                                echo date('D, d M Y H:i', $content->$value);
                                                             }
                                                             elseif(preg_match('/_date$/', $value))
                                                             {
-                                                                echo '<td>'.date('d F Y', $content->$value).'</td>';
+                                                                echo date('d F Y', $content->$value);
                                                             }
                                                             elseif($value == 'tim_name' OR $value == 'name')
                                                             {
@@ -60,7 +61,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 $value_edit_btn  = '<span class="label label-warning"><i class="fa fa-edit" aria-hidden="true"></i> '.lang('actions_edit').'</span>';
                                                                 $value_delete_btn  = '<span class="label label-danger"><i class="fa fa-trash" aria-hidden="true"></i> '.lang('actions_delete').'</span>';
 
-                                                                echo '<td class="name">';
                                                                 echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $content->$value, $atts_profile);
                                                                 echo '<div class="actions show-actions">';
                                                                 echo anchor('admin/contents/p/'.$content_slug.'/details/'.$content->id, $value_profile_btn, $atts_profile);
@@ -68,12 +68,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 $site_url =  site_url('admin/contents/p/' . $content_slug . '/delete/' . $content->id);
                                                                 echo '<a href="#" type="button" data-toggle="modal" data-target="#modal-danger" data-name="'.$content->$value.'" data-url="'.$site_url.'">' . $value_delete_btn . '</a>';
                                                                 echo '</div>';
-                                                                echo '</td>';
                                                             }
                                                             else
                                                             {
-                                                                echo '<td>'.$content->$value.'</td>';
+                                                                echo $content->$value;
                                                             }
+                                                            echo '</div></td>';
                                                         ?>
                                                     
                                                     <?php endforeach;?>
