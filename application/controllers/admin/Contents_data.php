@@ -292,11 +292,9 @@ class Contents_data extends Admin_controller {
 	        		{
 	        			$content_url .= '?status=failed';
 	        		}
-	        		// $this->load->view('testing', $this->data);
 	        	}
 	        	elseif ($kind == '')
 	        	{
-	        		// $this->data['tes'] = $content_tim;
 	        		if ($this->contents_model->delete_participant($content_slug, $id, $content_tim)) 
 	        		{
 	        			$content_url = site_url(array('admin/contents/p', $content_slug));
@@ -306,7 +304,6 @@ class Contents_data extends Admin_controller {
 	        		{
 	        			$content_url .= '?status=failed';
 	        		}
-	        		$this->load->view('testing', $this->data);
 	        	}
 	        	else
 	        	{
