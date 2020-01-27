@@ -15,6 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script type="text/javascript" src="<?php echo base_url($frameworks_dir . '/bootstrap/js/bootstrap.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/slimscroll/slimscroll.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/icheck/icheck.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net/jquery.dataTables.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net-bs/dataTables.bootstrap.min.js');?>"></script>
 
 <?php if ($mobile == TRUE): ?>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/fastclick/fastclick.min.js'); ?>"></script>
@@ -65,11 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/colorpickersliders/colorpickersliders.min.js'); ?>"></script>
 <?php endif; ?>
 <?php if ($this->router->fetch_class() == 'users' OR $this->router->fetch_class() == 'contents' OR $this->router->fetch_class() == 'contents_data'): ?>
-        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net/jquery.dataTables.min.js');?>"></script>
-        <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/datatables.net-bs/dataTables.bootstrap.min.js');?>"></script>
         <script type="text/javascript">
             $(function () {
-                $('#dataTable').DataTable({<?php echo $datatable_attributes;?>})
 				$('#modal-danger').on('show.bs.modal', function (event) {
 					var button = $(event.relatedTarget)
 					var url  = button.data('url')
@@ -121,5 +120,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php endif; ?>
         <script type="text/javascript" src="<?php echo base_url($frameworks_dir . '/adminlte/js/adminlte.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo base_url($frameworks_dir . '/domprojects/js/dp.min.js'); ?>"></script>
+        <script type="text/javascript">
+        	$(function () {
+        		$('.dataTable').DataTable({
+        			<?php 
+        				if (is_array($datatable_attributes)) {
+        					echo attributes_to_string2_($datatable_attributes);
+        				}
+        				else
+        				{
+        					echo $datatable_attributes;
+        				}
+        			?>
+        			});
+        		});
+        	</script>
     </body>
 </html>

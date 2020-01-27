@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="box-body">
                                     <div class="box-body">
-                                        <table id="dataTable" class="table table-striped table-hover">
+                                        <table class="dataTable table table-striped table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>

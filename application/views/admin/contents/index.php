@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="box-title"><?php echo anchor('admin/contents/create', '<i class="fa fa-plus"></i> '. lang('contents_create'), array('class' => 'btn btn-block btn-primary btn-flat')); ?></h3>
                                 </div>
                                 <div class="box-body">
-                                    <table id="dataTable" class="table table-striped table-hover">
+                                    <table class="dataTable table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th><?php echo lang('contents_created_on');?></th>

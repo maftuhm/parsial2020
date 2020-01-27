@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 <h2>List Tables</h2>
-                                    <table class="table table-striped table-hover table-condensed">
+                                    <table class="dataTable table table-striped table-hover table-condensed">
                                         <thead>
                                             <tr>
                                                 <th>&nbsp;</th>

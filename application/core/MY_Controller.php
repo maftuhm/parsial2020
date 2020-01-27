@@ -96,7 +96,7 @@ class Admin_Controller extends MY_Controller
             $this->data['is_admin']    = $this->ion_auth->is_admin();
             $this->data['menu_contents'] = $this->contents_common_model->get_contents();
             $this->data['count_contents'] = $this->contents_common_model->count_contents();
-            $this->data['datatable_attributes'] = array('scrollX' => 'true', 'paging' => 'true', 'lengthChange' => 'true', 'searching' => 'false', 'ordering'=> 'true', 'info' => 'true', 'autoWidth' => 'false');
+            $this->data['datatable_attributes'] = $this->config->item('datatable_attributes');
 
             if ($this->router->fetch_class() == 'dashboard')
             {

@@ -33,4 +33,14 @@ $config['breadcrumb_el_close'] = '</li>';
 $config['breadcrumb_el_first'] = '<i class="fa fa-dashboard"></i>';
 $config['breadcrumb_el_last']  = '<li class="active">';
 
+$config['datatable_attributes'] = array(
+	'scrollX' => 'true', 
+	'paging' => 'true', 
+	'lengthChange' => 
+	'true', 'searching' => 'false', 
+	'ordering'=> 'true', 
+	'info' => 'true', 
+	'autoWidth' => 'false'
+);
+
 

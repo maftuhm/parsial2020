@@ -154,7 +154,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="box-body members-details">
                                     <?php echo form_open(site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id, 'members')), array('id' => 'members-form', 'method' => 'GET'));?>
-                                    <table id="dataTable" class="table table-striped table-hover">
+                                    <table class="dataTable table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th><button style="width: 34px;" type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button></th>

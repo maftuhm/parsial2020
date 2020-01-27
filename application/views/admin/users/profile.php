@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="box-title">xxxx</h3>
                                 </div>
                                 <div class="box-body">
-                                    <table class="table table-striped table-hover">
+                                    <table class="dataTable table table-striped table-hover">
                                         <tbody>
 <?php foreach ($user_info as $user):?>
                                             <tr>
