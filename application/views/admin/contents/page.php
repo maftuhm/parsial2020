@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-12">
                              <div class="box">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><?php #echo $content_name;?></h3>
+                                    <h3 class="box-title"></h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="box-body">
@@ -39,6 +39,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             if ($value == 'created_on')
                                                             {
                                                                 echo date('D, d M Y H:i', $content->$value);
+                                                                if ($content->payment != NULL)
+                                                                {
+                                                                    $image = $content->payment->file_name;
+                                                                    $url_image = site_url(array('media', $content_slug, $image));
+                                                                    $label = 'label-success';
+                                                                    $payment = lang('contents_paid');
+                                                                    $attr_modal = array(
+                                                                        'href' => '#',
+                                                                        'data-toggle' => 'modal',
+                                                                        'data-target' => '#modal-image-payment',
+                                                                        'data-upload_time' => date('D, d M Y H:i', $content->payment->time),
+                                                                        'data-bank_name' => $content->payment->bank_name,
+                                                                        'data-account_owner' => $content->payment->account_owner,
+                                                                        'data-account_number' => $content->payment->account_number,
+                                                                        'data-file_name' => $image,
+                                                                        'data-url' => $url_image,
+                                                                        'data-alt' => $image
+                                                                    );
+                                                                    $attr_modal = attributes_to_string_($attr_modal, array('=', ' '));
+                                                                }
+                                                                else
+                                                                {
+                                                                    $label = 'label-default';
+                                                                    $payment = lang('contents_not_paid');
+                                                                    $attr_modal = '';
+                                                                }
+                                                                echo '<div><a type="button" '.$attr_modal.'><span class="label-payment label '.$label.'">'.$payment.'</span></a></div>';
                                                             }
                                                             elseif(preg_match('/_date$/', $value))
                                                             {
@@ -110,6 +137,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
                             <?php echo anchor('#', lang('actions_delete'), array('class' => 'btn btn-outline btn-delete')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modal-image-payment">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"><?php echo lang('contents_payment') . ' participant';?></h4>
+                        </div>
+                        <div class="modal-body">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<tr>
+										<td rowspan="4"><img style="max-width: 240px;max-height: 300px;" src="#" title="" alt=""></td>
+										<th><?php echo lang('contents_upload_time')?></th>
+										<td class="upload_time">1</td>
+									</tr>
+									<tr>
+										<th><?php echo lang('contents_bank_name')?></th>
+										<td class="bank_name">2</td>
+									</tr>
+									<tr>
+										<th><?php echo lang('contents_account_owner')?></th>
+										<td class="account_owner">3</td>
+									</tr>
+									<tr>
+										<th><?php echo lang('contents_account_number')?></th>
+										<td class="account_number">4</td>
+									</tr>
+								</table>
+							</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn pull-right btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

@@ -9,6 +9,9 @@
 	visibility: hidden;
 	font-size: 12px;
 }
+.label-payment {
+    width: 50px;
+}
 .show-actions{
 	visibility: visible;
 }

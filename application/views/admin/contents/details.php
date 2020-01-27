@@ -20,51 +20,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <table class="table table-striped table-hover">
-                                        <tbody>
-                                        <?php
-                                            foreach ($participant_data as $key => $value)
-                                            {
-                                                echo '<tr>';
-                                                echo '<th>' . lang('contents_'.$key) . '</th>';
-                                                echo '<td>:</td>';
-                                                echo '<td>';
-                                                if ($key == 'created_on')
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <tbody>
+                                            <?php
+                                                foreach ($participant_data as $key => $value)
                                                 {
-                                                    echo date('D, d M Y H:i', $value);
-                                                }
-                                                elseif (preg_match('/_date$/', $key))
-                                                {
-                                                    echo date('l, d M Y', $value);
-                                                }
-                                                else
-                                                {
-                                                    if ($key == 'name' OR $key == 'tim_name') {
-                                                        $name = $value;
+                                                    echo '<tr>';
+                                                    echo '<th>' . lang('contents_'.$key) . '</th>';
+                                                    echo '<td>:</td>';
+                                                    echo '<td>';
+                                                    if ($key == 'created_on')
+                                                    {
+                                                        echo date('D, d M Y H:i', $value);
                                                     }
-                                                    echo $value;
+                                                    elseif (preg_match('/_date$/', $key))
+                                                    {
+                                                        echo date('l, d M Y', $value);
+                                                    }
+                                                    else
+                                                    {
+                                                        if ($key == 'name' OR $key == 'tim_name') {
+                                                            $name = $value;
+                                                        }
+                                                        echo $value;
+                                                    }
+                                                    echo '</td>';
+                                                    echo '</tr>';
                                                 }
-                                                echo '</td>';
-                                                echo '</tr>';
-                                            }
-                                        ?>
-                                        <tr>
-                                            <th><?php echo lang('contents_action'); ?></th>
-                                            <td>:</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <?php 
-                                                        $site_url =  site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id));
-                                                        $attr_delete = 'title="'.lang('actions_delete').' '.$name.'" data-name="'.$name.'" data-url="'.$site_url.'"';
-                                                    ?>
-                                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger" <?php echo $attr_delete;?>><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
-                                                    <?php echo anchor(array('admin/contents/p', $content_slug, /*'edit', */'details', $participant_id), '<i class="fa fa-edit"></i> '.lang('actions_edit'), array('class' => 'btn btn-primary btn-action', 'title' => lang('actions_edit').' '.$name));
-                                                    ?>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                            ?>
+                                            <tr>
+                                                <th><?php echo lang('contents_action'); ?></th>
+                                                <td>:</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <?php 
+                                                            $site_url =  site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id));
+                                                            $attr_delete = 'title="'.lang('actions_delete').' '.$name.'" data-name="'.$name.'" data-url="'.$site_url.'"';
+                                                        ?>
+                                                        <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger" <?php echo $attr_delete;?>><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
+                                                        <?php echo anchor(array('admin/contents/p', $content_slug, /*'edit', */'details', $participant_id), '<i class="fa fa-edit"></i> '.lang('actions_edit'), array('class' => 'btn btn-primary btn-action', 'title' => lang('actions_edit').' '.$name));
+                                                        ?>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -77,73 +79,75 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <table class="table table-striped table-hover">
-                                        <tbody>
-                                            <?php 
-                                            echo '<tr>';
-                                                echo '<th>'.lang('contents_payment').'</th>';
-                                                echo '<td>';
-                                                if ($paid){echo lang('contents_paid');}else{echo lang('contents_not_paid');}
-                                                echo '<td>';
-                                            echo '</tr>';
-                                            if ($paid){
-                                                foreach ($payment_keys as $keys => $key)
-                                                {
-                                                    echo '<tr>';
-                                                        echo '<th>'.lang('contents_'.$key).'</th>';
-                                                        echo '<td>';
-                                                        if($key == 'upload_time'){echo date('D, d M Y H:i', $participant_payment[$key]);}
-                                                        else{echo $participant_payment[$key];}
-                                                        echo '</td>';
-                                                    echo '</tr>';
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <tbody>
+                                                <?php 
+                                                echo '<tr>';
+                                                    echo '<th>'.lang('contents_payment').'</th>';
+                                                    echo '<td>';
+                                                    if ($paid){echo lang('contents_paid');}else{echo lang('contents_not_paid');}
+                                                    echo '<td>';
+                                                echo '</tr>';
+                                                if ($paid){
+                                                    foreach ($payment_keys as $keys => $key)
+                                                    {
+                                                        echo '<tr>';
+                                                            echo '<th>'.lang('contents_'.$key).'</th>';
+                                                            echo '<td>';
+                                                            if($key == 'upload_time'){echo date('D, d M Y H:i', $participant_payment[$key]);}
+                                                            else{echo $participant_payment[$key];}
+                                                            echo '</td>';
+                                                        echo '</tr>';
 
+                                                    }
                                                 }
-                                            }
-                                            ?>
-                                            <tr>
-                                                <th><?php echo lang('contents_proof_payment'); ?></th>
-                                                <td>
-                                                    <img style="width: auto; max-width: 100%; max-height: 250px;" 
-                                                    src="<?php echo base_url($upload_dir.$participant_payment['file_name']);?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th><?php echo lang('contents_action'); ?></th>
-                                                <td>
-                                                    <?php 
-                                                    // echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
-                                                    // echo anchor('admin/contents/p/'.$content_slug.'/send_email/'.$participant_id, '<i class="fa fa-envelope"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
-                                                    ?>
+                                                ?>
+                                                <tr>
+                                                    <th><?php echo lang('contents_proof_payment'); ?></th>
+                                                    <td>
+                                                        <img style="width: auto; max-width: 100%; max-height: 250px;" 
+                                                        src="<?php echo base_url($upload_dir.$participant_payment['file_name']);?>">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th><?php echo lang('contents_action'); ?></th>
+                                                    <td>
+                                                        <?php 
+                                                        // echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
+                                                        // echo anchor('admin/contents/p/'.$content_slug.'/send_email/'.$participant_id, '<i class="fa fa-envelope"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
+                                                        ?>
 
-                                                    <?php 
-                                                        echo form_open('admin/mailbox/compose', array('method'=>'GET'));
-                                                        if($content_team_group == TRUE){
-                                                            if (!empty($members_data)) {
-                                                                $member_name = $members_data[0]['name'] ? $members_data[0]['name'] : $name;
+                                                        <?php 
+                                                            echo form_open('admin/mailbox/compose', array('method'=>'GET'));
+                                                            if($content_team_group == TRUE){
+                                                                if (!empty($members_data)) {
+                                                                    $member_name = $members_data[0]['name'] ? $members_data[0]['name'] : $name;
+                                                                }
+                                                                else
+                                                                {
+                                                                    $member_name = $name;
+                                                                }
+                                                                echo form_hidden('name', $member_name);
+                                                            }else{
+                                                                echo form_hidden('name', $name);
                                                             }
-                                                            else
-                                                            {
-                                                                $member_name = $name;
-                                                            }
-                                                            echo form_hidden('name', $members_data[0]['name']);
-                                                        }else{
-                                                            echo form_hidden('name', $participant_data['name']);
-                                                        }
-                                                        echo form_hidden('email', $participant_data['email']);
-                                                        echo form_hidden('content_slug', $content_slug);
-                                                        $site_url =  site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id, 'payment'));
-                                                        $attr_delete = 'title="'.lang('actions_delete').' '.$name.' payment" data-name="'.$name.'\'s payment" data-url="'.$site_url.'"';
-                                                    ?>
-                                                    <div class="btn-group">
-                                                        <button type="submit" class="btn btn-primary btn-action" title="Confirm payment"><i class="fa fa-envelope"></i> Confirm</button>
-                                                        <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger" <?php echo $attr_delete;?>><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
-                                                    </div>
-                                                    <?php echo form_close();?>
-                                                    <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button> -->
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                            echo form_hidden('email', $participant_data['email']);
+                                                            echo form_hidden('content_slug', $content_slug);
+                                                            $site_url =  site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id, 'payment'));
+                                                            $attr_delete = 'title="'.lang('actions_delete').' '.$name.' payment" data-name="'.$name.'\'s payment" data-url="'.$site_url.'"';
+                                                        ?>
+                                                        <div class="btn-group">
+                                                            <button type="submit" class="btn btn-primary btn-action" title="Confirm payment"><i class="fa fa-envelope"></i> Confirm</button>
+                                                            <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger" <?php echo $attr_delete;?>><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
+                                                        </div>
+                                                        <?php echo form_close();?>
+                                                        <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button> -->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

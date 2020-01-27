@@ -78,6 +78,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					body.text(body.text() + name + '?')
 					modal.find('.btn-delete').attr('href', url)
 				})
+                $('#modal-image-payment').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget)
+                    var url  = button.data('url')
+                    var title = button.data('file_name')
+                    var modal = $(this)
+                    var img = modal.find('.modal-body img').first()
+                    modal.find('.modal-body .upload_time').first().text(button.data('upload_time'))
+                    modal.find('.modal-body .bank_name').first().text(button.data('bank_name'))
+                    modal.find('.modal-body .account_owner').first().text(button.data('account_owner'))
+                    modal.find('.modal-body .account_number').first().text(button.data('account_number'))
+
+                    img.attr('src', url)
+                    img.attr('title', title)
+                    img.attr('alt', title)
+                })
 				$('#delete').click(function(){
 				    $('#members-form').submit();
 				});
@@ -125,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         		$('.dataTable').DataTable({
         			<?php 
         				if (is_array($datatable_attributes)) {
-        					echo attributes_to_string2_($datatable_attributes);
+        					echo attributes_to_string_($datatable_attributes, array(':', ','), FALSE);
         				}
         				else
         				{

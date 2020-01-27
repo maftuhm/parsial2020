@@ -24,7 +24,7 @@ class Contents_data extends Admin_controller {
         }
         else
         {
-        	$this->data['datatable_attributes'] = attributes_to_string2_($this->data['datatable_attributes']);
+        	$this->data['datatable_attributes'] = attributes_to_string_($this->data['datatable_attributes'], array(':', ','), FALSE);
 
         	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
         	$this->data['content_slug'] = $content_slug;
@@ -36,6 +36,7 @@ class Contents_data extends Admin_controller {
 			else
 			{
 				$contents_title = ((array)$this->data['content_details'])['title'];
+				$contents_id = ((array)$this->data['content_details'])['id'];
 		        /* Title Page :: Common */
 		        $this->page_title->push($contents_title);
 		        $this->data['pagetitle'] = $this->page_title->show();
@@ -49,6 +50,17 @@ class Contents_data extends Admin_controller {
 	            $content = $this->unset_key((array)$this->contents_model->get_data($table_name, NULL, NULL, FALSE));
 	            $this->data['content_keys'] = array_keys($content);
 	            $this->data['content_data'] = $this->contents_model->get_data($table_name);
+	            foreach ($this->data['content_data'] as $key => $value) {
+	            	$payment_data = $this->contents_model->get_participant_payment($contents_id, $value->id);
+	            	if (!empty($payment_data)) 
+	            	{
+	            		$this->data['content_data'][$key]->payment = (object) $payment_data[0];
+	            	}
+	            	else
+	            	{
+	            		$this->data['content_data'][$key]->payment = NULL;
+	            	}
+	            }
 
 	            /* Load Template */
 	            $this->template->admin_render('admin/contents/page', $this->data);
@@ -67,7 +79,7 @@ class Contents_data extends Admin_controller {
         	$this->data['datatable_attributes']['paging'] = 'false';
         	$this->data['datatable_attributes']['ordering'] = 'false';
         	$this->data['datatable_attributes']['info'] = 'false';
-        	$this->data['datatable_attributes'] = attributes_to_string2_($this->data['datatable_attributes']);
+        	$this->data['datatable_attributes'] = attributes_to_string_($this->data['datatable_attributes'], array(':', ','), FALSE);
 
         	$this->data['content_details'] = $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
         	$this->data['content_slug'] = $content_slug;

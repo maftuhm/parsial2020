@@ -78,7 +78,7 @@ if ( ! function_exists('alert_admin'))
 
 if ( ! function_exists('attributes_to_string_'))
 {
-	function attributes_to_string_($attributes)
+	function attributes_to_string_($attributes, $separator = array(':', ','), $string_value = TRUE)
 	{
 		if (empty($attributes))
 		{
@@ -96,7 +96,14 @@ if ( ! function_exists('attributes_to_string_'))
 
 			foreach ($attributes as $key => $val)
 			{
-				$atts .= " ".$key.":'".$val."',";
+				if ($string_value == TRUE)
+				{
+					$atts .= " ".$key.$separator[0]."'".$val."'".$separator[1];					
+				}
+				else
+				{
+					$atts .= " '".$key."'".$separator[0].$val.$separator[1];					
+				}
 			}
 
 			return $atts;
@@ -111,40 +118,75 @@ if ( ! function_exists('attributes_to_string_'))
 	}
 }
 
-if ( ! function_exists('attributes_to_string2_'))
-{
-	function attributes_to_string2_($attributes)
-	{
-		if (empty($attributes))
-		{
-			return '';
-		}
+// if ( ! function_exists('attributes_to_string2_'))
+// {
+// 	function attributes_to_string2_($attributes)
+// 	{
+// 		if (empty($attributes))
+// 		{
+// 			return '';
+// 		}
 
-		if (is_object($attributes))
-		{
-			$attributes = (array) $attributes;
-		}
+// 		if (is_object($attributes))
+// 		{
+// 			$attributes = (array) $attributes;
+// 		}
 
-		if (is_array($attributes))
-		{
-			$atts = '';
+// 		if (is_array($attributes))
+// 		{
+// 			$atts = '';
 
-			foreach ($attributes as $key => $val)
-			{
-				$atts .= " '".$key."':".$val.",";
-			}
+// 			foreach ($attributes as $key => $val)
+// 			{
+// 				$atts .= " '".$key."':".$val.",";
+// 			}
 
-			return $atts;
-		}
+// 			return $atts;
+// 		}
 
-		if (is_string($attributes))
-		{
-			return " ".$attributes;
-		}
+// 		if (is_string($attributes))
+// 		{
+// 			return " ".$attributes;
+// 		}
 
-		return FALSE;
-	}
-}
+// 		return FALSE;
+// 	}
+// }
+
+// if ( ! function_exists('attributes_to_string3_'))
+// {
+// 	function attributes_to_string3_($attributes)
+// 	{
+// 		if (empty($attributes))
+// 		{
+// 			return '';
+// 		}
+
+// 		if (is_object($attributes))
+// 		{
+// 			$attributes = (array) $attributes;
+// 		}
+
+// 		if (is_array($attributes))
+// 		{
+// 			$atts = '';
+
+// 			foreach ($attributes as $key => $val)
+// 			{
+// 				$atts .= " ".$key."='".$val."'";
+// 			}
+
+// 			return $atts;
+// 		}
+
+// 		if (is_string($attributes))
+// 		{
+// 			return " ".$attributes;
+// 		}
+
+// 		return FALSE;
+// 	}
+// }
 
 if ( ! function_exists('parse_form_attributes_'))
 {
