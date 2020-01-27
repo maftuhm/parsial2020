@@ -266,23 +266,53 @@ class Contents_data extends Admin_controller {
 			else
 			{
 				$id = (int) $id;
-	        	$content_id = (int)((array)$this->contents_model->get_data('contents', $content_slug, 'slug', FALSE))['id'];
+				$content_details = (array) $this->contents_model->get_data('contents', $content_slug, 'slug', FALSE);
+	        	$content_id = $content_details['id'];
+	        	$content_tim = (bool) $content_details['team_group'];
+	        	$content_url = site_url(array('admin/contents/p', $content_slug, 'details', $id));
 	        	if ($kind == 'payment')
 	        	{
-	        		$this->contents_model->delete_payment($content_id, $id);
+	        		if ($this->contents_model->delete_payment($content_id, $id))
+	        		{
+	        			$content_url .= '?status=success';
+	        		}
+	        		else
+	        		{
+	        			$content_url .= '?status=failed';
+	        		}
 	        	}
 	        	elseif ($kind == 'members') 
 	        	{
-	        		$members_id = $this->input->get('members_id');
-	        		if ($this->contents_model->delete_members($content_slug, $id, $members_id)) 
+	        		$members_id = (array) $this->input->get('members_id');
+	        		if ($this->contents_model->delete_members($content_slug, $members_id)) 
 	        		{
-	        			redirect(array('admin/contents/p', $content_slug, 'details', $id), 'refresh');
+	        			$content_url .= '?status=success';
 	        		}
+	        		else
+	        		{
+	        			$content_url .= '?status=failed';
+	        		}
+	        		// $this->load->view('testing', $this->data);
+	        	}
+	        	elseif ($kind == '')
+	        	{
+	        		// $this->data['tes'] = $content_tim;
+	        		if ($this->contents_model->delete_participant($content_slug, $id, $content_tim)) 
+	        		{
+	        			$content_url = site_url(array('admin/contents/p', $content_slug));
+	        			$content_url .= '?status=success';
+	        		}
+	        		else
+	        		{
+	        			$content_url .= '?status=failed';
+	        		}
+	        		$this->load->view('testing', $this->data);
 	        	}
 	        	else
 	        	{
-
+        			$content_url .= '?status=failed';
 	        	}
+    			redirect($content_url, 'refresh');
 	        }
 		}
 	}

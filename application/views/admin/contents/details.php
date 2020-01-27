@@ -114,25 +114,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     // echo anchor('admin/contents/p/'.$content_slug.'/edit/'.$participant_id, '<i class="fa fa-edit"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
                                                     // echo anchor('admin/contents/p/'.$content_slug.'/send_email/'.$participant_id, '<i class="fa fa-envelope"></i> '.lang('edit'), array('class' => 'btn btn-primary btn-action'));
                                                     ?>
+
                                                     <?php 
                                                         echo form_open('admin/mailbox/compose', array('method'=>'GET'));
                                                         if($content_team_group == TRUE){
                                                             if (!empty($members_data)) {
-                                                                $member_name = $members_data[0]['name'];
+                                                                $member_name = $members_data[0]['name'] ? $members_data[0]['name'] : $name;
                                                             }
                                                             else
                                                             {
                                                                 $member_name = $name;
                                                             }
-                                                            echo form_hidden('name', $member_name);
+                                                            echo form_hidden('name', $members_data[0]['name']);
                                                         }else{
                                                             echo form_hidden('name', $participant_data['name']);
                                                         }
                                                         echo form_hidden('email', $participant_data['email']);
                                                         echo form_hidden('content_slug', $content_slug);
-                                                        echo '<button type="submit" class="btn btn-primary btn-action" title="Confirm payment"><i class="fa fa-envelope"></i> Confirm</button>';
-                                                        echo form_close();
+                                                        $site_url =  site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id, 'payment'));
+                                                        $attr_delete = 'title="'.lang('actions_delete').' '.$name.' payment" data-name="'.$name.'\'s payment" data-url="'.$site_url.'"';
                                                     ?>
+                                                    <div class="btn-group">
+                                                        <button type="submit" class="btn btn-primary btn-action" title="Confirm payment"><i class="fa fa-envelope"></i> Confirm</button>
+                                                        <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger" <?php echo $attr_delete;?>><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
+                                                    </div>
+                                                    <?php echo form_close();?>
                                                     <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-danger"><i class="fa fa-trash-o"></i> <?php //echo lang('delete');?></button> -->
                                                 </td>
                                             </tr>
@@ -211,7 +217,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-delete-members"><i class="fa fa-trash-o"></i> <?php echo lang('actions_delete');?></button>
+                                    <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-delete-members"><i class="fa fa-trash-o"></i> <?php //echo lang('actions_delete');?></button> -->
                                     <?php echo form_close();?>
                                 </div>
                             </div>
@@ -238,21 +244,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </div>
             </div>
-            <div class="modal modal-danger fade" id="modal-delete-members">
+            <!-- <div class="modal modal-danger fade" id="modal-delete-members">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title"><?php echo lang('actions_delete') . ' participant?';?></h4>
+                            <h4 class="modal-title"><?php //echo lang('actions_delete') . ' participant?';?></h4>
                         </div>
                         <div class="modal-body">
                             <p>Are you sure want to delete </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                            <button id="delete" type="submit" class="btn btn-outline" data-dismiss="modal"><?php echo lang('actions_delete')?></button>
+                            <button id="delete" type="submit" class="btn btn-outline" data-dismiss="modal"><?php //echo lang('actions_delete')?></button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
