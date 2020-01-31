@@ -557,6 +557,136 @@ class Register extends Public_Controller {
     	$this->template->public_form_render('public/mcc_upload', $this->data);
 	}
 
+	public function penyisihan_mcc($id = NULL)
+	{
+		$content = 'mcc';
+		$tables = $this->config->item('tables');
+		$table  = $tables['content_prefix'] . $content;
+		$table_member = $table . $tables['members_suffix'];
+		$table_member_media	= $table_member . $tables['media_suffix'];
+
+        $data_content = (array) $this->contents_common_model->get_contents($content, '*');
+    	$this->data['header'] = $data_content['title'];
+    	$content_id = $data_content['id'];
+
+		$this->data['page_title'] = 'Upload Berkas Jawaban';
+        $this->data['title'] = $this->data['page_title'] . ' ' . $this->data['header'] .' ' . $this->data['title'];
+
+    	$this->data['show_email_form'] = TRUE;
+    	$tim_data = array();
+
+        if ($id != '')
+        {
+        	$tim_data['id_encript'] = $id;
+			$id = (int) decrypt_url($id);
+			if(!$this->public_model->check_any($table, array('id' => $id)))
+			{
+				show_404();
+			}
+			else
+			{
+	        	$data = $this->public_model->get_participant($table, $id, 'id');
+	        	foreach ($data as $key) {
+	        		$email = $key->email;
+	        	}
+	        	$tim_data['email'] = $email;				
+			}
+			$this->data['show_email_form'] = FALSE;
+        }
+        else
+        {
+	        $this->form_validation->set_rules('tim_name', 'lang:tim_name', 'required');
+	        $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_exists['.$table.']');
+
+	        if ($this->form_validation->run() == TRUE)
+	        {
+	        	$email = $this->input->post('email');
+	        	$data = $this->public_model->get_participant($table, $email, 'email');
+	        	foreach ($data as $key) {
+	        		$id = $key->id;
+	        	}
+	        	$tim_data['id_encript'] = encrypt_url($id);
+	        	$tim_data['email']		= $email;
+	        }
+	        else
+	        {
+				$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+	        }
+        }
+
+		if (isset($id) && !empty($_FILES))
+		{
+			if ($content_id != NULL && $id != NULL)
+			{
+	            if ($this->public_model->check_any($table_member, array('tim_id' => $id)))
+	            {
+	            	$members_data = $this->public_model->get_participant($table_member, $id, 'tim_id');
+	            	foreach ($members_data as $column) {
+	            		$member_id[] = $column->id;
+	            		$member_name[] = $column->name;
+	            	}
+
+	            	if ($this->public_model->check_any($table_member_media, array('member_id' => $member_id[0])))
+	            	{
+						$id = encrypt_url($id);
+	            		$atts = array(
+							'icon'		=> 'error',
+							'title' 	=> 'Terjadi kesalahan!',
+							'html'		=> 'Anda sudah upload data tim!<br>Silahkan upload bukti pembayaran melalui link dibawah',
+							'showConfirmButton' => 'false',
+							'footer'	=> anchor('payment/mcc/'.$id, 'Pembayaran')
+						);
+						$this->data['alert_modal'] = sweet_alert($atts);
+	            	}
+	            	else
+	            	{
+						$file_type = 'ktm';
+						$file_id = $this->multiple_upload($content.'/data/', $file_type);
+			            if ($file_id != FALSE)
+			            {
+			            	$members_media = [];
+				            for ($i=0; $i < count($member_id); $i++)
+				            {
+				            	$members_media_data = array(
+				            		'member_id' 	=> $member_id[$i],
+				            		'media_id'		=> $file_id[$i]
+				            		);
+					            array_push($members_media, $members_media_data);
+				            }
+
+							$this->data['all_file'] = $members_media[0];
+				            if ($this->public_model->input_participant($table_member_media, $members_media))
+				            {
+								$id = encrypt_url($id);
+								$atts = array(
+									'icon'		=> 'success',
+									'title' 	=> 'Berhasil!',
+									'text'		=> 'Data tim anda telah kami simpan. silahkan lakukan pembayaran kemudian upload melalui link dibawah',
+									'showConfirmButton' => 'false',
+									'footer'	=> anchor('payment/mcc/'.$id, 'Pembayaran')
+								);
+								$this->data['alert_modal'] = sweet_alert($atts);
+								$tim_data['name'] = $member_name[0];
+								$this->email_success($content, $data_content['title'], $tim_data, 'payment');
+
+				            }
+			            }
+			            else
+			            {
+							$atts = array(
+								'icon'		=> 'error',
+								'title' 	=> 'Terjadi kesalahan!',
+								'html'		=> $this->data['error']
+							);
+							$this->data['alert_modal'] = validation_errors(sweet_alert_open(), sweet_alert_close());
+			            }
+	            	}
+	            }
+			}
+		}
+
+    	$this->template->public_form_render('public/mcc_upload_penyisihan', $this->data);
+	}
 	public function upload_futsal($id = NULL)
 	{
 		$content = 'futsal';
@@ -1024,6 +1154,6 @@ class Register extends Public_Controller {
 		}
 
 		$message = $this->load->view('email/index', $data, TRUE);
-		return $this->email->send_email($data['title'], $message, $data_participant['email']);
+		// return $this->email->send_email($data['title'], $message, $data_participant['email']);
 	}
 }

@@ -66,10 +66,13 @@ $route['admin/contents/p/(:any)/(:any)/(:any)/(:any)']	= 'admin/contents_data/$2
 /* ===== PUBLIC ROUTES ===== */
 $route['coming-soon'] 			= 'public/coming_soon';
 $route['(:any)'] 				= 'public/register/$1';
+$route['upload/mcc/penyisihan'] = 'public/register/penyisihan_mcc';
+$route['upload/mcc/penyisihan/(:any)'] = 'public/register/penyisihan_mcc/$1';
 $route['upload/mcc'] 			= 'public/register/upload_mcc';
 $route['upload/mcc/(:any)'] 	= 'public/register/upload_mcc/$1';
 $route['upload/futsal'] 		= 'public/register/upload_futsal';
 $route['upload/futsal/(:any)'] 	= 'public/register/upload_futsal/$1';
+
 // $route['upload/(:any)'] 		= 'public/register/upload/$1';
 // $route['upload/(:any)/(:any)'] 	= 'public/register/upload/$1/$2';
 $route['payment/(:any)'] 		= 'public/register/payment/$1';
