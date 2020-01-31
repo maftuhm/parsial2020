@@ -111,7 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         	$image_url = base_url($upload_dir.$image_name);
                                                             if($participant_payment['file_ext'] == '.pdf')
                                                             {
-                                                                echo '<iframe src="'.$image_url.'" type="application/pdf" width="300" height="400" frameBorder="0">This browser does not support PDFs.</iframe><div>Download the PDF : <a href="'.$image_name.'">'.$image_name.'</a></div>';
+                                                                echo '<iframe src="'.$image_url.'" type="application/pdf" width="300" height="400" frameBorder="0">This browser does not support PDFs.</iframe><div>Download PDF : <a href="'.$image_name.'">'.$image_name.'</a></div>';
                                                             }
                                                             else
                                                             {
@@ -197,22 +197,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         foreach ($members_keys as $keys => $key)
                                                         {
                                                             echo '<td>';
-                                                            if ($key == 'name')
-                                                            {
-                                                                echo '<a href="'.$value['id'].'">'.$value[$key].'</a>';
-                                                            }
-                                                            else
-                                                            {
-                                                                echo $value[$key];
-                                                            }
+                                                            echo $value[$key];
                                                             echo '</td>';
                                                         }
 
                                                         if ($uploaded)
                                                         {
-                                                            foreach ($media_keys as $keys => $key)
+                                                            foreach ($value['media_details'] as $media => $med)
                                                             {
-                                                                echo '<td><img class="image-pa" src="'.base_url($upload_data_dir.$value[$key]) .'"></td>';
+                                                                $file_url = base_url($upload_data_dir.$med['file_name']);
+                                                                if($med['file_ext'] == '.pdf')
+                                                                {
+                                                                    echo '<td><iframe src="'.$file_url.'" type="application/pdf" width="250" height="250" frameBorder="0">This browser does not support PDFs.</iframe><div>Download PDF : <a href="'.$file_url.'">'.$med['file_name'].'</a></div></td>';
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo '<td><img class="image-pa" src="'.$file_url.'"></td>';
+                                                                }
                                                             }
                                                         }
                                                     }
