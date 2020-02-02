@@ -6,6 +6,7 @@
 		<div class="form-container upload-btn-wrapper">
 			<form action="<?php echo current_url();?>" method="post" enctype="multipart/form-data">
 				<fieldset>
+					<pre><?php //print_r($tes);?></pre>
 					<legend>Isi semua data di bawah ini dengan lengkap!</legend>
 					<div class="form-grup">
 						<?php if($show_email_form): ?>
@@ -13,7 +14,7 @@
 							<label>Nama Tim</label>
 						</div>
 						<div class="input">
-							<input type="text" name="name_team" placeholder="Isi nama team Anda" maxlength="30" autofocus required />
+							<input type="text" name="tim_name" placeholder="Isi nama team Anda" maxlength="30" autofocus required />
 						</div>
 						<div class="label">
 							<label>Email Ketua Tim</label>
@@ -27,13 +28,13 @@
 							<label>Upload Makalah</label>
 						</div>
 						<div class="input">
-							<input type="file" class="form-upload" name="makalah" /required>
+							<input type="file" class="form-upload" name="makalah[]" required />
 						</div>
 						<div class="label">
 							<label>Upload Poster</label>
 						</div>
 						<div class="input">
-							<input type="file" class="form-upload" name="poster" /required>
+							<input type="file" class="form-upload" name="poster[]" required />
 						</div>
 					</div>
 						

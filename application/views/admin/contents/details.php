@@ -111,7 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         	$image_url = base_url($upload_dir.$image_name);
                                                             if($participant_payment['file_ext'] == '.pdf')
                                                             {
-                                                                echo '<iframe src="'.$image_url.'" type="application/pdf" width="300" height="400" frameBorder="0">This browser does not support PDFs.</iframe><div>Download PDF : <a href="'.$image_name.'">'.$image_name.'</a></div>';
+                                                                echo '<iframe src="'.$image_url.'" type="application/pdf" width="300" height="400" frameBorder="0">This browser does not support PDFs.</iframe><div>Download PDF : <a href="'.$image_url.'">'.$image_name.'</a></div>';
                                                             }
                                                             else
                                                             {

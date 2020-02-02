@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 if ($content->payment != NULL)
                                                                 {
                                                                     $image = $content->payment->file_name;
-                                                                    $url_image = site_url(array('media', $content_slug, $image));
+                                                                    $url_image = base_url(array('media', $content_slug, $image));
                                                                     $label = 'label-success';
                                                                     $payment = lang('contents_paid');
                                                                     $attr_modal = array(

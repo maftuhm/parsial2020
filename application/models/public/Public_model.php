@@ -63,11 +63,24 @@ class Public_model extends CI_Model {
 		return FALSE;
 	}
 
-	public function upload($file_data, $content_id = '', $participant_id = '')
+	public function upload($file_id, $content_id = '', $participant_id = '')
 	{
-		$file_id = $this->upload_media($file_data);
+		// $file_id = $this->upload_media($file_data);
 		if ($file_id != FALSE)
 		{
+			if (is_array($file_id))
+			{
+				foreach ($file_id as $keys => $values)
+				{
+					foreach ($values as $key => $value) {
+						$data_groups[] = array(
+							'content_id' 		=> $content_id, 
+							'participant_id' 	=> $participant_id, 
+							'media_id'			=> $value);
+					}
+				}
+				return $this->db->insert_batch('participants_media', $data_groups);
+			}
 			$data_groups = array(
 				'content_id' 		=> $content_id, 
 				'participant_id' 	=> $participant_id, 
