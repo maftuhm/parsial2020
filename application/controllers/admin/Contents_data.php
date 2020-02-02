@@ -164,8 +164,9 @@ class Contents_data extends Admin_controller {
 		            }
 	            }
 
+	            $this->data['participant_media'] = $this->contents_model->get_participant_media($contents_id, $id);
 	            $this->data['participant_payment'] = $this->contents_model->get_participant_payment($contents_id, $id);
-	            // $this->data['tes_payment'] = $this->data['participant_payment'];
+	            $this->data['tes'] = $this->data['participant_media'];
             	$this->data['payment_keys'] = array('upload_time', 'bank_name', 'account_owner', 'account_number');
             	// $this->data['query'] = $this->contents_model->delete_payment($content_slug, $id);
 	            if ($this->data['participant_payment'] != FALSE)

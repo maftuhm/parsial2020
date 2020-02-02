@@ -64,6 +64,15 @@ class Contents_model extends CI_Model {
         return $this->db->get()->result('array');
     }
 
+    public function get_participant_media($content_id, $participant_id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->tables['participants_media']);
+        $this->db->join($this->tables['media'], $this->tables['media'].'.id = '. $this->tables['participants_media'].'.media_id');
+        $this->db->where(array('participant_id'=> $participant_id, 'content_id' => $content_id));
+        return $this->db->get()->result('array');
+    }
+
     public function get_count_members($content_slug, $tim_id)
     {
         $table_media = $this->tables['media'];

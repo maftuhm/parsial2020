@@ -21,6 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="box-body">
                                     <div class="table-responsive">
+                                        <pre><?php print_r($tes);?></pre>
                                         <table class="table table-striped table-hover">
                                             <tbody>
                                             <?php
@@ -234,6 +235,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </table>
                                     <!-- <button type="button" class="btn btn-danger btn-action" data-toggle="modal" data-target="#modal-delete-members"><i class="fa fa-trash-o"></i> <?php //echo lang('actions_delete');?></button> -->
                                     <?php echo form_close();?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    <?php if(!empty($participant_media)):?>
+                    <div class="row">
+                        <div class="col-md-12">
+                             <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">File</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body members-details">
+                                    <?php echo form_open(site_url(array('admin/contents/p', $content_slug , 'delete', $participant_id, 'members')), array('method' => 'POST'));
+                                        foreach ($participant_media as $key => $value):
+                                        $image_name = $value['file_name'];
+                                        $image_url = base_url($upload_dir.$image_name);
+                                    ?>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="thumbnail">
+                                            <h3 style="text-align: center;text-transform: uppercase;"><?=$value['name']?></h3>
+                                            <?php if($value['file_ext'] == '.pdf'):?>
+                                            <iframe src="<?=$image_url;?>" height="320" width="100%">This browser does not support PDF.</iframe>
+                                            <?php else:?>
+                                            <a href="<?=$image_url;?>" target="_blank" class="thumbnail">
+                                                <img src="<?=$image_url;?>" alt="<?=$image_name;?>">
+                                            </a>
+                                            <?php endif;?>
+                                            <div class="caption">
+                                            <a href="<?=$image_url;?>" title="<?=$image_name;?>" target="_blank"><p style="overflow: hidden; color: #000"><b><?=$image_name;?></b></p></a>
+                                            <p><a href="<?=$image_url;?>" class="btn btn-primary" role="button" target="_blank">Download</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php endforeach;echo form_close();?>
                                 </div>
                             </div>
                         </div>

@@ -62,12 +62,13 @@ $config['avatar_dir']     = $config['upload_dir'] . '/avatar';
 | -------------------------------------------------------------------------
 | Database table names.
 */
-$config['tables']['contents']       = 'contents';
-$config['tables']['forms']          = 'forms';
-$config['tables']['contents_forms'] = 'contents_forms';
-$config['tables']['media']    		= 'media';
-$config['tables']['payments']  		= 'payments';
-$config['tables']['payments_media']	= 'payments_media';
+$config['tables']['contents']       	= 'contents';
+$config['tables']['forms']          	= 'forms';
+$config['tables']['contents_forms']		= 'contents_forms';
+$config['tables']['media']    			= 'media';
+$config['tables']['payments']  			= 'payments';
+$config['tables']['payments_media']		= 'payments_media';
+$config['tables']['participants_media']	= 'participants_media';
 
 /*
 | -------------------------------------------------------------------------
