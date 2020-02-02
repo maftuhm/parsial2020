@@ -674,7 +674,6 @@ class Register extends Public_Controller {
 							{
 								if ($this->public_model->check_any('participants_media', array('participant_id' => $id, 'content_id'=> $content_id)))
 								{
-									$id = encrypt_url($id);
 									$atts = array(
 										'icon'		=> 'error',
 										'title' 	=> 'Terjadi kesalahan!',
@@ -691,12 +690,10 @@ class Register extends Public_Controller {
 											'icon'		=> 'success',
 											'title' 	=> 'Berhasil!',
 											'text'		=> 'Jawaban anda telah kami simpan. Terimakasih atas partisipasi anda. Semoga success!',
-											'showConfirmButton' => 'false'
 										);
 										$this->data['alert_modal'] = sweet_alert($atts);
 										$tim_data['name'] = $member_name[0];
-										$this->email_success($content, $data_content['title'], $tim_data, 'payment');
-
+										$this->email_success($content, $data_content['title'], $tim_data);
 									}
 								}
 							}
@@ -707,6 +704,7 @@ class Register extends Public_Controller {
 		}
 		$this->template->public_form_render('public/mcc_upload_penyisihan', $this->data);
 	}
+
 	public function upload_futsal($id = NULL)
 	{
 		$content = 'futsal';

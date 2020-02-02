@@ -137,42 +137,47 @@ class Contents_model extends CI_Model {
 			}
 			$this->db->where_in('member_id', $members_id);
 			$media_id_arr = $this->db->get()->result('array');
-			foreach ($media_id_arr as $key => $value)
-			{
-				$media_id[] = $value['media_id'];
-			}
-			$this->db->trans_begin();
-			$this->db->where_in('id', $media_id);
-			$this->db->delete($table_media);
-			if ($this->db->trans_status() === FALSE)
-			{
-				$this->db->trans_rollback();
-			}
-			else
-			{
-				$this->db->trans_commit();
-				$this->db->where_in('member_id', $members_id);
-				$this->db->delete($table_member_media);
-				if ($this->db->trans_status() === FALSE)
-				{
-					$this->db->trans_rollback();
-				}
-				else
-				{
-					$this->db->trans_commit();
-					$this->db->where_in('id', $members_id);
-					$this->db->delete($table_member);
-					if ($this->db->trans_status() === FALSE)
-					{
-						$this->db->trans_rollback();
-					}
-					else
-					{
-						$this->db->trans_commit();
-						return TRUE;
-					}
-				}
-			}
+            if (!empty($media_id_arr))
+            {
+                foreach ($media_id_arr as $key => $value)
+                {
+                    $media_id[] = $value['media_id'];
+                }
+                $this->db->trans_begin();
+                $this->db->where_in('id', $media_id);
+                $this->db->delete($table_media);
+                if ($this->db->trans_status() === FALSE)
+                {
+                    $this->db->trans_rollback();
+                }
+                else
+                {
+                    $this->db->trans_commit();
+                    $this->db->where_in('member_id', $members_id);
+                    $this->db->delete($table_member_media);
+                    if ($this->db->trans_status() === FALSE)
+                    {
+                        $this->db->trans_rollback();
+                    }
+                    else
+                    {
+                        $this->db->trans_commit();
+                    }
+                }
+            }
+            $this->db->trans_begin();
+            $this->db->where_in('id', $members_id);
+            $this->db->delete($table_member);
+            if ($this->db->trans_status() === FALSE)
+            {
+                $this->db->trans_rollback();
+            }
+            else
+            {
+                $this->db->trans_commit();
+                return TRUE;
+            }
+
     	}
     	return TRUE;
     }
