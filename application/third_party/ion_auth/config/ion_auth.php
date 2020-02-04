@@ -82,8 +82,8 @@ $config['salt_prefix']    = version_compare(PHP_VERSION, '5.3.7', '<') ? '$2a$' 
  | The controller should check this function and act
  | appropriately. If this variable set to 0, there is no maximum.
  */
-$config['site_title']                 = "Example.com";       // Site Title, example.com
-$config['admin_email']                = "admin@example.com"; // Admin Email, admin@example.com
+$config['site_title']                 = "parsialhimatika.com";       // Site Title, example.com
+$config['admin_email']                = "maftuhsafii@gmail.com"; // Admin Email, admin@example.com
 $config['default_group']              = 'members';           // Default group, use name
 $config['admin_group']                = 'admin';             // Default administrators group, use name
 $config['identity']                   = 'email';             // You can use any unique column in your table as identity column. The values in this column, alongside password, will be used for login purposes
@@ -172,7 +172,7 @@ $config['email_forgot_password_complete'] = 'new_password.tpl.php';
  | fbaa5e216d163a02ae630ab1a43372635dd374c0 with default salt.
  */
 $config['salt_length'] = 22;
-$config['store_salt']  = FALSE;
+$config['store_salt']  = TRUE;
 
 /*
  | -------------------------------------------------------------------------
