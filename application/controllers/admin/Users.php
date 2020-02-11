@@ -29,7 +29,6 @@ class Users extends Admin_Controller {
         {
             /* Breadcrumbs */
             $this->data['breadcrumb'] = $this->breadcrumbs->show();
-
             /* Get all users */
             $this->data['users'] = $this->ion_auth->users()->result();
             foreach ($this->data['users'] as $k => $user)
@@ -53,17 +52,17 @@ class Users extends Admin_Controller {
 		$tables = $this->config->item('tables', 'ion_auth');
 
 		/* Validate form input */
+		$this->form_validation->set_rules('username', 'lang:users_username', 'required|is_unique['.$tables['users'].'.username]');
+		$this->form_validation->set_rules('email', 'lang:users_email', 'required|valid_email|is_unique['.$tables['users'].'.email]');
 		$this->form_validation->set_rules('first_name', 'lang:users_firstname', 'required');
 		$this->form_validation->set_rules('last_name', 'lang:users_lastname', 'required');
-		$this->form_validation->set_rules('email', 'lang:users_email', 'required|valid_email|is_unique['.$tables['users'].'.email]');
 		$this->form_validation->set_rules('phone', 'lang:users_phone', 'required');
-		$this->form_validation->set_rules('company', 'lang:users_company', 'required');
 		$this->form_validation->set_rules('password', 'lang:users_password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', 'lang:users_password_confirm', 'required');
 
 		if ($this->form_validation->run() == TRUE)
 		{
-			$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
+			$username = strtolower($this->input->post('username'));
 			$email    = strtolower($this->input->post('email'));
 			$password = $this->input->post('password');
 
@@ -82,8 +81,26 @@ class Users extends Admin_Controller {
 		}
 		else
 		{
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			$this->form_validation->set_error_delimiters('', '');
+            $this->data['message'] = $this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message');
+            $required = ' field is required';
+            $this->data['form_error'] = array(
+            	'username' => form_error('username') ? form_error('username') : lang('users_username') . $required,
+            	'first_name' => form_error('first_name') ? form_error('first_name') : lang('users_firstname') . $required,
+            	'last_name' => form_error('last_name') ? form_error('last_name') : lang('users_lastname') . $required,
+            	'email' => form_error('email') ? form_error('email') : lang('users_email') . $required,
+            	'phone' => form_error('phone') ? form_error('phone') : lang('users_phone') . $required,
+            	'password' => form_error('password') ? form_error('password') : lang('users_password') . $required,
+            	'password_confirm' => form_error('password_confirm') ? form_error('password_confirm') : lang('users_password_confirm') . $required
+            );
 
+			$this->data['username'] = array(
+				'name'  => 'username',
+				'id'    => 'username',
+				'type'  => 'text',
+                'class' => 'form-control',
+				'value' => $this->form_validation->set_value('username'),
+			);
 			$this->data['first_name'] = array(
 				'name'  => 'first_name',
 				'id'    => 'first_name',
@@ -428,16 +445,154 @@ class Users extends Admin_Controller {
         /* Breadcrumbs */
         $this->breadcrumbs->unshift(2, lang('menu_users_profile'), 'admin/groups/profile');
         $this->data['breadcrumb'] = $this->breadcrumbs->show();
+        $this->page_title->set(lang('menu_users'), lang('menu_users_profile'));
+        $this->data['pagetitle'] = $this->page_title->show();
 
         /* Data */
         $id = (int) $id;
+		$tables = $this->config->item('tables', 'ion_auth');
 
         $this->data['user_info'] = $this->ion_auth->user($id)->result();
+
         foreach ($this->data['user_info'] as $k => $user)
         {
             $this->data['user_info'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
         }
 
+		$user          = $this->ion_auth->user($id)->row();
+		$groups        = $this->ion_auth->groups()->result_array();
+		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
+
+		/* Validate form input */
+		$this->form_validation->set_rules('username', 'lang:edit_user_validation_username_label', 'required|is_unique['.$tables['users'].'.username]');
+		$this->form_validation->set_rules('email', 'lang:edit_user_validation_email_label', 'required|is_unique['.$tables['users'].'.email]');
+		$this->form_validation->set_rules('first_name', 'lang:edit_user_validation_fname_label', 'required');
+		$this->form_validation->set_rules('last_name', 'lang:edit_user_validation_lname_label', 'required');
+		$this->form_validation->set_rules('phone', 'lang:edit_user_validation_phone_label', 'required');
+		$this->form_validation->set_rules('company', 'lang:edit_user_validation_company_label', 'required');
+
+		if (isset($_POST) && ! empty($_POST))
+		{
+            if ($this->_valid_csrf_nonce() === FALSE OR $id != $this->input->post('id'))
+			{
+				show_error($this->lang->line('error_csrf'));
+			}
+
+            if ($this->input->post('password'))
+			{
+				$this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+				$this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+			}
+
+			if ($this->form_validation->run() == TRUE)
+			{
+				$data = array(
+					'username' => $this->input->post('username'),
+					'first_name' => $this->input->post('first_name'),
+					'last_name'  => $this->input->post('last_name'),
+					'company'    => $this->input->post('company'),
+					'phone'      => $this->input->post('phone')
+				);
+
+                if ($this->input->post('password'))
+				{
+					$data['password'] = $this->input->post('password');
+				}
+
+                if ($this->ion_auth->is_admin())
+				{
+                    $groupData = $this->input->post('groups');
+
+					if (isset($groupData) && !empty($groupData))
+                    {
+						$this->ion_auth->remove_from_group('', $id);
+
+						foreach ($groupData as $grp)
+                        {
+							$this->ion_auth->add_to_group($grp, $id);
+						}
+					}
+				}
+
+                if($this->ion_auth->update($user->id, $data))
+			    {
+                    $this->session->set_flashdata('message', $this->ion_auth->messages());
+					redirect('admin/users/profile/'.$user->id, 'refresh');
+			    }
+			    else
+			    {
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+					redirect('auth', 'refresh');
+			    }
+			}
+		}
+
+		// display the edit user form
+		$this->data['csrf'] = $this->_get_csrf_nonce();
+
+		// set the flash data error message if there is one
+		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+		// pass the user to the view
+		$this->data['user']          = $user;
+		$this->data['groups']        = $groups;
+		$this->data['currentGroups'] = $currentGroups;
+
+		$this->data['username'] = array(
+			'name'  => 'username',
+			'id'    => 'username',
+			'type'  => 'text',
+            'class' => 'form-control',
+			'value' => $this->form_validation->set_value('username', $user->username)
+		);
+		$this->data['email'] = array(
+			'name'  => 'email',
+			'id'    => 'email',
+			'type'  => 'email',
+            'class' => 'form-control',
+			'value' => $this->form_validation->set_value('email', $user->email)
+		);
+		$this->data['first_name'] = array(
+			'name'  => 'first_name',
+			'id'    => 'first_name',
+			'type'  => 'text',
+            'class' => 'form-control',
+			'value' => $this->form_validation->set_value('first_name', $user->first_name)
+		);
+		$this->data['last_name'] = array(
+			'name'  => 'last_name',
+			'id'    => 'last_name',
+			'type'  => 'text',
+            'class' => 'form-control',
+			'value' => $this->form_validation->set_value('last_name', $user->last_name)
+		);
+		$this->data['company'] = array(
+			'name'  => 'company',
+			'id'    => 'company',
+			'type'  => 'text',
+            'class' => 'form-control',
+			'value' => $this->form_validation->set_value('company', $user->company)
+		);
+		$this->data['phone'] = array(
+			'name'  => 'phone',
+			'id'    => 'phone',
+            'type'  => 'tel',
+            'pattern' => '^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$',
+            'class' => 'form-control',
+			'value' => $this->form_validation->set_value('phone', $user->phone)
+		);
+		$this->data['password'] = array(
+			'name' => 'password',
+			'id'   => 'password',
+            'class' => 'form-control',
+			'type' => 'password'
+		);
+		$this->data['password_confirm'] = array(
+			'name' => 'password_confirm',
+			'id'   => 'password_confirm',
+            'class' => 'form-control',
+			'type' => 'password'
+		);
         /* Load Template */
 		$this->template->admin_render('admin/users/profile', $this->data);
 	}

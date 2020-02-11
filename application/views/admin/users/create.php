@@ -19,17 +19,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="box-body">
                                     <?php echo $message;?>
 
-                                    <?php echo form_open(current_url(), array('class' => 'form-horizontal', 'id' => 'form-create_user')); ?>
-                                        <div class="form-group">
+                                    <?php echo form_open(current_url(), array('class' => 'form-horizontal validate-form', 'id' => 'form-create_user')); ?>
+                                        <div class="form-group validate-input">
+                                            <?php echo lang('users_username', 'username', array('class' => 'col-sm-2 control-label')); ?>
+                                            <div class="col-sm-10">
+                                                <?php echo form_input($username);?>
+                                                <div class="help-block"><i class="fa fa-times-circle-o"></i> <span class="message"><?php echo form_error('username');?></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group validate-input">
+                                            <?php echo lang('users_email', 'email', array('class' => 'col-sm-2 control-label')); ?>
+                                            <div class="col-sm-10">
+                                                <?php echo form_input($email);?>
+                                                <div class="help-block"><i class="fa fa-times-circle-o"></i> <span class="message"><?php echo form_error('email');?></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group validate-input">
                                             <?php echo lang('users_firstname', 'first_name', array('class' => 'col-sm-2 control-label')); ?>
                                             <div class="col-sm-10">
                                                 <?php echo form_input($first_name);?>
+                                                <div class="help-block"><i class="fa fa-times-circle-o"></i> <span class="message"><?php echo form_error('first_name');?></span></div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group validate-input">
                                             <?php echo lang('users_lastname', 'last_name', array('class' => 'col-sm-2 control-label')); ?>
                                             <div class="col-sm-10">
                                                 <?php echo form_input($last_name);?>
+                                                <div class="help-block"><i class="fa fa-times-circle-o"></i> <span class="message"><?php echo form_error('last_name');?></span></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -38,31 +54,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php echo form_input($company);?>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <?php echo lang('users_email', 'email', array('class' => 'col-sm-2 control-label')); ?>
-                                            <div class="col-sm-10">
-                                                <?php echo form_input($email);?>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
+                                        <div class="form-group validate-input">
                                             <?php echo lang('users_phone', 'phone', array('class' => 'col-sm-2 control-label')); ?>
                                             <div class="col-sm-10">
                                                 <?php echo form_input($phone);?>
+                                                <div class="help-block"><i class="fa fa-times-circle-o"></i> <span class="message"><?php echo form_error('phone');?></span></div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group validate-input">
                                             <?php echo lang('users_password', 'password', array('class' => 'col-sm-2 control-label')); ?>
                                             <div class="col-sm-10">
                                                 <?php echo form_input($password);?>
+                                                <div class="help-block" style="position: absolute;"><i class="fa fa-times-circle-o"></i> <span class="message"><?php echo form_error('password');?></span></div>
                                                 <div class="progress" style="margin:0">
                                                     <div class="pwstrength_viewport_progress"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group validate-input">
                                             <?php echo lang('users_password_confirm', 'password_confirm', array('class' => 'col-sm-2 control-label')); ?>
                                             <div class="col-sm-10">
                                                 <?php echo form_input($password_confirm);?>
+                                                <div class="help-block"><i class="fa fa-times-circle-o"></i> <span class="message"><?php echo form_error('password');?></span></div>
                                             </div>
                                         </div>
                                         <div class="form-group">

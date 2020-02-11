@@ -92,3 +92,20 @@ td.checkbox-member{
 		width: 100%;
 	}
 }*/
+
+input:focus + .focus-input::before {
+  width: 100%;
+}
+
+.has-val input + .focus-input::before {
+  width: 100%;
+}
+
+.validate-input {
+  position: relative;
+  margin-bottom: 6px;
+}
+.help-block {
+    margin:0;
+    visibility: hidden;
+}

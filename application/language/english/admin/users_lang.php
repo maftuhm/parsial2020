@@ -29,4 +29,4 @@ $lang['users_password']            = 'Password';
 $lang['users_password_confirm']    = 'Password confirm';
 $lang['users_phone']               = 'Phone';
 $lang['users_status']              = 'Status';
-$lang['users_username']            = 'User name / Pseudo';
+$lang['users_username']            = 'Username';

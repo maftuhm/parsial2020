@@ -59,8 +59,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php if ($admin_prefs['transition_page'] == TRUE): ?>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/animsition/animsition.min.js'); ?>"></script>
 <?php endif; ?>
-<?php if ($this->router->fetch_class() == 'users' && ($this->router->fetch_method() == 'create' OR $this->router->fetch_method() == 'edit')): ?>
+<?php if ($this->router->fetch_class() == 'users' && ($this->router->fetch_method() == 'create' OR $this->router->fetch_method() == 'edit' OR $this->router->fetch_method() == 'profile')): ?>
         <script  type="text/javascript"src="<?php echo base_url($plugins_dir . '/pwstrength/pwstrength.min.js'); ?>"></script>
+        <script  type="text/javascript"src="<?php echo base_url('assets/admin/script.js'); ?>"></script>
 <?php endif; ?>
 <?php if ($this->router->fetch_class() == 'groups' && ($this->router->fetch_method() == 'create' OR $this->router->fetch_method() == 'edit')): ?>
         <script type="text/javascript" src="<?php echo base_url($plugins_dir . '/tinycolor/tinycolor.min.js'); ?>"></script>
